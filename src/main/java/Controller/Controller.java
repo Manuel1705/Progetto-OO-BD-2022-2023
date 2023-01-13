@@ -15,8 +15,7 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.Pane;
 
-public class Controller
-        //implements Initializable
+public class Controller implements Initializable
         {
 
         @FXML
@@ -77,7 +76,7 @@ public class Controller
                 return list;
         }
 
-       /* public void initialize(URL url, ResourceBundle rb){
+        public void initialize(URL url, ResourceBundle rb){
                 FirstNameEmployeeTable.setCellValueFactory(new PropertyValueFactory<Employee,String>("firstName"));
                 LastNameEmployeeTable.setCellValueFactory(new PropertyValueFactory<Employee, String>("lastName"));
                 AddressEmployeeTable.setCellValueFactory(new PropertyValueFactory<Employee, String>("address"));
@@ -91,6 +90,5 @@ public class Controller
                 System.out.println("prova");
                 //System.out.println(getEmployeeList().size());
                 EmployeesTable.setItems(getEmployeeList());
-        }*/
-
+        }
     }
