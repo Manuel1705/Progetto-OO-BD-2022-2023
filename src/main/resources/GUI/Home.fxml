@@ -2,13 +2,14 @@
 
 <?import de.jensd.fx.glyphs.fontawesome.FontAwesomeIconView?>
 <?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.FlowPane?>
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="488.0" prefWidth="1498.0" style="-fx-background-color: gray;" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controller.Controller">
+<AnchorPane prefHeight="488.0" prefWidth="1498.0" style="-fx-background-color: gray;" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="GUI.HomeController">
    <children>
       <FlowPane alignment="CENTER" columnHalignment="CENTER" hgap="100.0" layoutY="68.0" nodeOrientation="LEFT_TO_RIGHT" prefHeight="365.0" prefWidth="978.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="68.0">
          <children>
@@ -49,6 +50,7 @@
                      </children>
                   </Pane>
                   <FontAwesomeIconView fill="WHITE" glyphName="USERS" layoutX="55.0" layoutY="80.0" size="30" />
+                  <Button alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#switchToEmployeeListScene" prefHeight="140.0" prefWidth="140.0" style="-fx-background-color: none;" textFill="WHITE" />
                </children>
                <FlowPane.margin>
                   <Insets />
