@@ -11,7 +11,7 @@
 
 <AnchorPane xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="GUI.EmployeeListController">
    <children>
-      <TableView fx:id="EmployeesTable" layoutY="36.0" prefHeight="364.0" prefWidth="999.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="36.0">
+      <TableView fx:id="EmployeesTable" layoutY="36.0" onMouseClicked="#getSelectedEmployeeIndex" prefHeight="364.0" prefWidth="1060.0" AnchorPane.bottomAnchor="36.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="36.0">
         <columns>
           <TableColumn fx:id="FirstNameEmployeeTable" prefWidth="127.5" text="First Name" />
           <TableColumn fx:id="LastNameEmployeeTable" prefWidth="92.0" text="Last Name" />
@@ -30,7 +30,7 @@
       </TableView>
       <FlowPane alignment="CENTER" columnHalignment="CENTER" nodeOrientation="LEFT_TO_RIGHT" prefHeight="36.0" prefWidth="1060.0" style="-fx-background-color: black;" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <children>
-            <Label alignment="CENTER" contentDisplay="CENTER" style="-fx-background-color: black;" text="EMPLOYEES LIST" textFill="WHITE" />
+            <Label alignment="CENTER" contentDisplay="CENTER" text="EMPLOYEES LIST" textFill="WHITE" />
          </children>
          <opaqueInsets>
             <Insets />
@@ -38,8 +38,19 @@
       </FlowPane>
       <Pane prefHeight="36.0" prefWidth="101.0" style="-fx-background-color: black;" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="0.0">
          <children>
-            <Button alignment="CENTER" contentDisplay="CENTER" layoutX="6.0" layoutY="6.0" lineSpacing="100.0" mnemonicParsing="false" onAction="#switchToHomeScene" style="-fx-background-color: nonw;" text="Dashboard" textFill="WHITE" />
+            <Button alignment="CENTER" contentDisplay="CENTER" layoutX="6.0" layoutY="6.0" lineSpacing="100.0" mnemonicParsing="false" onAction="#switchToHomeScene" style="-fx-background-color: none;" text="Dashboard" textFill="WHITE" />
          </children>
       </Pane>
+      <FlowPane alignment="CENTER_RIGHT" columnHalignment="CENTER" hgap="50.0" prefHeight="36.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
+         <children>
+            <Button fx:id="hireButton" mnemonicParsing="false" onAction="#hireEmployee" text="Hire" />
+            <Button fx:id="modifyButton" mnemonicParsing="false" onAction="#modifyEmployee" text="Modify" />
+            <Button fx:id="fireButton" mnemonicParsing="false" onAction="#fireEmployee" text="Fire">
+               <FlowPane.margin>
+                  <Insets right="10.0" />
+               </FlowPane.margin>
+            </Button>
+         </children>
+      </FlowPane>
    </children>
 </AnchorPane>

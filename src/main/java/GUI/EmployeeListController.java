@@ -10,9 +10,11 @@ import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Button;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
 
 import java.io.IOException;
@@ -23,6 +25,7 @@ public class EmployeeListController implements Initializable {
 
     @FXML
     private TableView<Employee> EmployeesTable;
+
     @FXML
     private TableColumn<Employee, String> AddressEmployeeTable;
     @FXML
@@ -51,6 +54,14 @@ public class EmployeeListController implements Initializable {
 
     @FXML
     private TableColumn<Employee, String> ssnEmployeeTable;
+    @FXML
+    private Button fireButton;
+
+    @FXML
+    private Button hireButton;
+
+    @FXML
+    private Button modifyButton;
 
     //Employee employee=new Employee("435","name", "surname","32423","Junior",123);
     static ObservableList<Employee> list= FXCollections.observableArrayList();
@@ -75,6 +86,22 @@ public class EmployeeListController implements Initializable {
         System.out.println("prova");
         //System.out.println(getEmployeeList().size());
         EmployeesTable.setItems(getEmployeeList());
+    }
+    @FXML
+    public int getSelectedEmployeeIndex(){
+        return EmployeesTable.getSelectionModel().getSelectedIndex();
+    }
+    @FXML
+    void modifyEmployee() {
+
+    }
+    @FXML
+    void hireEmployee(){
+
+    }
+    @FXML
+    public void fireEmployee(){
+        list.remove(getSelectedEmployeeIndex());
     }
 
     private Stage stage;
