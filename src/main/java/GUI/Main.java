@@ -14,8 +14,7 @@ public class Main extends Application{
         Parent homeRoot = FXMLLoader.load(getClass().getResource("../GUI/Home.fxml"));
         Scene home = new Scene(homeRoot);
         stage.setTitle("Project2022-2023");
-        stage.setWidth(1920);
-        stage.setHeight(1080);
+        stage.setMaximized(true);
 
         stage.setScene(home);
         stage.show();
