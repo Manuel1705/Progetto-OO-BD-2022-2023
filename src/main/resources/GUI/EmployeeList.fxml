@@ -28,7 +28,7 @@
             <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
          </columnResizePolicy>
       </TableView>
-      <FlowPane alignment="CENTER" columnHalignment="CENTER" nodeOrientation="LEFT_TO_RIGHT" prefHeight="36.0" prefWidth="1060.0" style="-fx-background-color: black;" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+      <FlowPane alignment="CENTER" columnHalignment="CENTER" nodeOrientation="LEFT_TO_RIGHT" prefHeight="36.0" prefWidth="1060.0" style="-fx-background-color: #2b313c;" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <children>
             <Label alignment="CENTER" contentDisplay="CENTER" text="EMPLOYEES LIST" textFill="WHITE" />
          </children>
@@ -36,16 +36,16 @@
             <Insets />
          </opaqueInsets>
       </FlowPane>
-      <Pane prefHeight="36.0" prefWidth="101.0" style="-fx-background-color: black;" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="0.0">
+      <Pane prefHeight="36.0" prefWidth="101.0" style="-fx-background-color: #2b313c;" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="0.0">
          <children>
             <Button alignment="CENTER" contentDisplay="CENTER" layoutX="6.0" layoutY="6.0" lineSpacing="100.0" mnemonicParsing="false" onAction="#switchToHomeScene" style="-fx-background-color: none;" text="Dashboard" textFill="WHITE" />
          </children>
       </Pane>
       <FlowPane alignment="CENTER_RIGHT" columnHalignment="CENTER" hgap="50.0" prefHeight="36.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
          <children>
-            <Button fx:id="hireButton" mnemonicParsing="false" onAction="#hireEmployee" text="Hire" />
-            <Button fx:id="modifyButton" mnemonicParsing="false" onAction="#modifyEmployee" text="Modify" />
-            <Button fx:id="fireButton" mnemonicParsing="false" onAction="#fireEmployee" text="Fire">
+            <Button fx:id="hireButton" mnemonicParsing="false" onAction="#hireEmployee" style="-fx-background-color: #2b313c;" text="Hire" textFill="WHITE" />
+            <Button fx:id="modifyButton" mnemonicParsing="false" onAction="#modifyEmployee" style="-fx-background-color: #2b313c;" text="Modify" textFill="WHITE" />
+            <Button fx:id="fireButton" mnemonicParsing="false" onAction="#fireEmployee" style="-fx-background-color: #2b313c;" text="Fire" textFill="WHITE">
                <FlowPane.margin>
                   <Insets right="10.0" />
                </FlowPane.margin>
