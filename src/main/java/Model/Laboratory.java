@@ -1,7 +1,18 @@
 package Model;
 
 public class Laboratory {
-    private String name="NULL", topic;
+    public Laboratory(String name, String topic, Employee scientificResponsible, Project project){
+        this.name=name;
+        this.topic=topic;
+        this.scientificResponsible=scientificResponsible;
+        Sresp=scientificResponsible.getSsn();
+        this.project=project;
+        projectName=project.getName();
+    }
+    private String name="NULL",
+            topic,
+            projectName="Null",
+            Sresp="NULL";
     private int numEmployees;
     private Employee scientificResponsible;
     private Project project;
@@ -20,5 +31,14 @@ public class Laboratory {
         }
         public String getName(){
         return name;
+        }
+        public String getTopic(){
+        return topic;
+        }
+        public String getProjectName(){
+        return projectName;
+        }
+        public String getSresp(){
+        return Sresp;
         }
 }

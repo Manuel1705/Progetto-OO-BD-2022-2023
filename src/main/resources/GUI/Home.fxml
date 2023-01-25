@@ -23,6 +23,7 @@
                      </children>
                   </Pane>
                   <FontAwesomeIconView fill="WHITE" glyphName="TABLE" layoutX="56.0" layoutY="80.0" size="30" />
+                  <Button alignment="CENTER" contentDisplay="CENTER" layoutY="-1.0" mnemonicParsing="false" onAction="#switchToLabListScene" prefHeight="140.0" prefWidth="140.0" style="-fx-background-color: none;" textFill="WHITE" />
                </children>
                <FlowPane.margin>
                   <Insets />
@@ -38,6 +39,7 @@
                      </children>
                   </Pane>
                   <FontAwesomeIconView fill="WHITE" glyphName="BOOK" layoutX="55.0" layoutY="80.0" size="30" />
+                  <Button alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#switchToProjectsListScene" prefHeight="140.0" prefWidth="140.0" style="-fx-background-color: none;" textFill="WHITE" />
                </children>
             </Pane>
             <Pane fx:id="EmployeesButton" prefHeight="140.0" prefWidth="140.0" style="-fx-background-color: #2b313c;">

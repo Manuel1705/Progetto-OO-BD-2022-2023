@@ -4,7 +4,19 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 
 public class Project{
-    private String cup, name;
+    public Project(String cup, String name, float budget, LocalDate endDate, Employee ScientificResponsible,Employee Referent){
+        this.cup=cup;
+        this.name=name;
+        this.budget=budget;
+        remainingFunds=budget;
+        startDate=LocalDate.now();
+        this.endDate=endDate;
+        this.ScientificResponsible=ScientificResponsible;
+        Sresp=ScientificResponsible.getSsn();
+        this.Referent=Referent;
+        Ref=Referent.getSsn();
+    }
+    private String cup, name, Sresp,Ref;
     private float budget, remainingFunds;
     private LocalDate startDate, endDate;
     private ArrayList<Laboratory> labs = new ArrayList<Laboratory>();
@@ -31,5 +43,36 @@ public class Project{
         if(labs.size()<3)
             labs.add(lab);
     }
+    public String getName(){
+        return name;
+    }
 
+    public Employee getReferent() {
+        return Referent;
+    }
+    public Employee getScientificResponsible(){
+        return ScientificResponsible;
+    }
+
+    public String getRef(){
+        return Ref;
+    }
+    public String getSresp(){
+        return Sresp;
+    }
+    public String getCup(){
+        return cup;
+    }
+    public float getBudget(){
+        return budget;
+    }
+    public float getRemainingFunds(){
+        return remainingFunds;
+    }
+    public LocalDate getStartDate(){
+        return startDate;
+    }
+    public LocalDate getEndDate(){
+        return endDate;
+    }
 }
