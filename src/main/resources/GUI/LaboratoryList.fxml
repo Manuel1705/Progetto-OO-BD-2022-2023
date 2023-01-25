@@ -24,7 +24,7 @@
       </TableView>
       <FlowPane alignment="CENTER" columnHalignment="CENTER" nodeOrientation="LEFT_TO_RIGHT" prefHeight="36.0" prefWidth="1060.0" style="-fx-background-color: #2b313c;" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <children>
-            <Label alignment="CENTER" contentDisplay="CENTER" text="LABORATORY LIST" textFill="WHITE" />
+            <Label alignment="CENTER" contentDisplay="CENTER" text="LABORATORYS LIST" textFill="WHITE" />
          </children>
          <opaqueInsets>
             <Insets />
