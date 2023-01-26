@@ -24,9 +24,9 @@ public class Project{
     private Employee ScientificResponsible;
     private Employee Referent;
     private ArrayList<Purchase> purchases = new ArrayList<Purchase>();
-    public void PurchaseEquipment(String name, String description, int id, Laboratory lab, float price, String dealer){
-            purchases.add(new Purchase(price,LocalDate.now(),dealer,new Equipment(name, description, id, lab)));
-    }
+    //public void PurchaseEquipment(String name, String description, int id, Laboratory lab, float price, String dealer){
+      //      purchases.add(new Purchase(price,LocalDate.now(),dealer,new Equipment(,name, description, id, lab)));
+    //}
     public void HireTemporaryEmployee(String ssn, String firstName, String lastName, String phoneNum, float salary){
             temporary.add(new Employee(ssn, firstName, lastName, phoneNum, "Temporary", salary));
     }

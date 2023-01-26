@@ -1,5 +1,6 @@
 package GUI;
 import Model.Employee;
+import Model.Equipment;
 import Model.Laboratory;
 import Model.Project;
 import javafx.event.ActionEvent;
@@ -82,6 +83,28 @@ public class HomeController
                                 LocalDate.of(2024,12,10),
                                 new Employee("12345678910121322","Manuel", "Mignogna","3465013137","Junior",1500),
                                 new Employee("12345678910121322","Manuel", "Mignogna","3465013137","Junior",1500)));
+                        stage.show();
+                }
+                @FXML
+                public void switchToEquipmentListScene(ActionEvent event) throws IOException {
+                        Parent root = FXMLLoader.load(getClass().getResource("../GUI/EquipmentList.fxml"));
+                        stage = (Stage)((Node)event.getSource()).getScene().getWindow();
+                        scene = new Scene(root);
+                        stage.setMaximized(true);
+                        stage.setScene(scene);
+                        EquipmentListController controller= new EquipmentListController();
+                        controller.addEquipment(new Equipment(12,"nomeEqui","descripion",123,
+                                new Project("123","project1",123,
+                                        LocalDate.of(2024,12,10),
+                                        new Employee("12345678910121322","Manuel", "Mignogna","3465013137","Junior",1500),
+                                        new Employee("12345678910121322","Manuel", "Mignogna","3465013137","Junior",1500)),
+                                new Laboratory("Lab1","topic",
+                                        new Employee("12345678910121322","Manuel", "Mignogna","3465013137","Junior",1500),
+                                        new Project("123","project1",123, LocalDate.of(2024,10,10),
+                                                new Employee("12345678910121322","Manuel", "Mignogna","3465013137","Junior",1500),
+                                                new Employee("12345678910121322","Manuel", "Mignogna","3465013137","Junior",1500))),
+                                "dealer"));
+
                         stage.show();
                 }
     }
