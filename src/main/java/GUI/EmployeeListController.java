@@ -11,10 +11,12 @@ import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.DialogPane;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.MouseEvent;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
 
 import java.io.IOException;
@@ -67,7 +69,6 @@ public class EmployeeListController implements Initializable {
     static ObservableList<Employee> list= FXCollections.observableArrayList();
     public void addEmployeeList(Employee employee){
         list.add(employee);
-        System.out.println(list.size());
     }
     public ObservableList<Employee> getEmployeeList(){
         return list;
@@ -83,8 +84,7 @@ public class EmployeeListController implements Initializable {
         emailEmployeeTable.setCellValueFactory(new PropertyValueFactory<Employee, String>("email"));
         phoneNumEmployeeTable.setCellValueFactory(new PropertyValueFactory<Employee,String>("phoneNum"));
         ssnEmployeeTable.setCellValueFactory(new PropertyValueFactory<Employee,String>("ssn"));
-        System.out.println("prova");
-        //System.out.println(getEmployeeList().size());
+
         EmployeesTable.setItems(getEmployeeList());
     }
     @FXML
@@ -95,10 +95,7 @@ public class EmployeeListController implements Initializable {
     void modifyEmployee() {
 
     }
-    @FXML
-    void hireEmployee(){
 
-    }
     @FXML
     public void fireEmployee(){
         list.remove(getSelectedEmployeeIndex());
@@ -115,5 +112,14 @@ public class EmployeeListController implements Initializable {
         stage.setMaximized(true);
         stage.setScene(scene);
         stage.show();
+    }
+    @FXML
+    public void hireEmployee (ActionEvent event) throws IOException {
+        Parent root = FXMLLoader.load(getClass().getResource("../GUI/addEmployee.fxml"));
+        scene = new Scene(root);
+        Stage stage= new Stage();
+        stage.initModality(Modality.APPLICATION_MODAL);
+        stage.setScene(scene);
+        stage.showAndWait();
     }
 }

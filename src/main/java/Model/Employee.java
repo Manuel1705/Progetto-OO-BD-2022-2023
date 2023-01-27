@@ -1,5 +1,6 @@
 package Model;
 
+import GUI.LaboratoryListController;
 import javafx.collections.ObservableArray;
 
 import java.time.LocalDate;
@@ -8,7 +9,7 @@ import java.util.ArrayList;
 
 
 public class Employee {
-    private String ssn, firstName, lastName, phoneNum, email="NULL", address="NULL", role, labName="Null";
+    private String ssn, firstName, lastName, phoneNum, email="Null", address="Null", role, labName="Null";
     LocalDate employmentDate;
     float salary;
     private Laboratory lab;
@@ -20,7 +21,7 @@ ArrayList<CareerDevelopment> careerChanges = new ArrayList<CareerDevelopment>();
         this.phoneNum = phoneNum;
         this.employmentDate = LocalDate.now();
         this.role = role;
-        this.salary=salary;;
+        this.salary=salary;
         this.email=email;
     }
 
@@ -78,7 +79,27 @@ ArrayList<CareerDevelopment> careerChanges = new ArrayList<CareerDevelopment>();
     public LocalDate getEmploymentDate(){
         return employmentDate;
     }
+    public  void setLabName(String laboratory) {
 
-}
+        if (laboratory != null) {
+            labName = laboratory;
+            int i = 0;
+            while (LaboratoryListController.list.get(i).getName() != labName) {
+                i++;
+            }
+            lab = LaboratoryListController.list.get(i);
+        }else
+        {
+            labName="Null";
+            lab=null;
+        }
+    }
+    public void setAddress(String address){
+        this.address=address;
+    }
+    public void setEmail(String email){
+        this.email=email;
+    }
+    }
 
 //new Employee("432","name", "surname","32423","Junior",123)

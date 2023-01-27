@@ -47,7 +47,7 @@ public class LaboratoryListController implements Initializable {
         private Button modifyLabButton;
 
 
-        static ObservableList<Laboratory> list = FXCollections.observableArrayList();
+        static public ObservableList<Laboratory> list = FXCollections.observableArrayList();
 
         public ObservableList<Laboratory> getLaboratoryList(){
             return list;
