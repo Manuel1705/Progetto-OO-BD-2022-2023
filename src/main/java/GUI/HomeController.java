@@ -53,7 +53,7 @@ public class HomeController
                         stage.setScene(scene);
                         EmployeeListController controller = new EmployeeListController();
                         controller.addEmployeeList(new Employee("12345678910121322","Manuel", "Mignogna","3465013137","Junior",1500));
-                        controller.addEmployeeList(new Employee("12345678910121322","Manuel", "Mignogna","3465013137","Executive",1500));
+                        controller.addEmployeeList(new Employee("12345678910121321","Manuel", "Mignogna","3465013137","Executive",1500));
                         stage.show();
                 }
                 @FXML

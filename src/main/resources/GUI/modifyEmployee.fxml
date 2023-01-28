@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ChoiceBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.Pane?>
+
+<Pane prefHeight="302.0" prefWidth="600.0" style="-fx-background-color: #2b313c;" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="GUI.modifyEmployeeController">
+   <children>
+      <AnchorPane maxHeight="250.0" maxWidth="600.0" minHeight="250.0" minWidth="600.0" prefHeight="250.0" prefWidth="600.0" style="-fx-background-color: #21252f;">
+         <children>
+            <TextField fx:id="firstNameModifyEmployee" layoutX="46.0" layoutY="61.0" prefHeight="25.0" prefWidth="136.0" promptText="First Name" />
+            <TextField fx:id="lastNameModifyEmployee" layoutX="232.0" layoutY="61.0" prefHeight="25.0" prefWidth="136.0" promptText="Last Name" />
+            <TextField fx:id="ssnModifyEmployee" editable="false" layoutX="414.0" layoutY="61.0" prefHeight="25.0" prefWidth="136.0" promptText="SSN" />
+            <TextField fx:id="phoneNumberModifyEmployee" layoutX="46.0" layoutY="118.0" prefHeight="25.0" prefWidth="136.0" promptText="Phone Number" />
+            <TextField fx:id="emailModifyEmployee" layoutX="232.0" layoutY="118.0" prefHeight="25.0" prefWidth="136.0" promptText="Email" />
+            <TextField fx:id="addressModifyEmployee" layoutX="414.0" layoutY="118.0" prefHeight="25.0" prefWidth="136.0" promptText="Address" />
+            <TextField fx:id="salaryModifyEmployee" accessibleRole="INCREMENT_BUTTON" layoutX="410.0" layoutY="175.0" prefHeight="25.0" prefWidth="136.0" promptText="Salary" />
+            <ChoiceBox fx:id="roleModifyEmployee" accessibleRole="CHECK_MENU_ITEM" layoutX="227.0" layoutY="175.0" prefHeight="25.0" prefWidth="142.0" />
+            <Label layoutX="79.0" layoutY="45.0" text="First Name" textFill="WHITE" />
+            <Label layoutX="79.0" layoutY="159.0" text="Laboratory" textFill="WHITE" />
+            <Label layoutX="66.0" layoutY="101.0" text="Phone Number" textFill="WHITE" />
+            <Label layoutX="266.0" layoutY="45.0" text="Last Name" textFill="WHITE" />
+            <Label layoutX="282.0" layoutY="101.0" text="Email" textFill="WHITE" />
+            <Label layoutX="458.0" layoutY="159.0" text="Salary" textFill="WHITE" />
+            <Label layoutX="468.0" layoutY="45.0" text="SSN" textFill="WHITE" />
+            <Label layoutX="452.0" layoutY="101.0" text="Address" textFill="WHITE" />
+            <Label layoutX="284.0" layoutY="159.0" text="Role" textFill="WHITE" />
+            <ChoiceBox fx:id="labModifyEmployee" accessibleRole="CHECK_MENU_ITEM" layoutX="43.0" layoutY="175.0" prefHeight="25.0" prefWidth="142.0" />
+         </children>
+      </AnchorPane>
+      <Button fx:id="modifyEmployeeButton" layoutX="525.0" layoutY="263.0" mnemonicParsing="false" onAction="#modifyEmployee" style="-fx-background-color: #21252f;" text="Modify" textFill="WHITE" />
+   </children>
+</Pane>

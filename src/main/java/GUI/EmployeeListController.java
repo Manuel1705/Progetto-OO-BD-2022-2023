@@ -66,7 +66,7 @@ public class EmployeeListController implements Initializable {
     private Button modifyButton;
 
     //Employee employee=new Employee("435","name", "surname","32423","Junior",123);
-    static ObservableList<Employee> list= FXCollections.observableArrayList();
+    static public ObservableList<Employee> list= FXCollections.observableArrayList();
     public void addEmployeeList(Employee employee){
         list.add(employee);
     }
@@ -91,10 +91,7 @@ public class EmployeeListController implements Initializable {
     public int getSelectedEmployeeIndex(){
         return EmployeesTable.getSelectionModel().getSelectedIndex();
     }
-    @FXML
-    void modifyEmployee() {
 
-    }
 
     @FXML
     public void fireEmployee(){
@@ -121,5 +118,18 @@ public class EmployeeListController implements Initializable {
         stage.initModality(Modality.APPLICATION_MODAL);
         stage.setScene(scene);
         stage.showAndWait();
+    }
+    @FXML
+    void modifyEmployee(ActionEvent event)throws IOException  {
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("../GUI/modifyEmployee.fxml"));
+        root=loader.load();
+        modifyEmployeeController controller= loader.getController();
+        controller.setEmployeeIndex(getSelectedEmployeeIndex());
+        Stage stage= new Stage();
+        scene = new Scene(root);
+        stage.setScene(scene);
+        stage.initModality(Modality.APPLICATION_MODAL);
+        stage.showAndWait();
+        EmployeesTable.refresh();
     }
 }

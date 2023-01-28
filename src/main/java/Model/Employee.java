@@ -100,6 +100,21 @@ ArrayList<CareerDevelopment> careerChanges = new ArrayList<CareerDevelopment>();
     public void setEmail(String email){
         this.email=email;
     }
+    public void setFirstName(String firstName){
+        this.firstName=firstName;
+    }
+    public  void setLastName(String lastName){
+        this.lastName=lastName;
+    }
+    public  void setPhoneNum(String phoneNum){
+        this.phoneNum=phoneNum;
+    }
+    public  void setRole(String role){
+        this.role=role;
+    }
+    public void setSalary(float salary){
+        this.salary=salary;
+    }
     }
 
 //new Employee("432","name", "surname","32423","Junior",123)
