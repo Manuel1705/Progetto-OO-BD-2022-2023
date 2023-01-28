@@ -9,7 +9,7 @@ import java.util.ArrayList;
 
 
 public class Employee {
-    private String ssn, firstName, lastName, phoneNum, email="Null", address="Null", role, labName="Null";
+    private String ssn, firstName, lastName, phoneNum, role, email="Null", address="Null";
     LocalDate employmentDate;
     float salary;
     private Laboratory lab;
@@ -77,77 +77,156 @@ ArrayList<CareerDevelopment> careerChanges = new ArrayList<CareerDevelopment>();
     public String getRole(){
         return role;
     }
-    public void assignLab(Laboratory lab){
 
+    /**
+     * Metodo che aggiorna il laboratorio in cui lavora l'impiegato
+     * @param lab Riferimento all'oggetto laboratorio che corrisponde al nuovo laboratorio dell'impiegato
+     */
+    public void assignLab(Laboratory lab){
         this.lab = lab;
-        labName = lab.getName();
     }
+
+    /**
+     * Metodo che restituisce il laboratorio in cui lavora l'impiegato
+     * @return Riferimento all'oggetto laboratorio memorizzato nell'attributo lab
+     */
     public Laboratory getLab(){
         return lab;
     }
+
+    /**
+     * Metodo che restituisce il nome del laboratorio dell'impiegato se esso esiste, altrimenti restituisce null
+     * @return Il nome del laboratorio oppure null
+     */
     public String getLabName(){
-        return labName;
+        if(lab != null) return lab.getName();
+        else return "Null";
     }
+
+    /**
+     * Metodo che restituisce il nome dell'impiegato
+     * @return Nome dell'impiegato
+     */
     public String getFirstName(){
         return firstName;
     }
+
+    /**
+     * Metodo che restituisce il cognome dell'impiegato
+     * @return Cognome dell'impiegato
+     */
     public String getLastName(){
         return lastName;
     }
+
+    /**
+     * Metodo che restituisce il Social Security Number dell'impiegato
+     * @return Ssn dell'impiegato
+     */
     public String getSsn(){
         return  ssn;
     }
+
+    /**
+     * Metodo che restituisce il numero di telefono dell'impiegato
+     * @return Numero di telefono dell'impiegato
+     */
     public String getPhoneNum(){
         return phoneNum;
     }
+
+    /**
+     * Metodo che restituisce l'indirizzo email dell'impiegato
+     * @return Indirzzio email dell'impiegato
+     */
     public String getEmail(){
         return email;
     }
+
+    /**
+     * Metodo che restituisce l'indirizzo stradale del domicilio dell'impiegato
+     * @return Indirizzo dell'impiegato
+     */
     public String getAddress(){
         return address;
     }
-    public  float getSalary(){
-        return  salary;
+
+    /**
+     * Metodo che restituisce il salario dell'impiegato
+     * @return Salario dell'impiegato
+     */
+    public float getSalary(){
+        return salary;
     }
+
+    /**
+     * Metodo che restituisce la data di assunzione dell'impiegato
+     * @return Data di assunzione dell'impiegato
+     */
     public LocalDate getEmploymentDate(){
         return employmentDate;
     }
     public  void setLabName(String laboratory) {
 
         if (laboratory != null) {
-            labName = laboratory;
             int i = 0;
-            while (LaboratoryListController.list.get(i).getName() != labName) {
+            while (LaboratoryListController.list.get(i).getName() != laboratory) {
                 i++;
             }
             lab = LaboratoryListController.list.get(i);
         }else
         {
-            labName="Null";
             lab=null;
         }
     }
+
+    /**
+     * Metodo che aggiorna l'indirizzo dell'impiegato
+     * @param address Nuovo indirizzo dell'impiegato
+     */
     public void setAddress(String address){
-        this.address=address;
+        this.address = address;
     }
+
+    /**
+     * Metodo che aggiorna l'indirzzo email dell'impiegato
+     * @param email Nuovo indirizzo email dell'impiegato
+     */
     public void setEmail(String email){
-        this.email=email;
+        this.email = email;
     }
+
+    /**
+     * Metodo che aggiorna il nome dell'impiegato
+     * @param firstName Nuovo nome dell'impiegato
+     */
     public void setFirstName(String firstName){
-        this.firstName=firstName;
+        this.firstName = firstName;
     }
-    public  void setLastName(String lastName){
-        this.lastName=lastName;
+
+    /**
+     * Metodo che aggiorna il cognome dell'impiegato
+     * @param lastName Nuovo cognome dell'impiegato
+     */
+    public void setLastName(String lastName){
+        this.lastName = lastName;
     }
-    public  void setPhoneNum(String phoneNum){
-        this.phoneNum=phoneNum;
+
+    /**
+     * Metodo che aggiorna il numero di telefono dell'impiegato
+     * @param phoneNum Nuovo numero di telefono dell'impiegato
+     */
+    public void setPhoneNum(String phoneNum){
+        this.phoneNum = phoneNum;
     }
-    public  void setRole(String role){
-        this.role=role;
+
+
+    public void setRole(String role){
+        this.role = role;
     }
     public void setSalary(float salary){
-        this.salary=salary;
+        this.salary = salary;
     }
-    }
+}
 
 //new Employee("432","name", "surname","32423","Junior",123)
