@@ -2,20 +2,12 @@ package GUI;
 
 import Model.Employee;
 import Model.Laboratory;
-import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
-import javafx.scene.Node;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.TextField;
-import javafx.stage.Stage;
-import javafx.stage.Window;
-
 import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
@@ -65,10 +57,13 @@ public class addEmployeeController implements Initializable {
                         phoneNumberAddEmployee.getText(),
                         roleAddEmployee.getValue(),
                         Float.valueOf(salaryAddEmployee.getText()));
-                if(!labAddEmployee.getValue().isBlank()){
+                if(!labAddEmployee.getValue().equals("Null")){
                     employee.setLabName(labAddEmployee.getValue());
-                }else {
-                    employee.setLabName(null);
+                    int i=0;
+                    while (!LaboratoryListController.list.get(i).getName().equals(labAddEmployee.getValue())) {
+                        i++;
+                    }
+                    employee.setLab(LaboratoryListController.list.get(i));
                 }
                 if(!addressAddEmployee.getText().isEmpty()){
                     employee.setAddress(addressAddEmployee.getText());
@@ -77,7 +72,13 @@ public class addEmployeeController implements Initializable {
                     employee.setEmail(emailAddEmployee.getText());
                 }
                 if(!roleAddEmployee.getValue().isBlank()) {
-            employeeListController.addEmployeeList(employee);
+                    if(!employee.getSsn().isBlank() &&
+                    !employee.getFirstName().isBlank() &&
+                    !employee.getLastName().isBlank() &&
+                    !Float.toString(employee.getSalary()).isBlank() &&
+                    !employee.getPhoneNum().isBlank()) {
+                        employeeListController.addEmployeeList(employee);
+                    }
         }
     }
 
@@ -88,7 +89,7 @@ public class addEmployeeController implements Initializable {
         roleAddEmployee.getItems().addAll(roles);
 
         ArrayList<String> labs= new ArrayList<String>();
-        labs.add(null);
+        labs.add("Null");
         for (Laboratory lab: LaboratoryListController.list
              ) {
             labs.add(lab.getName());

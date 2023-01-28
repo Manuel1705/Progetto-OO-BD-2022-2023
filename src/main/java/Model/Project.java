@@ -1,5 +1,7 @@
 package Model;
 
+import GUI.EmployeeListController;
+
 import java.time.LocalDate;
 import java.util.ArrayList;
 
@@ -15,6 +17,14 @@ public class Project{
         Sresp=ScientificResponsible.getSsn();
         this.Referent=Referent;
         Ref=Referent.getSsn();
+    }
+    public Project(String cup, String name, float budget, LocalDate endDate){
+        this.cup=cup;
+        this.name=name;
+        this.budget=budget;
+        remainingFunds=budget;
+        startDate=LocalDate.now();
+        this.endDate=endDate;
     }
     private String cup, name, Sresp,Ref;
     private float budget, remainingFunds;
@@ -75,4 +85,23 @@ public class Project{
     public LocalDate getEndDate(){
         return endDate;
     }
+    public  void setSrespSSN(String sresp){
+            Sresp=sresp;
+
+        }
+    public void setResp(Employee employee){
+        ScientificResponsible=employee;
+    }
+        public void setRefSSN(String ref){
+                Ref=ref;
+                int i=0;
+                while(!EmployeeListController.list.get(i).getSsn().equals(ref)){
+                    i++;
+                }
+                Referent=EmployeeListController.list.get(i);
+            }
+            public void setRef(Employee employee){
+        Referent=employee;
+    }
+
 }

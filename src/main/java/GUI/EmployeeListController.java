@@ -119,7 +119,7 @@ public class EmployeeListController implements Initializable {
         stage.setScene(scene);
         stage.showAndWait();
     }
-    @FXML
+    /*@FXML
     void modifyEmployee(ActionEvent event)throws IOException  {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("../GUI/modifyEmployee.fxml"));
         root=loader.load();
@@ -131,5 +131,18 @@ public class EmployeeListController implements Initializable {
         stage.initModality(Modality.APPLICATION_MODAL);
         stage.showAndWait();
         EmployeesTable.refresh();
+    }*/
+    @FXML
+    void modifyEmployee(ActionEvent event)throws IOException  {
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("../GUI/modifyEmployee.fxml"));
+        root=loader.load();
+        modifyEmployeeController controller= loader.getController();
+        controller.setEmployeeIndex(getSelectedEmployeeIndex());
+        scene = new Scene(root);
+        Stage stage= new Stage();
+        stage.setScene(scene);
+        stage.initModality(Modality.APPLICATION_MODAL);
+        stage.showAndWait();
+
     }
 }

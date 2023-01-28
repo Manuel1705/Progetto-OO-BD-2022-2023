@@ -113,19 +113,10 @@ ArrayList<CareerDevelopment> careerChanges = new ArrayList<CareerDevelopment>();
         return employmentDate;
     }
     public  void setLabName(String laboratory) {
-
-        if (laboratory != null) {
             labName = laboratory;
-            int i = 0;
-            while (LaboratoryListController.list.get(i).getName() != labName) {
-                i++;
-            }
-            lab = LaboratoryListController.list.get(i);
-        }else
-        {
-            labName="Null";
-            lab=null;
-        }
+    }
+    public void setLab(Laboratory lab){
+        this.lab=lab;
     }
     public void setAddress(String address){
         this.address=address;
