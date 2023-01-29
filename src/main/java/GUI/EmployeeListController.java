@@ -26,7 +26,7 @@ import java.util.ResourceBundle;
 public class EmployeeListController implements Initializable {
 
     @FXML
-    private TableView<Employee> EmployeesTable;
+    public TableView<Employee> EmployeesTable;
 
     @FXML
     private TableColumn<Employee, String> AddressEmployeeTable;
@@ -71,6 +71,10 @@ public class EmployeeListController implements Initializable {
         list.add(employee);
     }
     public ObservableList<Employee> getEmployeeList(){
+        for (Employee employee: list
+             ) {
+            employee.CheckRole();
+        }
         return list;
     }
     public void initialize(URL url, ResourceBundle rb){
@@ -119,30 +123,19 @@ public class EmployeeListController implements Initializable {
         stage.setScene(scene);
         stage.showAndWait();
     }
-    /*@FXML
-    void modifyEmployee(ActionEvent event)throws IOException  {
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("../GUI/modifyEmployee.fxml"));
-        root=loader.load();
-        modifyEmployeeController controller= loader.getController();
-        controller.setEmployeeIndex(getSelectedEmployeeIndex());
-        Stage stage= new Stage();
-        scene = new Scene(root);
-        stage.setScene(scene);
-        stage.initModality(Modality.APPLICATION_MODAL);
-        stage.showAndWait();
-        EmployeesTable.refresh();
-    }*/
     @FXML
     void modifyEmployee(ActionEvent event)throws IOException  {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("../GUI/modifyEmployee.fxml"));
         root=loader.load();
-        modifyEmployeeController controller= loader.getController();
-        controller.setEmployeeIndex(getSelectedEmployeeIndex());
-        scene = new Scene(root);
         Stage stage= new Stage();
+        scene = new Scene(root);
         stage.setScene(scene);
         stage.initModality(Modality.APPLICATION_MODAL);
+        modifyEmployeeController controller= loader.getController();
+        controller.setEmployeeIndex(getSelectedEmployeeIndex());
         stage.showAndWait();
+        EmployeesTable.refresh();
 
     }
+
 }

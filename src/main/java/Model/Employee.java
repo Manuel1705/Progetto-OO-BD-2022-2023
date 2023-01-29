@@ -60,13 +60,21 @@ ArrayList<CareerDevelopment> careerChanges = new ArrayList<CareerDevelopment>();
             role.equals("Senior") && getEmploymentTime().getYears() >= 7 ||
             role.equals("Executive"))
         {
-
             careerChanges.add(new CareerDevelopment(this.role, role, ssn, this.salary-salary));
             this.role = role;
             this.salary = salary;
         }
         else {
             System.out.println("Cambio ruolo non consentito");
+        }
+    }
+    public void CheckRole(){
+        if (getEmploymentTime().getYears()>=3 && getEmploymentTime().getYears()<7 &&
+                !role.equals("Executive")){
+            ChangeRole("Middle",salary+500);
+        }
+        if (getEmploymentTime().getYears()>=7 && !role.equals("Executive")){
+            ChangeRole("Senior",salary+500);
         }
     }
 

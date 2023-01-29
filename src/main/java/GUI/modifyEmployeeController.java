@@ -2,11 +2,15 @@ package GUI;
 
 import Model.Employee;
 import Model.Laboratory;
+import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.TextField;
+import javafx.stage.Stage;
+import javafx.stage.Window;
+
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
@@ -46,6 +50,7 @@ public class modifyEmployeeController implements Initializable {
     public void setEmployeeIndex(int index){
         this.index=index;
     }
+
     @FXML
     void modifyEmployee(){
         Employee employee = EmployeeListController.list.get(index);
@@ -65,6 +70,8 @@ public class modifyEmployeeController implements Initializable {
         if(!emailModifyEmployee.getText().isEmpty()){
             employee.setEmail(emailModifyEmployee.getText());
         }
+        Stage stage = (Stage) modifyEmployeeButton.getScene().getWindow();
+        stage.close();
     }
 
     @Override
