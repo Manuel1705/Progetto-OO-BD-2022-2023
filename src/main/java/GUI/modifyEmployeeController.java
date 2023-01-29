@@ -2,30 +2,23 @@ package GUI;
 
 import Model.Employee;
 import Model.Laboratory;
-import javafx.application.Platform;
 import javafx.fxml.FXML;
-import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
-import javafx.stage.Window;
-
-import java.net.URL;
 import java.util.ArrayList;
-import java.util.ResourceBundle;
 
-public class modifyEmployeeController implements Initializable {
+public class modifyEmployeeController{
 
-    @FXML
-    private TextField addressModifyEmployee;
 
     @FXML
     private TextField emailModifyEmployee;
 
     @FXML
     private TextField firstNameModifyEmployee;
-
+    @FXML
+    private TextField addressModifyEmployee;
     @FXML
     private ChoiceBox<String> labModifyEmployee;
 
@@ -47,35 +40,9 @@ public class modifyEmployeeController implements Initializable {
     @FXML
     private TextField ssnModifyEmployee;
     int index;
-    public void setEmployeeIndex(int index){
-        this.index=index;
-    }
 
-    @FXML
-    void modifyEmployee(){
-        Employee employee = EmployeeListController.list.get(index);
-        employee.setFirstName(firstNameModifyEmployee.getText());
-        employee.setLastName(lastNameModifyEmployee.getText());
-        employee.setPhoneNum(phoneNumberModifyEmployee.getText());
-        employee.setRole(roleModifyEmployee.getValue());
-        employee.setSalary(Float.valueOf(salaryModifyEmployee.getText()));
-        if(!labModifyEmployee.getValue().isBlank()){
-            employee.setLabName(labModifyEmployee.getValue());
-        }else {
-            employee.setLabName(null);
-        }
-        if(!addressModifyEmployee.getText().isEmpty()){
-            employee.setAddress(addressModifyEmployee.getText());
-        }
-        if(!emailModifyEmployee.getText().isEmpty()){
-            employee.setEmail(emailModifyEmployee.getText());
-        }
-        Stage stage = (Stage) modifyEmployeeButton.getScene().getWindow();
-        stage.close();
-    }
-
-    @Override
-    public void initialize(URL url, ResourceBundle resourceBundle) {
+    public void setEmployeeIndex(int index)  {
+       this.index=index;
         String[] roles={"Junior","Executive"};
         roleModifyEmployee.getItems().addAll(roles);
         ArrayList<String> labs= new ArrayList<String>();
@@ -93,5 +60,29 @@ public class modifyEmployeeController implements Initializable {
         labModifyEmployee.setValue(EmployeeListController.list.get(index).getLabName());
         salaryModifyEmployee.setText(Float.toString(EmployeeListController.list.get(index).getSalary()));
         ssnModifyEmployee.setText(EmployeeListController.list.get(index).getSsn());
+        emailModifyEmployee.setText(EmployeeListController.list.get(index).getEmail());
+    }
+
+    @FXML
+    void modifyEmployee(){
+        Employee employee = EmployeeListController.list.get(index);
+        employee.setFirstName(firstNameModifyEmployee.getText());
+        employee.setLastName(lastNameModifyEmployee.getText());
+        employee.setPhoneNum(phoneNumberModifyEmployee.getText());
+        employee.setRole(roleModifyEmployee.getValue());
+        employee.setSalary(Float.parseFloat(salaryModifyEmployee.getText()));
+        if(!labModifyEmployee.getValue().isBlank()){
+            employee.setLabName(labModifyEmployee.getValue());
+        }else {
+            employee.setLabName(null);
+        }
+        if(!addressModifyEmployee.getText().isEmpty()){
+            employee.setAddress(addressModifyEmployee.getText());
+        }
+        if(!emailModifyEmployee.getText().isEmpty()){
+            employee.setEmail(emailModifyEmployee.getText());
+        }
+        Stage stage = (Stage) modifyEmployeeButton.getScene().getWindow();
+        stage.close();
     }
 }

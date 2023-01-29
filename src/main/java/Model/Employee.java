@@ -9,7 +9,7 @@ import java.util.ArrayList;
 
 
 public class Employee {
-    private String ssn, firstName, lastName, phoneNum, role, email="Null", address="Null",labName="Null";
+    private String ssn, firstName, lastName, phoneNum, role, email, address,labName;
     LocalDate employmentDate;
     float salary;
     private Laboratory lab;
@@ -33,6 +33,10 @@ ArrayList<CareerDevelopment> careerChanges = new ArrayList<CareerDevelopment>();
         this.employmentDate = LocalDate.now();
         this.role = role;
         this.salary = salary;
+        email="Null";
+        address="Null";
+        labName="Null";
+        lab=null;
     }
 
     /**
