@@ -24,9 +24,6 @@ public class addEmployeeController implements Initializable {
     private TextField addressAddEmployee;
 
     @FXML
-    private Button cancelButton;
-
-    @FXML
     private TextField emailAddEmployee;
 
     @FXML
@@ -58,7 +55,7 @@ public class addEmployeeController implements Initializable {
                         lastNameAddEmployee.getText(),
                         phoneNumberAddEmployee.getText(),
                         roleAddEmployee.getValue(),
-                        Float.valueOf(salaryAddEmployee.getText()));
+                        Float.parseFloat(salaryAddEmployee.getText()));
                 if(!labAddEmployee.getValue().equals("Null")){
                     employee.setLabName(labAddEmployee.getValue());
                     int i=0;
@@ -73,17 +70,16 @@ public class addEmployeeController implements Initializable {
                 if(!emailAddEmployee.getText().isEmpty()){
                     employee.setEmail(emailAddEmployee.getText());
                 }
-                if(!roleAddEmployee.getValue().isBlank()) {
-                    if(!employee.getSsn().isBlank() &&
+                if(!roleAddEmployee.getValue().isBlank() &&
+                        !employee.getSsn().isBlank() &&
                     !employee.getFirstName().isBlank() &&
                     !employee.getLastName().isBlank() &&
                     !Float.toString(employee.getSalary()).isBlank() &&
                     !employee.getPhoneNum().isBlank()) {
                         employeeListController.addEmployeeList(employee);
+                    Stage stage = (Stage) hireEmployeeButton.getScene().getWindow();
+                    stage.close();
                     }
-        }
-        Stage stage = (Stage) hireEmployeeButton.getScene().getWindow();
-        stage.close();
     }
 
     @Override

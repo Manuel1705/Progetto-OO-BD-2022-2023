@@ -45,21 +45,37 @@ public class addProjectController implements Initializable {
         ProjectListController projectListController= new ProjectListController();
         Project project = new Project(cupAddProject.getText(),
                 nameAddProject.getText(),
-                Float.valueOf(budgetAddProject.getText()),
+                Float.parseFloat(budgetAddProject.getText()),
                 endDateAddProject.getValue());
+
+
         project.setRefSSN(scientificReferentAddProject.getValue());
-        int i=0;
-        while(!EmployeeListController.list.get(i).getSsn().equals(scientificReferentAddProject.getValue())){
-            i++;
+        if(!scientificReferentAddProject.getValue().equals("Null")) {
+            int i = 0;
+            while (!EmployeeListController.list.get(i).getSsn().equals(scientificReferentAddProject.getValue())) {
+                i++;
+            }
+            project.setRef(EmployeeListController.list.get(i));
         }
-        project.setRef(EmployeeListController.list.get(i));
+        else { project.setRef(null); }
+
         project.setSrespSSN(scientificResponsibleAddProject.getValue());
-        i=0;
-        while(!EmployeeListController.list.get(i).getSsn().equals(scientificResponsibleAddProject.getValue())){
-            i++;
+        if(!scientificResponsibleAddProject.getValue().equals("Null")) {
+                int i = 0;
+                while (!EmployeeListController.list.get(i).getSsn().equals(scientificResponsibleAddProject.getValue())) {
+                    i++;
+                }
+                project.setResp(EmployeeListController.list.get(i));
         }
-        project.setRef(EmployeeListController.list.get(i));
-        projectListController.AddProjectList(project);
+        else { project.setResp(null); }
+        System.out.println(endDateAddProject.converterProperty().toString());
+        if(!cupAddProject.getText().isBlank() &&
+            !nameAddProject.getText().isBlank()&&
+        endDateAddProject.getValue().compareTo(LocalDate.now())>0) {
+            projectListController.AddProjectList(project);
+            Stage stage = (Stage) addProjectButton.getScene().getWindow();
+            stage.close();
+        }
     }
     ArrayList<Employee> scientificResponsibles= new ArrayList<Employee>();
     ArrayList<String> scientificResponsiblesSSN= new ArrayList<String>();
@@ -69,21 +85,19 @@ public class addProjectController implements Initializable {
     public void initialize(URL url, ResourceBundle resourceBundle) {
             scientificResponsiblesSSN.add("Null");
             scietificReferentsSSN.add("Null");
-        for (Employee employye: EmployeeListController.list
-             ) {
+        for (Employee employye: EmployeeListController.list) {
             if(employye.getRole().equals("Executive")){
                 scientificResponsibles.add(employye);
-                scientificResponsiblesSSN.add(employye.getSsn());}
-                else if(employye.getRole().equals("Senior")) {
+                scientificResponsiblesSSN.add(employye.getSsn());
+            }
+            else if(employye.getRole().equals("Senior")) {
                 scietificReferents.add(employye);
                 scietificReferentsSSN.add(employye.getSsn());
                 }
         }
-        if(!scientificResponsiblesSSN.isEmpty()) {
             scientificResponsibleAddProject.getItems().addAll(scientificResponsiblesSSN);
-        }
-        if(!scietificReferentsSSN.isEmpty()) {
             scientificReferentAddProject.getItems().addAll(scietificReferentsSSN);
-        }
+
     }
-}
+    }
+
