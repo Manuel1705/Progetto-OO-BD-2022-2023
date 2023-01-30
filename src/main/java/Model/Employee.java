@@ -9,7 +9,7 @@ import java.util.ArrayList;
 
 
 public class Employee {
-    private String ssn, firstName, lastName, phoneNum, role, email, address,labName;
+    private String ssn, firstName, lastName, phoneNum, role, email, address;
     LocalDate employmentDate;
     float salary;
     private Laboratory lab;
@@ -35,7 +35,6 @@ ArrayList<CareerDevelopment> careerChanges = new ArrayList<CareerDevelopment>();
         this.salary = salary;
         email="Null";
         address="Null";
-        labName="Null";
         lab=null;
     }
 
@@ -178,9 +177,7 @@ ArrayList<CareerDevelopment> careerChanges = new ArrayList<CareerDevelopment>();
     public LocalDate getEmploymentDate(){
         return employmentDate;
     }
-    public  void setLabName(String laboratory) {
-            labName = laboratory;
-    }
+
     public void setLab(Laboratory lab){
         this.lab=lab;
     }

@@ -71,11 +71,11 @@ public class modifyEmployeeController{
         employee.setPhoneNum(phoneNumberModifyEmployee.getText());
         employee.setRole(roleModifyEmployee.getValue());
         employee.setSalary(Float.parseFloat(salaryModifyEmployee.getText()));
-        if(!labModifyEmployee.getValue().isBlank()){
-            employee.setLabName(labModifyEmployee.getValue());
-        }else {
-            employee.setLabName(null);
+        int i=0;
+        while (!LaboratoryListController.list.get(i).getName().equals(labModifyEmployee.getValue())) {
+            i++;
         }
+        employee.setLab(LaboratoryListController.list.get(i));
         if(!addressModifyEmployee.getText().isEmpty()){
             employee.setAddress(addressModifyEmployee.getText());
         }

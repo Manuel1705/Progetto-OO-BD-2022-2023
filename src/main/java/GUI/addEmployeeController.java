@@ -57,7 +57,7 @@ public class addEmployeeController implements Initializable {
                         roleAddEmployee.getValue(),
                         Float.parseFloat(salaryAddEmployee.getText()));
                 if(!labAddEmployee.getValue().equals("Null")){
-                    employee.setLabName(labAddEmployee.getValue());
+                   // employee.setLabName(labAddEmployee.getValue());
                     int i=0;
                     while (!LaboratoryListController.list.get(i).getName().equals(labAddEmployee.getValue())) {
                         i++;
