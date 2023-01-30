@@ -1,5 +1,5 @@
 package GUI;
-
+import Controller.Controller;
 import Model.Employee;
 import Model.Laboratory;
 import javafx.event.ActionEvent;
@@ -10,8 +10,10 @@ import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 
+import java.io.Console;
 import java.io.IOException;
 import java.net.URL;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
 
@@ -46,36 +48,28 @@ public class addEmployeeController implements Initializable {
 
     @FXML
     private TextField ssnAddEmployee;
-
+    Controller controller;
     @FXML
     void hireEmployee(ActionEvent event) throws IOException {
-                EmployeeListController employeeListController = new EmployeeListController();
-                Employee employee = new Employee(ssnAddEmployee.getText(),
-                        firstNameAddEmployee.getText(),
-                        lastNameAddEmployee.getText(),
-                        phoneNumberAddEmployee.getText(),
-                        roleAddEmployee.getValue(),
-                        Float.parseFloat(salaryAddEmployee.getText()));
-                if(!labAddEmployee.getValue().equals("Null")){
-                    int i=0;
-                    while (!LaboratoryListController.list.get(i).getName().equals(labAddEmployee.getValue())) {
-                        i++;
-                    }
-                    employee.setLab(LaboratoryListController.list.get(i));
-                }
-                if(!addressAddEmployee.getText().isEmpty()){
-                    employee.setAddress(addressAddEmployee.getText());
-                }
-                if(!emailAddEmployee.getText().isEmpty()){
-                    employee.setEmail(emailAddEmployee.getText());
-                }
-                if(!roleAddEmployee.getValue().isBlank() &&
-                        !employee.getSsn().isBlank() &&
-                    !employee.getFirstName().isBlank() &&
-                    !employee.getLastName().isBlank() &&
-                    !Float.toString(employee.getSalary()).isBlank() &&
-                    !employee.getPhoneNum().isBlank()) {
-                        employeeListController.addEmployeeList(employee);
+        if(!roleAddEmployee.getValue().isBlank() &&
+                !ssnAddEmployee.getText().isBlank() &&
+                !firstNameAddEmployee.getText().isBlank() &&
+                !lastNameAddEmployee.getText().isBlank()&&
+                !salaryAddEmployee.getText().isBlank() &&
+                !phoneNumberAddEmployee.getText().isBlank()) {
+                controller=Controller.getInstance();
+            controller.getEmployeeController().addEmployeeList(ssnAddEmployee.getText(),
+                    firstNameAddEmployee.getText(),
+                    lastNameAddEmployee.getText(),
+                    phoneNumberAddEmployee.getText(),
+                    addressAddEmployee.getText(),
+                    roleAddEmployee.getValue(),
+                    emailAddEmployee.getText(),
+                    LocalDate.now(),
+                    Float.parseFloat(salaryAddEmployee.getText()),
+                    labAddEmployee.getValue());
+
+
                     Stage stage = (Stage) hireEmployeeButton.getScene().getWindow();
                     stage.close();
                     }

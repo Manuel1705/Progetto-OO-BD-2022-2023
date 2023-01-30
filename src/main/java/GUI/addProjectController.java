@@ -1,4 +1,4 @@
-package GUI;
+/*package GUI;
 
 import Model.Employee;
 import Model.Laboratory;
@@ -100,4 +100,4 @@ public class addProjectController implements Initializable {
 
     }
     }
-
+*/

@@ -1,5 +1,6 @@
 package GUI;
 
+import Controller.Controller;
 import Model.Employee;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -21,6 +22,8 @@ import javafx.stage.Stage;
 
 import java.io.IOException;
 import java.net.URL;
+import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.ResourceBundle;
 
 public class EmployeeListController implements Initializable {
@@ -66,18 +69,20 @@ public class EmployeeListController implements Initializable {
     private Button modifyButton;
 
 
+
+    Controller controller;
     static public ObservableList<Employee> list= FXCollections.observableArrayList();
-    public void addEmployeeList(Employee employee){
+    public void loadList(){
+        for (Employee employee: controller.getEmployeeController().getEmployeeArrayList()) {
+            list.add(employee);
+        }
+    }
+    public void addList(Employee employee){
         list.add(employee);
     }
-    public ObservableList<Employee> getEmployeeList(){
-        for (Employee employee: list
-             ) {
-            employee.CheckRole();
-        }
-        return list;
-    }
     public void initialize(URL url, ResourceBundle rb){
+
+        //aggiorna la tabella
         FirstNameEmployeeTable.setCellValueFactory(new PropertyValueFactory<Employee,String>("firstName"));
         LastNameEmployeeTable.setCellValueFactory(new PropertyValueFactory<Employee, String>("lastName"));
         AddressEmployeeTable.setCellValueFactory(new PropertyValueFactory<Employee, String>("address"));
@@ -88,8 +93,7 @@ public class EmployeeListController implements Initializable {
         emailEmployeeTable.setCellValueFactory(new PropertyValueFactory<Employee, String>("email"));
         phoneNumEmployeeTable.setCellValueFactory(new PropertyValueFactory<Employee,String>("phoneNum"));
         ssnEmployeeTable.setCellValueFactory(new PropertyValueFactory<Employee,String>("ssn"));
-
-        EmployeesTable.setItems(getEmployeeList());
+        EmployeesTable.setItems(list);
     }
     @FXML
     public int getSelectedEmployeeIndex(){
@@ -123,7 +127,7 @@ public class EmployeeListController implements Initializable {
         stage.setScene(scene);
         stage.showAndWait();
     }
-    @FXML
+    /*@FXML
     void modifyEmployee(ActionEvent event)throws IOException  {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("../GUI/modifyEmployee.fxml"));
         root=loader.load();
@@ -136,6 +140,6 @@ public class EmployeeListController implements Initializable {
         stage.showAndWait();
         EmployeesTable.refresh();
 
-    }
+    }*/
 
 }

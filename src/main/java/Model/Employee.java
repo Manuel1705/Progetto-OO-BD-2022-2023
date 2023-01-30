@@ -25,6 +25,7 @@ ArrayList<CareerDevelopment> careerChanges = new ArrayList<CareerDevelopment>();
      * @param role        Il ruolo iniziale dell'impiegato. I valori previsti sono "Junior", "Middle", "Senior", "Executive" e "Temporary"
      * @param salary      Il salario iniziale dell'impiegato
      */
+    //costruttore con employmentDate automatico
     public Employee(String ssn, String firstName, String lastName, String phoneNum, String role, float salary) {
         this.ssn = ssn;
         this.firstName = firstName;
@@ -37,7 +38,19 @@ ArrayList<CareerDevelopment> careerChanges = new ArrayList<CareerDevelopment>();
         address="Null";
         lab=null;
     }
-
+    //costruttore con employmentDate esplicito
+    public Employee(String ssn, String firstName, String lastName, String phoneNum, String role, float salary, LocalDate employmentDate) {
+        this.ssn = ssn;
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.phoneNum = phoneNum;
+        this.employmentDate = employmentDate;
+        this.role = role;
+        this.salary = salary;
+        email="Null";
+        address="Null";
+        lab=null;
+    }
     /**
      * Metodo che restituisce l'intervallo di tempo tra l'assunzione dell'impiegato e la data attuale.
      *

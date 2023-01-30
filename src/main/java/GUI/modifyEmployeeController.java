@@ -1,4 +1,4 @@
-package GUI;
+/*package GUI;
 
 import Model.Employee;
 import Model.Laboratory;
@@ -85,4 +85,4 @@ public class modifyEmployeeController{
         Stage stage = (Stage) modifyEmployeeButton.getScene().getWindow();
         stage.close();
     }
-}
+}*/

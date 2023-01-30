@@ -1,4 +1,5 @@
 package GUI;
+import Controller.Controller;
 import Model.Employee;
 import Model.Equipment;
 import Model.Laboratory;
@@ -44,6 +45,7 @@ public class HomeController
                 private Stage stage;
                 private Scene scene;
                 private Parent root;
+                Controller controller;
                 @FXML
                 public void switchToEmployeeListScene(ActionEvent event) throws IOException {
                         Parent root = FXMLLoader.load(getClass().getResource("../GUI/EmployeeList.fxml"));
@@ -51,9 +53,6 @@ public class HomeController
                         scene = new Scene(root);
                         stage.setMaximized(true);
                         stage.setScene(scene);
-                        EmployeeListController controller = new EmployeeListController();
-                        controller.addEmployeeList(new Employee("12345678910121322","Manuel", "Mignogna","3465013137","Junior",1500));
-                        controller.addEmployeeList(new Employee("12345678910121321","Manuel", "Mignogna","3465013137","Executive",1500));
                         stage.show();
                 }
                 @FXML
