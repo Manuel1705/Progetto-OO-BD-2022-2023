@@ -65,7 +65,7 @@ public class EmployeeListController implements Initializable {
     @FXML
     private Button modifyButton;
 
-    //Employee employee=new Employee("435","name", "surname","32423","Junior",123);
+
     static public ObservableList<Employee> list= FXCollections.observableArrayList();
     public void addEmployeeList(Employee employee){
         list.add(employee);
