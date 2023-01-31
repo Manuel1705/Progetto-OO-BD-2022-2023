@@ -1,31 +1,30 @@
 package Controller;
-
 import GUI.EmployeeListController;
 import GUI.LaboratoryListController;
 import Model.Employee;
+import Model.Laboratory;
+
 import java.time.LocalDate;
 import java.util.ArrayList;
-
 public class EmployeeController {
     Controller controller;
-    ArrayList<Employee> employeeArrayList= new ArrayList<>(); //lista impiegati controller
-    public ArrayList<Employee> getEmployeeArrayList(){
-        return employeeArrayList;
-    }
-    //public void addEmployeeList(Employee employee){employeeArrayList.add(employee);}
+    ArrayList<Employee> employeeArrayList= new ArrayList<Employee>();
+    public ArrayList<Employee> getEmployeeArrayList(){ return employeeArrayList; }
+    public void addEmployeeList(Employee employee){employeeArrayList.add(employee);}
     public void addEmployeeList(String ssn, String firstName, String lastName,
                                 String phoneNum, String address, String role,
                                 String email, LocalDate employmentDate,
-                                float salary, String lab)
+                                String salary, String lab)
     {
-        Employee employee= new Employee(ssn,firstName,lastName,phoneNum,role,salary,employmentDate);
-
+        Employee employee= new Employee(ssn,firstName,lastName,phoneNum,role,Float.parseFloat(salary),employmentDate);
         controller=Controller.getInstance();
-
         if(!lab.equals("Null")){
-            //implementare dopo
-            }
-            //implementa dopo
+            ArrayList<Laboratory> labs=controller.getLaboratoryController().getLaboratoryArrayList();
+            int i=0;
+            while(!labs.get(i).getName().equals(lab)){ i++; }
+            employee.setLab(LaboratoryListController.list.get(i));
+        }
+        else employee.setLab(null);
 
         if(!address.isBlank())
             employee.setAddress(address);
@@ -37,12 +36,11 @@ public class EmployeeController {
         else
             employee.setEmail("Null");
 
-        employeeArrayList.add(employee); //aggiunge alla lista model
-        EmployeeListController.list.add(employee); //aggiunge alla tablella
+        employeeArrayList.add(employee);
+        EmployeeListController.list.add(employee);
     }
-
     public void modifyEmployeeList(int index , String firstName, String lastName,
-                                   String phoneNumber, String role, float salary,
+                                   String phoneNumber, String role, String salary,
                                    String lab,String address,String email)
     {
         Employee employee = EmployeeListController.list.get(index);
@@ -50,7 +48,7 @@ public class EmployeeController {
         employee.setLastName(lastName);
         employee.setPhoneNum(phoneNumber);
         employee.setRole(role);
-        employee.setSalary(salary);
+        employee.setSalary(Float.parseFloat(salary));
 
         if(!lab.equals("Null")) {
             int i = 0;
@@ -59,7 +57,6 @@ public class EmployeeController {
             }
             employee.setLab(LaboratoryListController.list.get(i));
         }else employee.setLab(null);
-
 
         if(!address.isEmpty()){
             employee.setAddress(address);

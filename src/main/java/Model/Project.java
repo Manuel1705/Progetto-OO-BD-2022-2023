@@ -58,15 +58,15 @@ public class Project{
         return Sresp;
     }
 
-    public String getSRefSSN(){
-        if(Sref==null)
+    public String getSrefSSN(){
+        if(Sref == null)
             return "Null";
-        return Sref.getSsn();
+        return Sref.getSSN();
     }
     public String getSrespSSN(){
-        if(Sresp==null)
+        if(Sresp == null)
             return "Null";
-        return Sresp.getSsn();
+        return Sresp.getSSN();
     }
     public String getCup(){
         return cup;

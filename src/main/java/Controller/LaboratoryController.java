@@ -16,7 +16,7 @@ public class LaboratoryController {
         Laboratory laboratory= new Laboratory(name,topic);
         if(!Sresp.isBlank()){
             int i=0;
-            while(!EmployeeListController.list.get(i).getSsn().equals(Sresp)){
+            while(!EmployeeListController.list.get(i).getSSN().equals(Sresp)){
                 i++;
             }
             laboratory.setSresp(EmployeeListController.list.get(i));

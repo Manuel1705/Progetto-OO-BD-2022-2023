@@ -147,7 +147,7 @@ ArrayList<CareerDevelopment> careerChanges = new ArrayList<CareerDevelopment>();
      * Metodo che restituisce il Social Security Number dell'impiegato
      * @return Ssn dell'impiegato
      */
-    public String getSsn(){
+    public String getSSN(){
         return  ssn;
     }
 

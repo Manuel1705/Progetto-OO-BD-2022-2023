@@ -39,7 +39,7 @@ public class Laboratory {
         public String getProjectName(){
         return project.getName();
         }
-        public String getSrespSSN(){ return Sresp.getSsn();}
+        public String getSrespSSN(){ return Sresp.getSSN();}
     public void setSresp(Employee employee){
         Sresp=employee;
     }

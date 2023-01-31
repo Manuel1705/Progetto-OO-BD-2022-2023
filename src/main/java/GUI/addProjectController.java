@@ -1,7 +1,6 @@
 package GUI;
-
+import Controller.Controller;
 import Model.Employee;
-import Model.Laboratory;
 import Model.Project;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -11,92 +10,55 @@ import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
-
 import java.net.URL;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
-
 public class addProjectController implements Initializable {
-
-    @FXML
-    private Button addProjectButton;
-
-    @FXML
-    private TextField budgetAddProject;
-
-    @FXML
-    private TextField cupAddProject;
-
-    @FXML
-    private DatePicker endDateAddProject;
-
-    @FXML
-    private TextField nameAddProject;
-
-    @FXML
-    private ChoiceBox<String> scientificReferentAddProject;
-
-    @FXML
-    private ChoiceBox<String> scientificResponsibleAddProject;
-
-    @FXML
-    void addProject(ActionEvent event) {
-        ProjectListController projectListController= new ProjectListController();
-        Project project = new Project(cupAddProject.getText(),
-                nameAddProject.getText(),
-                Float.parseFloat(budgetAddProject.getText()),
-                endDateAddProject.getValue());
-
-
-        if(!scientificReferentAddProject.getValue().equals("Null")) {
-            int i = 0;
-            while (!EmployeeListController.list.get(i).getSsn().equals(scientificReferentAddProject.getValue())) {
-                i++;
-            }
-            project.setSref(EmployeeListController.list.get(i));
-        }
-        else { project.setSref(null); }
-
-        if(!scientificResponsibleAddProject.getValue().equals("Null")) {
-                int i = 0;
-                while (!EmployeeListController.list.get(i).getSsn().equals(scientificResponsibleAddProject.getValue())) {
-                    i++;
-                }
-                project.setSresp(EmployeeListController.list.get(i));
-        }
-        else { project.setSresp(null); }
-
-        System.out.println(endDateAddProject.converterProperty().toString());
-        if(!cupAddProject.getText().isBlank() &&
+    @FXML private Button addProjectButton;
+    @FXML private TextField budgetAddProject;
+    @FXML private TextField cupAddProject;
+    @FXML private DatePicker endDateAddProject;
+    @FXML private TextField nameAddProject;
+    @FXML private ChoiceBox<String> SrefAddProject;
+    @FXML private ChoiceBox<String> SrespAddProject;
+    Controller controller;
+    @FXML void addProject(ActionEvent event) {
+        if(!cupAddProject.getText().isBlank()&&
             !nameAddProject.getText().isBlank()&&
-        endDateAddProject.getValue().compareTo(LocalDate.now())>0) {
-            projectListController.AddProjectList(project);
+            !budgetAddProject.getText().isBlank()&&
+            endDateAddProject.getValue().compareTo(LocalDate.now())>0)
+        {
+            controller=Controller.getInstance();
+            controller.getProjectController().addProjectList(
+                    cupAddProject.getText(),
+                    nameAddProject.getText(),
+                    budgetAddProject.getText(),
+                    endDateAddProject.getValue(),
+                    SrefAddProject.getValue(),
+                    SrespAddProject.getValue());
+
             Stage stage = (Stage) addProjectButton.getScene().getWindow();
             stage.close();
         }
     }
-    ArrayList<Employee> scientificResponsibles= new ArrayList<Employee>();
-    ArrayList<String> scientificResponsiblesSSN= new ArrayList<String>();
-    ArrayList<Employee> scietificReferents= new ArrayList<Employee>();
-    ArrayList<String> scietificReferentsSSN= new ArrayList<String>();
-    @Override
-    public void initialize(URL url, ResourceBundle resourceBundle) {
-            scientificResponsiblesSSN.add("Null");
-            scietificReferentsSSN.add("Null");
-        for (Employee employye: EmployeeListController.list) {
+    @Override public void initialize(URL url, ResourceBundle resourceBundle) {
+        ArrayList<String> SrespSSN = new ArrayList<String>();
+        SrespSSN.add("Null");
+        ArrayList<String> SrefSSN = new ArrayList<String>();
+        SrefSSN.add("Null");
+        controller=Controller.getInstance();
+        ArrayList<Employee> employeeArrayList=controller.getEmployeeController().getEmployeeArrayList();
+        for (Employee employye: employeeArrayList) {
             if(employye.getRole().equals("Executive")){
-                scientificResponsibles.add(employye);
-                scientificResponsiblesSSN.add(employye.getSsn());
+                SrespSSN.add(employye.getSSN());
             }
             else if(employye.getRole().equals("Senior")) {
-                scietificReferents.add(employye);
-                scietificReferentsSSN.add(employye.getSsn());
+                SrefSSN.add(employye.getSSN());
                 }
         }
-            scientificResponsibleAddProject.getItems().addAll(scientificResponsiblesSSN);
-            scientificReferentAddProject.getItems().addAll(scietificReferentsSSN);
-
+            SrespAddProject.getItems().addAll(SrespSSN);
+            SrefAddProject.getItems().addAll(SrefSSN);
     }
     }
 

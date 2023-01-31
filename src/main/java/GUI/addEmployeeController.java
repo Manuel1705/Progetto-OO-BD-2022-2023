@@ -7,46 +7,23 @@ import javafx.scene.control.Button;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
-import java.io.IOException;
 import java.net.URL;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
-
 public class addEmployeeController implements Initializable {
-
-    @FXML
-    private TextField lastNameAddEmployee;
-
-    @FXML
-    private TextField addressAddEmployee;
-
-    @FXML
-    private TextField emailAddEmployee;
-
-    @FXML
-    private TextField firstNameAddEmployee;
-
-    @FXML
-    private Button hireEmployeeButton;
-
-    @FXML
-    private ChoiceBox<String> labAddEmployee;
-
-    @FXML
-    private TextField phoneNumberAddEmployee;
-
-    @FXML
-    private ChoiceBox<String> roleAddEmployee;
-
-    @FXML
-    private TextField salaryAddEmployee;
-
-    @FXML
-    private TextField ssnAddEmployee;
+    @FXML private TextField lastNameAddEmployee;
+    @FXML private TextField addressAddEmployee;
+    @FXML private TextField emailAddEmployee;
+    @FXML private TextField firstNameAddEmployee;
+    @FXML private Button hireEmployeeButton;
+    @FXML private ChoiceBox<String> labAddEmployee;
+    @FXML private TextField phoneNumberAddEmployee;
+    @FXML private ChoiceBox<String> roleAddEmployee;
+    @FXML private TextField salaryAddEmployee;
+    @FXML private TextField ssnAddEmployee;
     Controller controller;
-    @FXML
-    void hireEmployee(){
+    @FXML void hireEmployee(){
         if(!roleAddEmployee.getValue().isBlank() &&
                 !ssnAddEmployee.getText().isBlank() &&
                 !firstNameAddEmployee.getText().isBlank() &&
@@ -55,34 +32,32 @@ public class addEmployeeController implements Initializable {
                 !phoneNumberAddEmployee.getText().isBlank())
         {
                     controller=Controller.getInstance();
-                    controller.getEmployeeController().addEmployeeList(ssnAddEmployee.getText(),
-                    firstNameAddEmployee.getText(),
-                    lastNameAddEmployee.getText(),
-                    phoneNumberAddEmployee.getText(),
-                    addressAddEmployee.getText(),
-                    roleAddEmployee.getValue(),
-                    emailAddEmployee.getText(),
-                    LocalDate.now(),
-                    Float.parseFloat(salaryAddEmployee.getText()),
-                    labAddEmployee.getValue());
-
+                    controller.getEmployeeController().addEmployeeList(
+                        ssnAddEmployee.getText(),
+                        firstNameAddEmployee.getText(),
+                        lastNameAddEmployee.getText(),
+                        phoneNumberAddEmployee.getText(),
+                        addressAddEmployee.getText(),
+                        roleAddEmployee.getValue(),
+                        emailAddEmployee.getText(),
+                        LocalDate.now(),
+                        salaryAddEmployee.getText(),
+                        labAddEmployee.getValue());
+                    //chiusura finestra pop up
                     Stage stage = (Stage) hireEmployeeButton.getScene().getWindow();
                     stage.close();
                 }
     }
-
-    @Override
-    public void initialize(URL url, ResourceBundle resourceBundle) {
-
+    @Override public void initialize(URL url, ResourceBundle resourceBundle) {
         String[] roles={"Junior","Executive"};
         roleAddEmployee.getItems().addAll(roles);
-
-        ArrayList<String> labs= new ArrayList<>();
-        labs.add("Null");
-        for (Laboratory lab: LaboratoryListController.list
-             ) {
-            labs.add(lab.getName());
+        controller=Controller.getInstance();
+        ArrayList<Laboratory> labs= controller.getLaboratoryController().getLaboratoryArrayList();
+        ArrayList<String>labsName=new ArrayList<String>();
+        labsName.add("Null");
+        for (Laboratory lab: labs) {
+            labsName.add(lab.getName());
         }
-        labAddEmployee.getItems().addAll(labs);
+        labAddEmployee.getItems().addAll(labsName);
     }
 }
