@@ -193,7 +193,7 @@ for each row
 execute function update_remaining_funds_employee_insert();
 ---------------------------------
 
-create function update_remaining_funds_equipment_delete() returns trigger as $update_remaining_funds_equipment_delete_trigger$
+create function update_remaining_funds_employee_delete() returns trigger as $update_remaining_funds_employee_delete_trigger$
 declare
 role_emp azienda.employee.role%type;
 emp_salary azienda.employee.salary%type;
@@ -208,13 +208,13 @@ if role_emp='temporary' then
 	--a seguito del licenziamento di un impiegato con contratto temporaneo
 end if;
 end;
-$update_remaining_funds_equipment_delete_trigger$ LANGUAGE plpgsql;
+$update_remaining_funds_employee_delete_trigger$ LANGUAGE plpgsql;
 
 --trigger corrispondente
-create trigger update_remaining_funds_equipment_delete_trigger before delete on azienda.equipment
---viene attivato ad ogni eliminazione nella tabella temporary_contract
+create trigger update_remaining_funds_employee_delete_trigger before delete on azienda.temporary_contract
+--viene attivato prima di ogni eliminazione nella tabella temporary_contract
 for each row
-execute function update_remaining_funds_equipment_delete();
+execute function update_remaining_funds_employee_delete();
 ---------------------------------
 
 create function update_remaining_funds_equipment() returns trigger as $update_remaining_funds_equipment_trigger$
