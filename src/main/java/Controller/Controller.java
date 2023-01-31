@@ -3,21 +3,22 @@ package Controller;
 public class Controller
 {
     private EmployeeController employeeController;
-    private Controller(){
-        employeeController= new EmployeeController();
-        System.out.println(employeeController);
+    private ProjectController projectController;
+
+    private Controller(){ //costruttore
+        employeeController = new EmployeeController();
+        projectController = new ProjectController();
     }
     private static Controller instance=null;
-    public static Controller getInstance(){
+    public static Controller getInstance(){//singleton controller
         if(instance==null)
             instance=new Controller();
 
         return instance;
-
     }
-    public EmployeeController getEmployeeController(){
-        System.out.println(employeeController);
-        return employeeController;
+    public EmployeeController getEmployeeController(){return employeeController; }
+    public ProjectController getProjectController(){
+        return projectController;
     }
 
 }

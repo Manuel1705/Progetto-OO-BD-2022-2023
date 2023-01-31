@@ -1,6 +1,6 @@
-/*package GUI;
+package GUI;
 
-import Model.Employee;
+
 import Model.Laboratory;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
@@ -8,8 +8,9 @@ import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 import java.util.ArrayList;
+import Controller.Controller;
 
-public class modifyEmployeeController{
+public class modifyEmployeeController {
 
 
     @FXML
@@ -40,13 +41,14 @@ public class modifyEmployeeController{
     @FXML
     private TextField ssnModifyEmployee;
     int index;
+    Controller controller;
 
     public void setEmployeeIndex(int index)  {
        this.index=index;
-        String[] roles={"Junior","Executive"};
+        String[] roles = {"Junior","Executive"};
         roleModifyEmployee.getItems().addAll(roles);
         ArrayList<String> labs= new ArrayList<String>();
-        labs.add(null);
+        labs.add("Null");
         for (Laboratory lab: LaboratoryListController.list
         ) {
             labs.add(lab.getName());
@@ -65,24 +67,19 @@ public class modifyEmployeeController{
 
     @FXML
     void modifyEmployee(){
-        Employee employee = EmployeeListController.list.get(index);
-        employee.setFirstName(firstNameModifyEmployee.getText());
-        employee.setLastName(lastNameModifyEmployee.getText());
-        employee.setPhoneNum(phoneNumberModifyEmployee.getText());
-        employee.setRole(roleModifyEmployee.getValue());
-        employee.setSalary(Float.parseFloat(salaryModifyEmployee.getText()));
-        int i=0;
-        while (!LaboratoryListController.list.get(i).getName().equals(labModifyEmployee.getValue())) {
-            i++;
-        }
-        employee.setLab(LaboratoryListController.list.get(i));
-        if(!addressModifyEmployee.getText().isEmpty()){
-            employee.setAddress(addressModifyEmployee.getText());
-        }
-        if(!emailModifyEmployee.getText().isEmpty()){
-            employee.setEmail(emailModifyEmployee.getText());
-        }
+        controller=Controller.getInstance();
+        controller.getEmployeeController().modifyEmployeeList(index,
+                firstNameModifyEmployee.getText(),
+                lastNameModifyEmployee.getText(),
+                phoneNumberModifyEmployee.getText(),
+                roleModifyEmployee.getValue(),
+                Float.parseFloat(salaryModifyEmployee.getText()),
+                labModifyEmployee.getValue(),
+                addressModifyEmployee.getText(),
+                emailModifyEmployee.getText());
+
+
         Stage stage = (Stage) modifyEmployeeButton.getScene().getWindow();
         stage.close();
     }
-}*/
+}

@@ -12,18 +12,13 @@ import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
-import javafx.scene.control.DialogPane;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
-import javafx.scene.input.MouseEvent;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
-
 import java.io.IOException;
 import java.net.URL;
-import java.time.LocalDate;
-import java.util.ArrayList;
 import java.util.ResourceBundle;
 
 public class EmployeeListController implements Initializable {
@@ -73,9 +68,7 @@ public class EmployeeListController implements Initializable {
     Controller controller;
     static public ObservableList<Employee> list= FXCollections.observableArrayList();
     public void loadList(){
-        for (Employee employee: controller.getEmployeeController().getEmployeeArrayList()) {
-            list.add(employee);
-        }
+        list.addAll(controller.getEmployeeController().getEmployeeArrayList());
     }
     public void addList(Employee employee){
         list.add(employee);
@@ -112,26 +105,27 @@ public class EmployeeListController implements Initializable {
     @FXML
     public void switchToHomeScene(ActionEvent event) throws IOException {
         Parent root = FXMLLoader.load(getClass().getResource("../GUI/Home.fxml"));
-        stage = (Stage)((Node)event.getSource()).getScene().getWindow();
+        stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
         scene = new Scene(root);
         stage.setMaximized(true);
         stage.setScene(scene);
         stage.show();
     }
     @FXML
-    public void hireEmployee (ActionEvent event) throws IOException {
+    public void hireEmployee() throws IOException {
         Parent root = FXMLLoader.load(getClass().getResource("../GUI/addEmployee.fxml"));
         scene = new Scene(root);
-        Stage stage= new Stage();
+        stage= new Stage();
         stage.initModality(Modality.APPLICATION_MODAL);
         stage.setScene(scene);
         stage.showAndWait();
     }
-    /*@FXML
-    void modifyEmployee(ActionEvent event)throws IOException  {
+
+    @FXML
+    void modifyEmployee()throws IOException  {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("../GUI/modifyEmployee.fxml"));
         root=loader.load();
-        Stage stage= new Stage();
+        stage= new Stage();
         scene = new Scene(root);
         stage.setScene(scene);
         stage.initModality(Modality.APPLICATION_MODAL);
@@ -139,7 +133,5 @@ public class EmployeeListController implements Initializable {
         controller.setEmployeeIndex(getSelectedEmployeeIndex());
         stage.showAndWait();
         EmployeesTable.refresh();
-
-    }*/
-
+    }
 }

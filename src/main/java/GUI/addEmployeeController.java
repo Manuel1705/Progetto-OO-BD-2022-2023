@@ -2,6 +2,7 @@ package GUI;
 import Controller.Controller;
 import Model.Employee;
 import Model.Laboratory;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -50,15 +51,15 @@ public class addEmployeeController implements Initializable {
     private TextField ssnAddEmployee;
     Controller controller;
     @FXML
-    void hireEmployee(ActionEvent event) throws IOException {
+    void hireEmployee() throws IOException {
         if(!roleAddEmployee.getValue().isBlank() &&
                 !ssnAddEmployee.getText().isBlank() &&
                 !firstNameAddEmployee.getText().isBlank() &&
                 !lastNameAddEmployee.getText().isBlank()&&
                 !salaryAddEmployee.getText().isBlank() &&
                 !phoneNumberAddEmployee.getText().isBlank()) {
-                controller=Controller.getInstance();
-            controller.getEmployeeController().addEmployeeList(ssnAddEmployee.getText(),
+                    controller=Controller.getInstance();
+                    controller.getEmployeeController().addEmployeeList(ssnAddEmployee.getText(),
                     firstNameAddEmployee.getText(),
                     lastNameAddEmployee.getText(),
                     phoneNumberAddEmployee.getText(),
@@ -69,10 +70,9 @@ public class addEmployeeController implements Initializable {
                     Float.parseFloat(salaryAddEmployee.getText()),
                     labAddEmployee.getValue());
 
-
                     Stage stage = (Stage) hireEmployeeButton.getScene().getWindow();
                     stage.close();
-                    }
+                }
     }
 
     @Override

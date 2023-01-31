@@ -96,7 +96,7 @@ public class ProjectListController implements Initializable {
         stage.setScene(scene);
         stage.show();
     }
-static ObservableList<Project> list= FXCollections.observableArrayList();
+static public ObservableList<Project> list= FXCollections.observableArrayList();
     void AddProjectList(Project project) {
         list.add(project);
     }
@@ -112,8 +112,8 @@ static ObservableList<Project> list= FXCollections.observableArrayList();
         ProjectStartDateTable.setCellValueFactory(new PropertyValueFactory<Project,String>("startDate"));
         ProjectEndDateTable.setCellValueFactory(new PropertyValueFactory<Project,String>("endDate"));
         ProjectRemainingFundsTable.setCellValueFactory(new PropertyValueFactory<Project,String>("remainingFunds"));
-        scientificResponsibleTable.setCellValueFactory(new PropertyValueFactory<Project,String>("Sresp"));
-        scientificReferentTable.setCellValueFactory(new PropertyValueFactory<Project,String>("Ref"));
+        scientificResponsibleTable.setCellValueFactory(new PropertyValueFactory<Project,String>("SrespSSN"));
+        scientificReferentTable.setCellValueFactory(new PropertyValueFactory<Project,String>("SrefSSN"));
         ProjectTable.setItems(getProjectsList());
     }
 }

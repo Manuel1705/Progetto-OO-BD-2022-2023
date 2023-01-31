@@ -1,22 +1,18 @@
 package Model;
 
-import GUI.EmployeeListController;
-
 import java.time.LocalDate;
 import java.util.ArrayList;
 
 public class Project{
-    public Project(String cup, String name, float budget, LocalDate endDate, Employee ScientificResponsible,Employee Referent){
+    public Project(String cup, String name, float budget, LocalDate endDate, Employee Sresp,Employee Sref){
         this.cup=cup;
         this.name=name;
         this.budget=budget;
         remainingFunds=budget;
         startDate=LocalDate.now();
         this.endDate=endDate;
-        this.ScientificResponsible=ScientificResponsible;
-        Sresp=ScientificResponsible.getSsn();
-        this.Referent=Referent;
-        Ref=Referent.getSsn();
+        this.Sresp=Sresp;
+        this.Sref=Sref;
     }
     public Project(String cup, String name, float budget, LocalDate endDate){
         this.cup=cup;
@@ -26,14 +22,14 @@ public class Project{
         startDate=LocalDate.now();
         this.endDate=endDate;
     }
-    private String cup, name, Sresp,Ref;
+    private String cup, name;
     private float budget, remainingFunds;
     private LocalDate startDate, endDate;
-    private ArrayList<Laboratory> labs = new ArrayList<Laboratory>();
-    private ArrayList<Employee> temporary = new ArrayList<Employee>();
-    private Employee ScientificResponsible;
-    private Employee Referent;
-    private ArrayList<Purchase> purchases = new ArrayList<Purchase>();
+    private ArrayList<Laboratory> labs = new ArrayList<>();
+    private ArrayList<Employee> temporary = new ArrayList<>();
+    private Employee Sresp;
+    private Employee Sref;
+    private ArrayList<Purchase> purchases = new ArrayList<>();
     //public void PurchaseEquipment(String name, String description, int id, Laboratory lab, float price, String dealer){
       //      purchases.add(new Purchase(price,LocalDate.now(),dealer,new Equipment(,name, description, id, lab)));
     //}
@@ -41,10 +37,10 @@ public class Project{
             temporary.add(new Employee(ssn, firstName, lastName, phoneNum, "Temporary", salary));
     }
     public void addScientificResponsible(String ssn, String firstName, String lastName, String phoneNum, float salary){
-            ScientificResponsible = new Employee(ssn, firstName, lastName, phoneNum, "Executive", salary);
+            Sresp = new Employee(ssn, firstName, lastName, phoneNum, "Executive", salary);
     }
     public void addReferent(String ssn, String firstName, String lastName, String phoneNum, float salary){
-            Referent = new Employee(ssn, firstName, lastName, phoneNum, "Senior", salary);
+            Sref = new Employee(ssn, firstName, lastName, phoneNum, "Senior", salary);
     }
     public int getLabsNum(){
         return labs.size();
@@ -57,18 +53,20 @@ public class Project{
         return name;
     }
 
-    public Employee getReferent() {
-        return Referent;
-    }
-    public Employee getScientificResponsible(){
-        return ScientificResponsible;
+    public Employee getSref() {return Sref;}
+    public Employee getSResp(){
+        return Sresp;
     }
 
-    public String getRef(){
-        return Ref;
+    public String getSRefSSN(){
+        if(Sref==null)
+            return "Null";
+        return Sref.getSsn();
     }
-    public String getSresp(){
-        return Sresp;
+    public String getSrespSSN(){
+        if(Sresp==null)
+            return "Null";
+        return Sresp.getSsn();
     }
     public String getCup(){
         return cup;
@@ -85,13 +83,11 @@ public class Project{
     public LocalDate getEndDate(){
         return endDate;
     }
-    public  void setSrespSSN(String sresp){ Sresp=sresp; }
-    public void setResp(Employee employee){
-        ScientificResponsible=employee;
+    public void setSresp(Employee employee){
+        Sresp=employee;
     }
-    public void setRefSSN(String ref){ Ref=ref; }
-    public void setRef(Employee employee){
-        Referent=employee;
+    public void setSref(Employee employee){
+        Sref=employee;
     }
 
 }

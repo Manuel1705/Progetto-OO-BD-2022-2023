@@ -1,4 +1,4 @@
-/*package GUI;
+package GUI;
 
 import Model.Employee;
 import Model.Laboratory;
@@ -49,25 +49,24 @@ public class addProjectController implements Initializable {
                 endDateAddProject.getValue());
 
 
-        project.setRefSSN(scientificReferentAddProject.getValue());
         if(!scientificReferentAddProject.getValue().equals("Null")) {
             int i = 0;
             while (!EmployeeListController.list.get(i).getSsn().equals(scientificReferentAddProject.getValue())) {
                 i++;
             }
-            project.setRef(EmployeeListController.list.get(i));
+            project.setSref(EmployeeListController.list.get(i));
         }
-        else { project.setRef(null); }
+        else { project.setSref(null); }
 
-        project.setSrespSSN(scientificResponsibleAddProject.getValue());
         if(!scientificResponsibleAddProject.getValue().equals("Null")) {
                 int i = 0;
                 while (!EmployeeListController.list.get(i).getSsn().equals(scientificResponsibleAddProject.getValue())) {
                     i++;
                 }
-                project.setResp(EmployeeListController.list.get(i));
+                project.setSresp(EmployeeListController.list.get(i));
         }
-        else { project.setResp(null); }
+        else { project.setSresp(null); }
+
         System.out.println(endDateAddProject.converterProperty().toString());
         if(!cupAddProject.getText().isBlank() &&
             !nameAddProject.getText().isBlank()&&
@@ -100,4 +99,4 @@ public class addProjectController implements Initializable {
 
     }
     }
-*/
+
