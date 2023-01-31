@@ -444,19 +444,20 @@ declare
 count_project integer;
    
 begin
---viene contato il numero di laboratori che si occupano di un progetto
+--viene contato il numero di laboratori che si occupano del progetto a cui vogliamo aggiungere un laboratorio
 select count(project) into count_project from azienda.laboratory where project=new.project;
---non più di 3 laboratori possono occuparsi dello stesso progetto
+--non più di 3 laboratori possono occuparsi dello stesso progetto 
+--(quindi il nome del suddetto progetto dovrà venir contato un massimo di tre volte)
 if count_project>3 then
---se ciò accade viene eliminata la tupla
+--ma se ciò accade viene eliminata la tupla che si voleva inserire
    delete from azienda.laboratory where name=new.name; 
 end if;
 end;
 $check_max_lab_insert_trigger$ LANGUAGE plpgsql;
 
 --trigger corrispondente
-create trigger check_max_lab_insert_trigger after insert or update of project on azienda.laboratory
---viene attivato ad ogni inserimento o modifica dell’attributo project in laboratory
+create trigger check_max_lab_insert_trigger after insert of project on azienda.laboratory
+--viene attivato ad ogni inserimento dell’attributo project in laboratory
 for each row
 execute function check_max_lab_insert();
 -------------------------------------------
@@ -466,16 +467,19 @@ declare
 count_project integer;
 
 begin
+--viene contato il numero di laboratori che si occupano di un progetto che vorremmo sia preso in carica da un ulteriore laboratorio
 select count(project) into count_project from azienda.laboratory where project=new.project;
+--ma se esistono già tre laboratori che hanno a carico quel progetto...
 if count_project>3 then
+   --...viene impedita la modifica
    update azienda.laboratory set project=old.project where name=new.name; 
 end if;
 end;
 $check_max_lab_update_trigger$ LANGUAGE plpgsql;
 
 --trigger corrispondente
-create trigger check_max_lab_update_trigger after insert or update of project on azienda.laboratory
---viene attivato ad ogni inserimento o modifica dell'attributo project in laboratory
+create trigger check_max_lab_update_trigger after update of project on azienda.laboratory
+--viene attivato ad ogni modifica dell'attributo project in laboratory
 for each row
 execute function check_max_lab_update();  
 ------------------------------
@@ -504,36 +508,44 @@ create trigger check_expired_project_trigger after insert on azienda.temporary_c
 for each row
 execute function check_expired_project();
 ----------------------
-
+ 
 create function check_resp() returns trigger as $check_resp_trigger$
 declare
 emp_exists integer;
-
+  
 begin
+--contiamo il numero di impiegati che sono responsabili scientifici di uno specifico progetto
 select count(ssn) into emp_exists from azienda.project where sresp=new.ssn;
-if emp_exists > 1 then
-    if new.role <>'executive' then
-    update azienda.project set sresp=old.sresp where sresp=new.ssn;
-	end if;
+
+if emp_exists >= 1 then --se ne esiste almeno uno...
+    if new.role <>'executive' then --...e la modifica non prevede che sia 'executive'...
+    update azienda.employee set role=old.role where ssn=new.ssn; --...la modifica non è consentita
+  end if;
 end if;
 
+--contiamo il numero di impiegati che sono referenti scientifici di uno specifico progetto
 select count(ssn) into emp_exists from azienda.project where sref=new.ssn;
-if emp_exists > 1 then
-    if new.role <>'senior' then
-    update azienda.project set sref=old.sref where sref=new.ssn;
-	end if;
+
+if emp_exists >= 1 then --se ne esiste almeno uno...
+    if new.role <>'senior' then --...e tentiamo di cambiare il ruolo in uno diverso da 'senior'...
+    update azienda.employee set role=old.role where ssn=new.ssn; --...la modifica non è consentita
+  end if;
 end if;
 
+--contiamo il numero di impiegati che sono responsabili scientifici di uno specifico laboratorio
 select count(ssn) into emp_exists from azienda.laboratory where sref=new.ssn;
-if emp_exists > 1 then
-    if new.role <>'senior' then
-    update azienda.laboratory set sref=old.sref where sref=new.ssn;
-	end if;
+
+if emp_exists >= 1 then --se ne esiste almeno uno...
+    if new.role <>'senior' then --...e tentiamo di cambiare il ruolo in uno diverso da 'senior'...
+    update azienda.employee set role=old.role where ssn=new.ssn; --...la modifica non è consentita
+  end if;
 end if;
 end;
 $check_resp_trigger$ LANGUAGE plpgsql;
 
+--trigger corrispondente
 create trigger check_resp_trigger after update of role on azienda.employee
+--viene attivato ad ogni modifica nella tabella employee
 for each row
 execute function check_resp();
 
