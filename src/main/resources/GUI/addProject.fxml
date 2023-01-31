@@ -15,14 +15,14 @@
             <TextField fx:id="cupAddProject" layoutX="45.0" layoutY="61.0" prefHeight="25.0" prefWidth="180.0" promptText="CUP" />
             <TextField fx:id="nameAddProject" layoutX="260.0" layoutY="61.0" prefHeight="25.0" prefWidth="180.0" promptText="Name" />
             <TextField fx:id="budgetAddProject" layoutX="475.0" layoutY="61.0" prefHeight="25.0" prefWidth="180.0" promptText="Budget" />
-            <ChoiceBox fx:id="scientificReferentAddProject" accessibleRole="CHECK_MENU_ITEM" layoutX="475.0" layoutY="144.0" prefHeight="25.0" prefWidth="180.0" />
+            <ChoiceBox fx:id="SrefAddProject" accessibleRole="CHECK_MENU_ITEM" layoutX="475.0" layoutY="144.0" prefHeight="25.0" prefWidth="180.0" />
             <Label layoutX="122.0" layoutY="45.0" text="CUP" textFill="WHITE" />
             <Label layoutX="105.0" layoutY="123.0" text="End Date" textFill="WHITE" />
             <Label layoutX="331.0" layoutY="45.0" text="Name" textFill="WHITE" />
             <Label layoutX="279.0" layoutY="123.0" text="Scientific Responsible" textFill="WHITE" />
             <Label layoutX="542.0" layoutY="45.0" text="Budget" textFill="WHITE" />
             <Label layoutX="506.0" layoutY="123.0" text="Scientific Referent" textFill="WHITE" />
-            <ChoiceBox fx:id="scientificResponsibleAddProject" accessibleRole="CHECK_MENU_ITEM" layoutX="260.0" layoutY="144.0" prefHeight="25.0" prefWidth="180.0" />
+            <ChoiceBox fx:id="SrespAddProject" accessibleRole="CHECK_MENU_ITEM" layoutX="260.0" layoutY="144.0" prefHeight="25.0" prefWidth="180.0" />
             <DatePicker fx:id="endDateAddProject" layoutX="46.0" layoutY="144.0" prefHeight="25.0" prefWidth="180.0" />
          </children>
       </AnchorPane>

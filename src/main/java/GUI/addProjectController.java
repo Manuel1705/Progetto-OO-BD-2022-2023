@@ -1,8 +1,6 @@
 package GUI;
 import Controller.Controller;
 import Model.Employee;
-import Model.Project;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
@@ -23,13 +21,12 @@ public class addProjectController implements Initializable {
     @FXML private ChoiceBox<String> SrefAddProject;
     @FXML private ChoiceBox<String> SrespAddProject;
     Controller controller;
-    @FXML void addProject(ActionEvent event) {
+    @FXML void addProject() {
         if(!cupAddProject.getText().isBlank()&&
             !nameAddProject.getText().isBlank()&&
             !budgetAddProject.getText().isBlank()&&
             endDateAddProject.getValue().compareTo(LocalDate.now())>0)
         {
-            controller=Controller.getInstance();
             controller.getProjectController().addProjectList(
                     cupAddProject.getText(),
                     nameAddProject.getText(),
@@ -43,22 +40,19 @@ public class addProjectController implements Initializable {
         }
     }
     @Override public void initialize(URL url, ResourceBundle resourceBundle) {
-        ArrayList<String> SrespSSN = new ArrayList<String>();
-        SrespSSN.add("Null");
-        ArrayList<String> SrefSSN = new ArrayList<String>();
-        SrefSSN.add("Null");
         controller=Controller.getInstance();
         ArrayList<Employee> employeeArrayList=controller.getEmployeeController().getEmployeeArrayList();
+        SrefAddProject.getItems().add("Empty Position");
+        SrespAddProject.getItems().add("Empty Position");
         for (Employee employye: employeeArrayList) {
             if(employye.getRole().equals("Executive")){
-                SrespSSN.add(employye.getSSN());
+                SrespAddProject.getItems().add(employye.getSSN());
             }
             else if(employye.getRole().equals("Senior")) {
-                SrefSSN.add(employye.getSSN());
+                SrefAddProject.getItems().add(employye.getSSN());
                 }
         }
-            SrespAddProject.getItems().addAll(SrespSSN);
-            SrefAddProject.getItems().addAll(SrefSSN);
+
     }
-    }
+}
 

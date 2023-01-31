@@ -21,6 +21,8 @@ public class Project{
         remainingFunds=budget;
         startDate=LocalDate.now();
         this.endDate=endDate;
+        Sref=null;
+        Sresp=null;
     }
     private String cup, name;
     private float budget, remainingFunds;
@@ -60,12 +62,12 @@ public class Project{
 
     public String getSrefSSN(){
         if(Sref == null)
-            return "Null";
+            return "Empty Position";
         return Sref.getSSN();
     }
     public String getSrespSSN(){
         if(Sresp == null)
-            return "Null";
+            return "Empty Position";
         return Sresp.getSSN();
     }
     public String getCup(){

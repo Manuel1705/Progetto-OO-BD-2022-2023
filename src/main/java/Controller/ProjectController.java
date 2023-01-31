@@ -20,24 +20,23 @@ public class ProjectController {
         controller=Controller.getInstance();
         ArrayList<Employee> employeeArrayList = controller.getEmployeeController().getEmployeeArrayList();
         Employee Sresp= null, Sref= null;
-        if(!SrespSSN.isBlank()){
-            if(!SrespSSN.equals("Null")) {
+
+            if(!SrespSSN.equals("Empty Position")) {
                 int i = 0;
                 while (!employeeArrayList.get(i).getSSN().equals(SrespSSN)) {
                     i++;
                 }
                 Sresp = employeeArrayList.get(i);
-            }
-        }
-        if(!SrefSSN.isBlank()) {
-            if(!SrefSSN.equals("Null")) {
+            } else Sresp=null;
+
+            if(!SrefSSN.equals("Empty Position")) {
                 int i = 0;
                 while (!employeeArrayList.get(i).getSSN().equals(SrefSSN)) {
                     i++;
                 }
                 Sref = employeeArrayList.get(i);
-            }
-        }
+            }else Sref=null;
+
         Project project = new Project(cup,name,Float.parseFloat(budget),endDate, Sresp, Sref );
         projectArrayList.add(project); //aggiunge alla lista controller
         ProjectListController.list.add(project); //aggiunge alla tabella

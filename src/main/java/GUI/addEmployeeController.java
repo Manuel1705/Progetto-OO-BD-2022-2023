@@ -31,7 +31,6 @@ public class addEmployeeController implements Initializable {
                 !salaryAddEmployee.getText().isBlank() &&
                 !phoneNumberAddEmployee.getText().isBlank())
         {
-                    controller=Controller.getInstance();
                     controller.getEmployeeController().addEmployeeList(
                         ssnAddEmployee.getText(),
                         firstNameAddEmployee.getText(),

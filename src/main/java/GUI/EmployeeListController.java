@@ -54,7 +54,7 @@ public class EmployeeListController implements Initializable {
         SalaryEmployeeTable.setCellValueFactory(new PropertyValueFactory<Employee, String>("salary"));
         emailEmployeeTable.setCellValueFactory(new PropertyValueFactory<Employee, String>("email"));
         phoneNumEmployeeTable.setCellValueFactory(new PropertyValueFactory<Employee,String>("phoneNum"));
-        ssnEmployeeTable.setCellValueFactory(new PropertyValueFactory<Employee,String>("ssn"));
+        ssnEmployeeTable.setCellValueFactory(new PropertyValueFactory<Employee,String>("SSN"));
         EmployeesTable.setItems(list);
     }
     @FXML public int getSelectedEmployeeIndex(){
