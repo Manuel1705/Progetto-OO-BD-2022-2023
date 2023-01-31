@@ -1,24 +1,25 @@
 package Model;
 
 public class Laboratory {
-    public Laboratory(String name, String topic, Employee scientificResponsible, Project project){
+    public Laboratory(String name, String topic, Employee Sresp, Project project){
         this.name=name;
         this.topic=topic;
-        this.scientificResponsible=scientificResponsible;
-        Sresp=scientificResponsible.getSsn();
+        this.Sresp=Sresp;
         this.project=project;
-        projectName=project.getName();
     }
-    private String name="NULL",
-            topic,
-            projectName="Null",
-            Sresp="NULL";
+    public Laboratory(String name, String topic){
+        this.name=name;
+        this.topic=topic;
+        Sresp=null;
+        project=null;
+    }
+    private String name, topic;
     private int numEmployees;
-    private Employee scientificResponsible;
+    private Employee Sresp;
     private Project project;
     public void addScientificResponsible(Employee employee){
             if(employee.getRole().equals("Senior")){
-                scientificResponsible = employee;
+                Sresp = employee;
             }
     }
     public void addProject(Project project){
@@ -36,9 +37,13 @@ public class Laboratory {
         return topic;
         }
         public String getProjectName(){
-        return projectName;
+        return project.getName();
         }
-        public String getSresp(){
-        return Sresp;
-        }
+        public String getSrespSSN(){ return Sresp.getSsn();}
+    public void setSresp(Employee employee){
+        Sresp=employee;
+    }
+    public void setProject(Project project){
+        this.project=project;
+    }
 }

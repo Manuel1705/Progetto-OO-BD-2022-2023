@@ -62,12 +62,6 @@ public class HomeController
                         scene = new Scene(root);
                         stage.setMaximized(true);
                         stage.setScene(scene);
-                        LaboratoryListController controller = new LaboratoryListController();
-                        controller.AddLaboratoryList(new Laboratory("Lab1","topic",
-                              new Employee("12345678910121322","Manuel", "Mignogna","3465013137","Junior",1500),
-                               new Project("123","project1",123, LocalDate.of(2024,10,10),
-                                      new Employee("12345678910121322","Manuel", "Mignogna","3465013137","Junior",1500),
-                                      new Employee("12345678910121322","Manuel", "Mignogna","3465013137","Junior",1500))));
                         stage.show();
                 }
                 @FXML
@@ -77,11 +71,6 @@ public class HomeController
                         scene = new Scene(root);
                         stage.setMaximized(true);
                         stage.setScene(scene);
-                        ProjectListController controller = new ProjectListController();
-                        controller.AddProjectList(new Project("123","project1",123,
-                                LocalDate.of(2024,12,10),
-                                new Employee("12345678910121322","Manuel", "Mignogna","3465013137","Junior",1500),
-                                new Employee("12345678910121322","Manuel", "Mignogna","3465013137","Junior",1500)));
                         stage.show();
                 }
                 @FXML
@@ -91,19 +80,6 @@ public class HomeController
                         scene = new Scene(root);
                         stage.setMaximized(true);
                         stage.setScene(scene);
-                        EquipmentListController controller= new EquipmentListController();
-                        controller.addEquipment(new Equipment(12,"nomeEqui","descripion",123,
-                                new Project("123","project1",123,
-                                        LocalDate.of(2024,12,10),
-                                        new Employee("12345678910121322","Manuel", "Mignogna","3465013137","Junior",1500),
-                                        new Employee("12345678910121322","Manuel", "Mignogna","3465013137","Junior",1500)),
-                                new Laboratory("Lab1","topic",
-                                        new Employee("12345678910121322","Manuel", "Mignogna","3465013137","Junior",1500),
-                                        new Project("123","project1",123, LocalDate.of(2024,10,10),
-                                                new Employee("12345678910121322","Manuel", "Mignogna","3465013137","Junior",1500),
-                                                new Employee("12345678910121322","Manuel", "Mignogna","3465013137","Junior",1500))),
-                                "dealer"));
-
                         stage.show();
                 }
     }

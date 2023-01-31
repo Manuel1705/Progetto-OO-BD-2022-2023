@@ -8,7 +8,7 @@ import java.util.ArrayList;
 
 public class EmployeeController {
     Controller controller;
-    ArrayList<Employee> employeeArrayList= new ArrayList<>(); //lista impiegati model
+    ArrayList<Employee> employeeArrayList= new ArrayList<>(); //lista impiegati controller
     public ArrayList<Employee> getEmployeeArrayList(){
         return employeeArrayList;
     }
