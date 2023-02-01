@@ -13,7 +13,6 @@ import javafx.stage.Stage;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
-
 public class addLaboratoryController implements Initializable {
     @FXML private ChoiceBox<String> SrespAddLaboratory;
     @FXML private Button addLaboratoryButton;
@@ -22,10 +21,8 @@ public class addLaboratoryController implements Initializable {
     @FXML private TextArea topicAddLaboratory;
     Controller controller;
     @FXML void addLaboratory() {
-        if (!nameAddLaboratory.getText().isBlank() &&
-                !topicAddLaboratory.getText().isBlank())
+        if (!nameAddLaboratory.getText().isBlank())
         {
-                    controller = Controller.getInstance();
                     controller.getLaboratoryController().addLaboratoryList(
                     nameAddLaboratory.getText(),
                     topicAddLaboratory.getText(),
@@ -38,17 +35,21 @@ public class addLaboratoryController implements Initializable {
     }
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-
+        controller=Controller.getInstance();
+        ArrayList<Employee> employeeArrayList=controller.getEmployeeController().getEmployeeArrayList();
         ArrayList<String> Sresp= new ArrayList<>();
         Sresp.add("Null");
-        for (Employee employee: EmployeeListController.list) {
-            Sresp.add(employee.getSSN());
+        for (Employee employee: employeeArrayList) {
+            if(employee.getRole().equals("Senior")) {
+                Sresp.add(employee.getSSN());
+            }
         }
         SrespAddLaboratory.getItems().addAll(Sresp);
+        ArrayList<Project>projectArrayList=controller.getProjectController().getProjectArrayList();
         ArrayList<String>projects= new ArrayList<>();
         projects.add("Null");
-        for (Project project: ProjectListController.list) {
-            projects.add(project.getName());
+        for (Project project: projectArrayList) {
+            projects.add(project.getCup());
         }
         projectAddLaboratory.getItems().addAll(projects);
     }

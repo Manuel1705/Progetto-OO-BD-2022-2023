@@ -16,28 +16,38 @@ public class EmployeeController {
                                 String email, LocalDate employmentDate,
                                 String salary, String lab)
     {
-        Employee employee= new Employee(ssn,firstName,lastName,phoneNum,role,Float.parseFloat(salary),employmentDate);
-        controller=Controller.getInstance();
-        if(!lab.equals("Null")){
-            ArrayList<Laboratory> labs=controller.getLaboratoryController().getLaboratoryArrayList();
-            int i=0;
-            while(!labs.get(i).getName().equals(lab)){ i++; }
-            employee.setLab(LaboratoryListController.list.get(i));
+        boolean exists=false;
+        for (Employee employee:employeeArrayList) {
+            if(employee.getSSN().equals(ssn)){
+                exists=true;
+                break;
+            }
         }
-        else employee.setLab(null);
+        if(!exists) {
+            Employee employee = new Employee(ssn, firstName, lastName, phoneNum, role, Float.parseFloat(salary), employmentDate);
+            controller = Controller.getInstance();
+            if (!lab.equals("Null")) {
+                ArrayList<Laboratory> labs = controller.getLaboratoryController().getLaboratoryArrayList();
+                int i = 0;
+                while (!labs.get(i).getName().equals(lab)) {
+                    i++;
+                }
+                employee.setLab(LaboratoryListController.list.get(i));
+            } else employee.setLab(null);
 
-        if(!address.isBlank())
-            employee.setAddress(address);
-        else
-            employee.setAddress("Null");
+            if (!address.isBlank())
+                employee.setAddress(address);
+            else
+                employee.setAddress("Null");
 
-        if(!email.isBlank())
-            employee.setEmail(email);
-        else
-            employee.setEmail("Null");
+            if (!email.isBlank())
+                employee.setEmail(email);
+            else
+                employee.setEmail("Null");
 
-        employeeArrayList.add(employee);
-        EmployeeListController.list.add(employee);
+            employeeArrayList.add(employee);
+            EmployeeListController.list.add(employee);
+        }else System.out.println("L'impigato esiste già");
     }
     public void modifyEmployeeList(int index , String firstName, String lastName,
                                    String phoneNumber, String role, String salary,

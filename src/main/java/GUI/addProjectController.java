@@ -32,8 +32,8 @@ public class addProjectController implements Initializable {
                     nameAddProject.getText(),
                     budgetAddProject.getText(),
                     endDateAddProject.getValue(),
-                    SrefAddProject.getValue(),
-                    SrespAddProject.getValue());
+                    SrespAddProject.getValue(),
+                    SrefAddProject.getValue());
 
             Stage stage = (Stage) addProjectButton.getScene().getWindow();
             stage.close();

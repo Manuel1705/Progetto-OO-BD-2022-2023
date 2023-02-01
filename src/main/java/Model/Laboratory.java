@@ -37,9 +37,22 @@ public class Laboratory {
         return topic;
         }
         public String getProjectName(){
-        return project.getName();
+        if(project !=null){
+            return project.getName();
         }
-        public String getSrespSSN(){ return Sresp.getSSN();}
+        else return "Null";
+    }
+    public String getProjectCup(){
+        if(project !=null){
+            return project.getCup();
+        }
+        else return "Null";
+    }
+        public String getSrespSSN(){
+        if (Sresp!=null){
+            return Sresp.getSSN();
+        }else return "Null";
+    }
     public void setSresp(Employee employee){
         Sresp=employee;
     }

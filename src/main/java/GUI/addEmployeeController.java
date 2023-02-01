@@ -52,11 +52,9 @@ public class addEmployeeController implements Initializable {
         roleAddEmployee.getItems().addAll(roles);
         controller=Controller.getInstance();
         ArrayList<Laboratory> labs= controller.getLaboratoryController().getLaboratoryArrayList();
-        ArrayList<String>labsName=new ArrayList<String>();
-        labsName.add("Null");
+        labAddEmployee.getItems().add("Null");
         for (Laboratory lab: labs) {
-            labsName.add(lab.getName());
+            labAddEmployee.getItems().add(lab.getName());
         }
-        labAddEmployee.getItems().addAll(labsName);
     }
 }

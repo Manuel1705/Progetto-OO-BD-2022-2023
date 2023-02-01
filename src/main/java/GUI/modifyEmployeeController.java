@@ -21,15 +21,15 @@ public class modifyEmployeeController {
     Controller controller;
     int index;
     public void setEmployeeIndex(int index)  {
+        controller=Controller.getInstance();
         this.index=index;
         String[] roles = {"Junior","Executive"};
         roleModifyEmployee.getItems().addAll(roles);
-        ArrayList<String> labs= new ArrayList<String>();
-        labs.add("Null");
-        for (Laboratory lab: LaboratoryListController.list){
-            labs.add(lab.getName());
+        ArrayList<Laboratory> labs= controller.getLaboratoryController().getLaboratoryArrayList();
+        labModifyEmployee.getItems().add("Null");
+        for (Laboratory lab: labs){
+            labModifyEmployee.getItems().add(lab.getName());
         }
-        labModifyEmployee.getItems().addAll(labs);
         firstNameModifyEmployee.setText(EmployeeListController.list.get(index).getFirstName());
         lastNameModifyEmployee.setText(EmployeeListController.list.get(index).getLastName());
         phoneNumberModifyEmployee.setText(EmployeeListController.list.get(index).getPhoneNum());
