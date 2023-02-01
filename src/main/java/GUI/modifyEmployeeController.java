@@ -1,4 +1,5 @@
 package GUI;
+import Model.Employee;
 import Model.Laboratory;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
@@ -30,18 +31,18 @@ public class modifyEmployeeController {
         for (Laboratory lab: labs){
             labModifyEmployee.getItems().add(lab.getName());
         }
-        firstNameModifyEmployee.setText(EmployeeListController.list.get(index).getFirstName());
-        lastNameModifyEmployee.setText(EmployeeListController.list.get(index).getLastName());
-        phoneNumberModifyEmployee.setText(EmployeeListController.list.get(index).getPhoneNum());
-        addressModifyEmployee.setText(EmployeeListController.list.get(index).getAddress());
-        roleModifyEmployee.setValue(EmployeeListController.list.get(index).getRole());
-        labModifyEmployee.setValue(EmployeeListController.list.get(index).getLabName());
-        salaryModifyEmployee.setText(Float.toString(EmployeeListController.list.get(index).getSalary()));
-        ssnModifyEmployee.setText(EmployeeListController.list.get(index).getSSN());
-        emailModifyEmployee.setText(EmployeeListController.list.get(index).getEmail());
+        ArrayList<Employee>employeeArrayList=controller.getEmployeeController().getEmployeeArrayList();
+        firstNameModifyEmployee.setText(employeeArrayList.get(index).getFirstName());
+        lastNameModifyEmployee.setText(employeeArrayList.get(index).getLastName());
+        phoneNumberModifyEmployee.setText(employeeArrayList.get(index).getPhoneNum());
+        addressModifyEmployee.setText(employeeArrayList.get(index).getAddress());
+        roleModifyEmployee.setValue(employeeArrayList.get(index).getRole());
+        labModifyEmployee.setValue(employeeArrayList.get(index).getLabName());
+        salaryModifyEmployee.setText(Float.toString(employeeArrayList.get(index).getSalary()));
+        ssnModifyEmployee.setText(employeeArrayList.get(index).getSSN());
+        emailModifyEmployee.setText(employeeArrayList.get(index).getEmail());
     }
     @FXML void modifyEmployee(){
-        controller=Controller.getInstance();
         controller.getEmployeeController().modifyEmployeeList(index,
                 firstNameModifyEmployee.getText(),
                 lastNameModifyEmployee.getText(),

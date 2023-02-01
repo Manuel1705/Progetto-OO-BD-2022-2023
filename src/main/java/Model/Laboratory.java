@@ -59,4 +59,5 @@ public class Laboratory {
     public void setProject(Project project){
         this.project=project;
     }
+    public void setTopic(String topic){this.topic=topic;}
 }

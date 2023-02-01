@@ -44,7 +44,17 @@ public class LaboratoryListController implements Initializable {
         stage.setScene(scene);
         stage.showAndWait();
     }
-        @FXML void modifyLaboratory() {
+        @FXML void modifyLaboratory() throws IOException{
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("../GUI/modifyLaboratory.fxml"));
+            root=loader.load();
+            stage= new Stage();
+            scene = new Scene(root);
+            stage.setScene(scene);
+            stage.initModality(Modality.APPLICATION_MODAL);
+            modifyLaboratoryController controller= loader.getController();
+            controller.setLaboratoryIndex(getSelectedLabIndex());
+            stage.showAndWait();
+            LabTable.refresh();
         }
         @FXML void dismissLaboratory() {
                 list.remove(getSelectedLabIndex());

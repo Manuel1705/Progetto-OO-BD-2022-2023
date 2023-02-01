@@ -28,11 +28,11 @@ public class EmployeeController {
             controller = Controller.getInstance();
             if (!lab.equals("Null")) {
                 ArrayList<Laboratory> labs = controller.getLaboratoryController().getLaboratoryArrayList();
-                int i = 0;
-                while (!labs.get(i).getName().equals(lab)) {
-                    i++;
+                for (Laboratory laboratory : labs) {
+                    if(laboratory.getName().equals(lab)){
+                        employee.setLab(laboratory);
+                    }
                 }
-                employee.setLab(LaboratoryListController.list.get(i));
             } else employee.setLab(null);
 
             if (!address.isBlank())
@@ -53,7 +53,8 @@ public class EmployeeController {
                                    String phoneNumber, String role, String salary,
                                    String lab,String address,String email)
     {
-        Employee employee = EmployeeListController.list.get(index);
+
+        Employee employee = controller.getEmployeeController().getEmployeeArrayList().get(index);
         employee.setFirstName(firstName);
         employee.setLastName(lastName);
         employee.setPhoneNum(phoneNumber);
@@ -61,11 +62,13 @@ public class EmployeeController {
         employee.setSalary(Float.parseFloat(salary));
 
         if(!lab.equals("Null")) {
-            int i = 0;
-            while (!LaboratoryListController.list.get(i).getName().equals(lab)) {
-                i++;
+            ArrayList<Laboratory>laboratoryArrayList=controller.getLaboratoryController().getLaboratoryArrayList();
+            for (Laboratory laboratory : laboratoryArrayList) {
+                if(laboratory.getName().equals(lab)){
+                    employee.setLab(laboratory);
+                    break;
+                }
             }
-            employee.setLab(LaboratoryListController.list.get(i));
         }else employee.setLab(null);
 
         if(!address.isEmpty()){

@@ -30,19 +30,19 @@ public class ProjectController {
             Employee Sresp = null, Sref = null;
 
             if (!SrespSSN.equals("Empty Position")) {
-                int i = 0;
-                while (!employeeArrayList.get(i).getSSN().equals(SrespSSN)) {
-                    i++;
+                for (Employee employee : employeeArrayList) {
+                    if(employee.getSSN().equals(SrespSSN)){
+                        Sresp=employee;
+                    }
                 }
-                Sresp = employeeArrayList.get(i);
             } else Sresp = null;
 
             if (!SrefSSN.equals("Empty Position")) {
-                int i = 0;
-                while (!employeeArrayList.get(i).getSSN().equals(SrefSSN)) {
-                    i++;
+                for (Employee employee : employeeArrayList) {
+                    if(employee.getSSN().equals(SrefSSN)){
+                        Sref=employee;
+                    }
                 }
-                Sref = employeeArrayList.get(i);
             } else Sref = null;
 
             Project project = new Project(cup, name, Float.parseFloat(budget), endDate, Sresp, Sref);
