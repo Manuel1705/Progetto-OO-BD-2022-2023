@@ -51,6 +51,7 @@ public class EquipmentController {
     }
     public void modifyEquipment(int index,String name,
                                 String description,String lab,String project){
+        controller=Controller.getInstance();
         Equipment equipment = controller.getEquipmentController().getEquipmentArrayList().get(index);
         equipment.setName(name);
         equipment.setDescription(description);
@@ -67,7 +68,7 @@ public class EquipmentController {
         if(!project.equals("Null")){
             ArrayList<Project>projectArrayList=controller.getProjectController().getProjectArrayList();
             for (Project prj: projectArrayList) {
-                if(prj.getName().equals(project)){
+                if(prj.getCup().equals(project)){
                     equipment.setProject(prj);
                     break;
                 }
