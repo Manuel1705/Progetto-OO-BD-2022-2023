@@ -5,11 +5,13 @@ public class Controller
     private EmployeeController employeeController;
     private ProjectController projectController;
     private LaboratoryController laboratoryController;
+    private EquipmentController equipmentController;
 
     private Controller(){ //costruttore
         employeeController = new EmployeeController();
         projectController = new ProjectController();
-        laboratoryController= new LaboratoryController();
+        laboratoryController = new LaboratoryController();
+        equipmentController = new EquipmentController();
     }
     private static Controller instance=null;
     public static Controller getInstance(){//singleton controller
@@ -23,5 +25,5 @@ public class Controller
         return projectController;
     }
     public LaboratoryController getLaboratoryController(){ return laboratoryController;}
-
+    public EquipmentController getEquipmentController(){return equipmentController;}
 }

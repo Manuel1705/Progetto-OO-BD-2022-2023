@@ -3,23 +3,28 @@ package Model;
 import java.time.LocalDate;
 
 public class Equipment {
-    String name, description, dealer, labName, projectName;
-    int id;
+    String id,name, description, dealer;
     Laboratory lab;
     Project project;
     float price;
     LocalDate purchaseDate;
-    public Equipment(int id, String name, String description, float price, Project project,Laboratory lab, String dealer){
+    public Equipment(String id, String name, float price, Project project,Laboratory lab, String dealer){
         this.name=name;
-        this.description=description;
         this.id=id;
         this.lab=lab;
-        labName= lab.getName();
         this.dealer=dealer;
         this.price=price;
         purchaseDate=LocalDate.now();
         this.project=project;
-        projectName=project.getName();
+    }
+    public Equipment(String id, String name, float price,String dealer){
+        this.name=name;
+        this.id=id;
+        lab=null;
+        this.dealer=dealer;
+        this.price=price;
+        purchaseDate=LocalDate.now();
+        project=null;
     }
     public void AssignLaboratory(Laboratory lab){
         this.lab=lab;
@@ -28,11 +33,15 @@ public class Equipment {
     public String getName(){
         return name;
     }
-    public String getProjectName(){
-        return projectName;
+    public String getProjectCup(){
+        if(project!=null) {
+            return project.getCup();
+        }else return "Null";
     }
     public String getLabName(){
-        return labName;
+        if(lab!=null) {
+            return lab.getName();
+        }else return "Null";
     }
     public String getDescription() {
         return description;
@@ -40,7 +49,7 @@ public class Equipment {
     public String getDealer(){
         return dealer;
     }
-    public int getId(){
+    public String getId(){
         return id;
     }
     public float getPrice(){
@@ -48,5 +57,19 @@ public class Equipment {
     }
     public LocalDate getPurchaseDate(){
         return purchaseDate;
+    }
+    public void setLab(Laboratory lab){
+        this.lab=lab;
+    }
+    public void setProject(Project project){
+        this.project=project;
+    }
+    public void setDescription(String description){
+        if (!description.isBlank()) {
+            this.description = description;
+        }else this.description="No description";
+    }
+    public void setName(String name){
+        this.name=name;
     }
 }

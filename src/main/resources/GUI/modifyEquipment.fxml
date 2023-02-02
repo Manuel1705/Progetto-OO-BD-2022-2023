@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ChoiceBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextArea?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.Pane?>
+
+<Pane maxHeight="300.0" maxWidth="700.0" minHeight="300.0" minWidth="700.0" prefHeight="300.0" prefWidth="700.0" style="-fx-background-color: #2b313c;" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="GUI.modifyEquipmentController">
+    <children>
+        <AnchorPane maxHeight="250.0" maxWidth="700.0" minHeight="250.0" minWidth="700.0" prefHeight="250.0" prefWidth="700.0" style="-fx-background-color: #21252f;">
+            <children>
+                <TextField fx:id="idEquipmentModifyEquipment" editable="false" layoutX="40.0" layoutY="61.0" prefHeight="25.0" prefWidth="180.0" promptText="id_Equipment" />
+                <TextField fx:id="nameModifyEquipment" layoutX="260.0" layoutY="61.0" prefHeight="25.0" prefWidth="180.0" promptText="Name" />
+                <TextField fx:id="priceModifyEquipment" editable="false" layoutX="40.0" layoutY="118.0" prefHeight="25.0" prefWidth="180.0" promptText="Price" />
+                <TextField fx:id="dealerModifyEquipment" editable="false" layoutX="260.0" layoutY="118.0" prefHeight="25.0" prefWidth="180.0" promptText="Dealer" />
+                <ChoiceBox fx:id="projectModifyEquipment" accessibleRole="CHECK_MENU_ITEM" layoutX="260.0" layoutY="188.0" prefHeight="25.0" prefWidth="180.0" />
+                <Label layoutX="86.0" layoutY="37.0" text="id_equipment" textFill="WHITE" />
+                <Label layoutX="95.0" layoutY="167.0" text="Laboratory" textFill="WHITE" />
+                <Label layoutX="115.0" layoutY="101.0" text="Price" textFill="WHITE" />
+                <Label layoutX="331.0" layoutY="37.0" text="Name" textFill="WHITE" />
+                <Label layoutX="533.0" layoutY="37.0" text="Description" textFill="WHITE" />
+                <Label layoutX="329.0" layoutY="101.0" text="Dealer" textFill="WHITE" />
+                <Label layoutX="328.0" layoutY="167.0" text="Project" textFill="WHITE" />
+                <ChoiceBox fx:id="labModifyEquipment" accessibleRole="CHECK_MENU_ITEM" layoutX="40.0" layoutY="188.0" prefHeight="25.0" prefWidth="180.0" />
+            <TextArea fx:id="descriptionModifyEquipment" layoutX="470.0" layoutY="63.0" prefHeight="151.0" prefWidth="200.0" promptText="Description" />
+            </children>
+        </AnchorPane>
+        <Button fx:id="modifyEquipmentButton" layoutX="642.0" layoutY="261.0" mnemonicParsing="false" onAction="#modifyEquipment" style="-fx-background-color: #21252f;" text="Buy" textFill="WHITE" />
+    </children>
+</Pane>
