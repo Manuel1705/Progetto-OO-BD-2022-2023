@@ -42,6 +42,12 @@ public class HomeController
 
                 @FXML
                 private Label ProjectNumLabel;
+                @FXML
+                private Label TempEmpNumLabel;
+
+                @FXML
+                private Pane TemporaryEmployeesButton;
+
                 private Stage stage;
                 private Scene scene;
                 private Parent root;
@@ -76,6 +82,15 @@ public class HomeController
                 @FXML
                 public void switchToEquipmentListScene(ActionEvent event) throws IOException {
                         Parent root = FXMLLoader.load(getClass().getResource("../GUI/EquipmentList.fxml"));
+                        stage = (Stage)((Node)event.getSource()).getScene().getWindow();
+                        scene = new Scene(root);
+                        stage.setMaximized(true);
+                        stage.setScene(scene);
+                        stage.show();
+                }
+                @FXML
+                public void switchToTemporaryEmployeeListScene(ActionEvent event)throws IOException{
+                        Parent root = FXMLLoader.load(getClass().getResource("../GUI/TemporaryEmployeeList.fxml"));
                         stage = (Stage)((Node)event.getSource()).getScene().getWindow();
                         scene = new Scene(root);
                         stage.setMaximized(true);

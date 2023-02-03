@@ -6,12 +6,14 @@ public class Controller
     private ProjectController projectController;
     private LaboratoryController laboratoryController;
     private EquipmentController equipmentController;
+    private TemporaryEmployeeController temporaryEmployeeController;
 
     private Controller(){ //costruttore
         employeeController = new EmployeeController();
         projectController = new ProjectController();
         laboratoryController = new LaboratoryController();
         equipmentController = new EquipmentController();
+        temporaryEmployeeController= new TemporaryEmployeeController();
     }
     private static Controller instance=null;
     public static Controller getInstance(){//singleton controller
@@ -26,4 +28,5 @@ public class Controller
     }
     public LaboratoryController getLaboratoryController(){ return laboratoryController;}
     public EquipmentController getEquipmentController(){return equipmentController;}
+    public TemporaryEmployeeController getTemporaryEmployeeController(){return temporaryEmployeeController;}
 }

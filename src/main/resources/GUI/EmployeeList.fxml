@@ -45,7 +45,7 @@
          <children>
             <Button fx:id="hireButton" mnemonicParsing="false" onAction="#hireEmployee" style="-fx-background-color: #2b313c;" text="Hire" textFill="WHITE" />
             <Button fx:id="modifyButton" mnemonicParsing="false" onAction="#modifyEmployee" style="-fx-background-color: #2b313c;" text="Modify" textFill="WHITE" />
-            <Button fx:id="fireButton" mnemonicParsing="false" style="-fx-background-color: #2b313c;" text="Fire" textFill="WHITE">
+            <Button fx:id="fireButton" mnemonicParsing="false" onAction="#fireEmployee" style="-fx-background-color: #2b313c;" text="Fire" textFill="WHITE">
                <FlowPane.margin>
                   <Insets right="10.0" />
                </FlowPane.margin>

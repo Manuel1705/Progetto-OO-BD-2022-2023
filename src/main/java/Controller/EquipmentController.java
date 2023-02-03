@@ -4,7 +4,6 @@ import GUI.EquipmentListController;
 import Model.Equipment;
 import Model.Laboratory;
 import Model.Project;
-
 import java.util.ArrayList;
 
 public class EquipmentController {
