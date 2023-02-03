@@ -43,9 +43,7 @@ public class TemporaryEmployeeListController implements Initializable {
     @FXML void fireTemporaryEmployee(ActionEvent event) {
 
     }
-
-    @FXML
-    public int getSelectedEmployeeIndex() {
+    @FXML public int getSelectedEmployeeIndex() {
             return TemporaryEmployeesTable.getSelectionModel().getSelectedIndex();
     }
 
