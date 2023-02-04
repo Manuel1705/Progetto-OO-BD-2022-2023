@@ -46,7 +46,6 @@ public class addEquipmentController implements Initializable {
             labAddEquipment.getItems().add(lab.getName());
         }
         ArrayList<Project>projectArrayList=controller.getProjectController().getProjectArrayList();
-        projectAddEquipment.getItems().add("Null");
         for (Project project:projectArrayList) {
             projectAddEquipment.getItems().add(project.getCup());
         }

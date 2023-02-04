@@ -22,6 +22,7 @@ public class EquipmentController {
             }
         }
         if (!exists){
+            controller=Controller.getInstance();
             Equipment equipment= new Equipment(id_equipment,name,
                     Float.parseFloat(price),dealer);
             if(!lab.equals("Null")){

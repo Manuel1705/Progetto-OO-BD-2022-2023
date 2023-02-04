@@ -2,9 +2,8 @@ package Controller;
 import GUI.EmployeeListController;
 import GUI.LaboratoryListController;
 import GUI.ProjectListController;
-import Model.Employee;
-import Model.Laboratory;
-import Model.Project;
+import Model.*;
+
 import java.util.ArrayList;
 public class LaboratoryController {
     Controller controller;
@@ -77,5 +76,27 @@ public class LaboratoryController {
             }
         }laboratory.setProject(null);
     }
-
+public void dismissLaboratory(int index){
+      controller=Controller.getInstance();
+      Laboratory laboratory=laboratoryArrayList.get(index);
+      ArrayList<Employee>employeeArrayList=controller.getEmployeeController().getEmployeeArrayList();
+    for (Employee employee:employeeArrayList) {
+        if(employee.getLabName().equals(laboratory.getName())){
+            employee.setLab(null);
+        }
+    }
+    ArrayList<TemporaryEmployee>temporaryEmployeeArrayList=controller.getTemporaryEmployeeController().temporaryEmployeeArrayList;
+    for (TemporaryEmployee temporaryEmployee:temporaryEmployeeArrayList) {
+        if(temporaryEmployee.getLabName().equals(laboratory.getName())){
+            temporaryEmployee.setLab(null);
+        }
+    }
+    ArrayList<Equipment>equipmentArrayList=controller.getEquipmentController().getEquipmentArrayList();
+    for (Equipment equipment:equipmentArrayList) {
+        if(equipment.getLabName().equals(laboratory.getName())){
+            equipment.setLab(null);
+        }
+    }
+    laboratoryArrayList.remove(index);
+}
 }

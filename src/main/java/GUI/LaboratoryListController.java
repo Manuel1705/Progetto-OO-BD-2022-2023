@@ -19,6 +19,7 @@ import javafx.stage.Stage;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
+import Controller.Controller;
 public class LaboratoryListController implements Initializable {
         @FXML private TableView<Laboratory> LabTable;
         @FXML private TableColumn<Laboratory, String> LabNameTable;
@@ -28,6 +29,7 @@ public class LaboratoryListController implements Initializable {
         @FXML private Button addLabButton;
         @FXML private Button dismissLabButton;
         @FXML private Button modifyLabButton;
+        Controller controller;
 
         static public ObservableList<Laboratory> list = FXCollections.observableArrayList();
         public ObservableList<Laboratory> getLaboratoryList(){
@@ -57,9 +59,11 @@ public class LaboratoryListController implements Initializable {
             LabTable.refresh();
         }
         @FXML void dismissLaboratory() {
-                list.remove(getSelectedLabIndex());
+            controller.getLaboratoryController().dismissLaboratory(getSelectedLabIndex());
+            list.remove(getSelectedLabIndex());
         }
         @Override public void initialize(URL url, ResourceBundle resourceBundle) {
+            controller=Controller.getInstance();
             LabNameTable.setCellValueFactory(new PropertyValueFactory<Laboratory,String>("name"));
             LabTopicTable.setCellValueFactory(new PropertyValueFactory<Laboratory,String>("topic"));
             LabProjectTable.setCellValueFactory(new PropertyValueFactory<Laboratory,String>("ProjectCup"));
