@@ -3,6 +3,7 @@ import GUI.EmployeeListController;
 import GUI.LaboratoryListController;
 import Model.Employee;
 import Model.Laboratory;
+import Model.Project;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -53,7 +54,7 @@ public class EmployeeController {
                                    String phoneNumber, String role, String salary,
                                    String lab,String address,String email)
     {
-
+        controller=Controller.getInstance();
         Employee employee = controller.getEmployeeController().getEmployeeArrayList().get(index);
         employee.setFirstName(firstName);
         employee.setLastName(lastName);
@@ -78,5 +79,26 @@ public class EmployeeController {
         if(!email.isBlank()){
             employee.setEmail(email);
         }else employee.setEmail("Null");
+    }
+    public void fireEmployee(int index){
+        //ottimizzare in base al ruolo
+        controller=Controller.getInstance();
+        Employee employee=employeeArrayList.get(index);
+        ArrayList<Laboratory>laboratoryArrayList=controller.getLaboratoryController().getLaboratoryArrayList();
+        for (Laboratory laboratory:laboratoryArrayList) {
+            if(laboratory.getSrespSSN().equals(employee.getSSN())){
+                laboratory.setSresp(null);
+            }
+        }
+        ArrayList<Project>projectArrayList=controller.getProjectController().getProjectArrayList();
+        for (Project project:projectArrayList) {
+            if(project.getSrespSSN().equals(employee.getSSN())){
+                project.setSresp(null);
+            }
+            if(project.getSrefSSN().equals(employee.getSSN())){
+                project.setSref(null);
+            }
+        }
+        employeeArrayList.remove(index);
     }
 }

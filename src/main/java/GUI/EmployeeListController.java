@@ -62,6 +62,7 @@ public class EmployeeListController implements Initializable {
         return EmployeesTable.getSelectionModel().getSelectedIndex();
     }
     @FXML public void fireEmployee(){
+        controller.getEmployeeController().fireEmployee(getSelectedEmployeeIndex());
         list.remove(getSelectedEmployeeIndex());
     }
     private Stage stage;
