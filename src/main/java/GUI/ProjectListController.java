@@ -48,12 +48,16 @@ public class ProjectListController implements Initializable {
         return ProjectTable.getSelectionModel().getSelectedIndex();
     }
     @FXML void modifyProject() throws IOException{
-        Parent root = FXMLLoader.load(getClass().getResource("../GUI/modifyProject.fxml"));
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("../GUI/modifyProject.fxml"));
+        root=loader.load();
+        stage= new Stage();
         scene = new Scene(root);
-        Stage stage= new Stage();
-        stage.initModality(Modality.APPLICATION_MODAL);
         stage.setScene(scene);
+        stage.initModality(Modality.APPLICATION_MODAL);
+        modifyProjectController controller= loader.getController();
+        controller.setProjectIndex(getSelectedProjectIndex());
         stage.showAndWait();
+        ProjectTable.refresh();
     }
     private Stage stage;
     private Scene scene;

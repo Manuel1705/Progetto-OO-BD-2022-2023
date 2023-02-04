@@ -1,7 +1,6 @@
 package GUI;
 
 import Controller.Controller;
-import Model.Employee;
 import Model.TemporaryEmployee;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -16,7 +15,6 @@ import javafx.scene.control.Button;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
-import javafx.scene.input.MouseEvent;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 
@@ -40,13 +38,6 @@ public class TemporaryEmployeeListController implements Initializable {
     @FXML private Button hireButton;
     @FXML private Button modifyButton;
 
-    @FXML void fireTemporaryEmployee(ActionEvent event) {
-
-    }
-    @FXML public int getSelectedEmployeeIndex() {
-            return TemporaryEmployeesTable.getSelectionModel().getSelectedIndex();
-    }
-
     @FXML
     void hireTemporaryEmployee(ActionEvent event) throws IOException {
         Parent root = FXMLLoader.load(getClass().getResource("../GUI/addTemporaryEmployee.fxml"));
@@ -57,10 +48,6 @@ public class TemporaryEmployeeListController implements Initializable {
         stage.showAndWait();
     }
 
-    @FXML
-    void modifyTemporaryEmployee(ActionEvent event) {
-
-    }
     Controller controller;
     static public ObservableList<TemporaryEmployee>list= FXCollections.observableArrayList();
     public void loadList(){
@@ -115,7 +102,7 @@ public class TemporaryEmployeeListController implements Initializable {
         stage.setScene(scene);
         stage.initModality(Modality.APPLICATION_MODAL);
         modifyTemporaryEmployeeController controller= loader.getController();
-        //controller.setTemporaryEmployeeIndex(getSelectedTemporaryEmployeeIndex());
+        controller.setTemporaryEmployeeIndex(getSelectedTemporaryEmployeeIndex());
         stage.showAndWait();
         TemporaryEmployeesTable.refresh();
     }

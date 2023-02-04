@@ -91,5 +91,18 @@ public class Project{
     public void setSref(Employee employee){
         Sref=employee;
     }
+    public void setName(String name){
+        this.name=name;
+    }
+    public void setBudget(Float budget) {
+        this.budget = budget;
+    }
+    public void setRemainingFunds(){
+        remainingFunds=budget;
+    }
+    public void setEndDate(LocalDate endDate){
+        this.endDate=endDate;
+    }
+
 
 }

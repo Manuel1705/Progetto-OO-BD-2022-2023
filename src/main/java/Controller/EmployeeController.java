@@ -71,12 +71,12 @@ public class EmployeeController {
             }
         }else employee.setLab(null);
 
-        if(!address.isEmpty()){
+        if(!address.isBlank()){
             employee.setAddress(address);
-        }
+        }else employee.setAddress("Null");
 
-        if(!email.isEmpty()){
+        if(!email.isBlank()){
             employee.setEmail(email);
-        }
+        }else employee.setEmail("Null");
     }
 }

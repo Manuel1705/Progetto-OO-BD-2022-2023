@@ -44,12 +44,12 @@ public class addProjectController implements Initializable {
         ArrayList<Employee> employeeArrayList=controller.getEmployeeController().getEmployeeArrayList();
         SrefAddProject.getItems().add("Empty Position");
         SrespAddProject.getItems().add("Empty Position");
-        for (Employee employye: employeeArrayList) {
-            if(employye.getRole().equals("Executive")){
-                SrespAddProject.getItems().add(employye.getSSN());
+        for (Employee employee: employeeArrayList) {
+            if(employee.getRole().equals("Executive")){
+                SrespAddProject.getItems().add(employee.getSSN());
             }
-            else if(employye.getRole().equals("Senior")) {
-                SrefAddProject.getItems().add(employye.getSSN());
+            else if(employee.getRole().equals("Senior")) {
+                SrefAddProject.getItems().add(employee.getSSN());
                 }
         }
 

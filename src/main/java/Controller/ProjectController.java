@@ -1,6 +1,7 @@
 package Controller;
 import GUI.ProjectListController;
 import Model.Employee;
+import Model.Laboratory;
 import Model.Project;
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -48,10 +49,32 @@ public class ProjectController {
             Project project = new Project(cup, name, Float.parseFloat(budget), endDate, Sresp, Sref);
             projectArrayList.add(project);
             ProjectListController.list.add(project);
-        }
-        System.out.println("Il progetto esiste già");
+        }else System.out.println("Il progetto esiste già");
     }
-    public void modifyProjectList(){
+    public void modifyProjectList(int index,
+                                  String cup,String name,
+                                  String budget,LocalDate endDate,
+                                  String Sref,String Sresp) {
+        Project project = controller.getProjectController().getProjectArrayList().get(index);
+        ArrayList<Employee> employeeArrayList = controller.getEmployeeController().getEmployeeArrayList();
+        if (!Sref.equals("Empty Position")) {
+            for (Employee employee : employeeArrayList) {
+                if (employee.getSSN().equals(Sref)) {
+                    project.setSref(employee);
+                }
+            }
+        } else project.setSref(null);
+        if (!Sresp.equals("Empty Position")) {
+            for (Employee employee : employeeArrayList) {
+                if (employee.getSSN().equals(Sresp)) {
+                    project.setSresp(employee);
+                }
+            }
+        } else project.setSresp(null);
+    project.setName(name);
+    project.setBudget(Float.parseFloat(budget));
+    project.setRemainingFunds();
+    project.setEndDate(endDate);
 
     }
 }

@@ -23,6 +23,7 @@ public class TemporaryEmployee {
         email="Null";
         address="Null";
         lab=null;
+        this.project=project;
 
     }
     //costruttore con employmentDate esplicito

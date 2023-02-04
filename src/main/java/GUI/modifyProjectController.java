@@ -1,5 +1,75 @@
 package GUI;
+import Controller.Controller;
+import Model.Employee;
+import Model.Project;
+import javafx.event.ActionEvent;
+import javafx.fxml.FXML;
+import javafx.scene.control.Button;
+import javafx.scene.control.ChoiceBox;
+import javafx.scene.control.DatePicker;
+import javafx.scene.control.TextField;
+import javafx.stage.Stage;
+
+import java.time.LocalDate;
+import java.util.ArrayList;
 
 public class modifyProjectController {
+
+    @FXML
+    private ChoiceBox<String> SrefModifyProject;
+
+    @FXML
+    private ChoiceBox<String> SrespModifyProject;
+
+    @FXML
+    private TextField budgetModifyProject;
+
+    @FXML
+    private TextField cupModifyProject;
+
+    @FXML
+    private DatePicker endDateModifyProject;
+
+    @FXML
+    private Button modifyProjectButton;
+
+    @FXML
+    private TextField nameModifyProject;
+    Controller controller;
+    int index;
+    public void setProjectIndex(int index){
+        controller=Controller.getInstance();
+        this.index=index;
+        ArrayList<Employee> employeeArrayList=controller.getEmployeeController().getEmployeeArrayList();
+        SrefModifyProject.getItems().add("Empty Position");
+        SrespModifyProject.getItems().add("Empty Position");
+        for (Employee employee: employeeArrayList) {
+            if(employee.getRole().equals("Executive")){
+                SrespModifyProject.getItems().add(employee.getSSN());
+            }
+            else if(employee.getRole().equals("Senior")) {
+                SrefModifyProject.getItems().add(employee.getSSN());
+            }
+        }
+        ArrayList<Project>projectArrayList=controller.getProjectController().getProjectArrayList();
+        cupModifyProject.setText(projectArrayList.get(index).getCup());
+        nameModifyProject.setText(projectArrayList.get(index).getName());
+        budgetModifyProject.setText(Float.toString(projectArrayList.get(index).getBudget()));
+        endDateModifyProject.setValue(projectArrayList.get(index).getEndDate());
+        SrefModifyProject.setValue(projectArrayList.get(index).getSrefSSN());
+        SrespModifyProject.setValue(projectArrayList.get(index).getSrespSSN());
+    }
+    @FXML
+    void modifyProject() {
+        controller.getProjectController().modifyProjectList(index,
+                cupModifyProject.getText(),
+                nameModifyProject.getText(),
+                budgetModifyProject.getText(),
+                endDateModifyProject.getValue(),
+                SrefModifyProject.getValue(),
+                SrespModifyProject.getValue());
+        Stage stage = (Stage) modifyProjectButton.getScene().getWindow();
+        stage.close();
+    }
 
 }
