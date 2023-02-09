@@ -15,7 +15,7 @@
          <children>
             <Pane fx:id="LabButton" prefHeight="140.0" prefWidth="140.0" style="-fx-background-color: #2b313c;">
                <children>
-                  <Label layoutX="29.0" layoutY="100.0" text="Laboratories" textFill="WHITE" />
+                  <Label layoutX="37.0" layoutY="100.0" text="Laboratories" textFill="WHITE" />
                   <Pane prefHeight="43.0" prefWidth="140.0" style="-fx-background-color: #2b313c;">
                      <children>
                         <Label layoutX="14.0" layoutY="14.0" text="N°" textFill="WHITE" />
@@ -31,7 +31,7 @@
             </Pane>
             <Pane fx:id="ProjectButton" prefHeight="140.0" prefWidth="140.0" style="-fx-background-color: #2b313c;">
                <children>
-                  <Label layoutX="44.0" layoutY="100.0" text="Projects" textFill="WHITE" />
+                  <Label layoutX="49.0" layoutY="100.0" text="Projects" textFill="WHITE" />
                   <Pane prefHeight="43.0" prefWidth="140.0" style="-fx-background-color: #2b313c;">
                      <children>
                         <Label layoutX="14.0" layoutY="14.0" text="N°" textFill="WHITE" />
@@ -44,7 +44,7 @@
             </Pane>
             <Pane fx:id="EmployeesButton" prefHeight="140.0" prefWidth="140.0" style="-fx-background-color: #2b313c;">
                <children>
-                  <Label layoutX="34.0" layoutY="100.0" text="Employees" textFill="WHITE" />
+                  <Label layoutX="43.0" layoutY="101.0" text="Employees" textFill="WHITE" />
                   <Pane prefHeight="43.0" prefWidth="140.0" style="-fx-background-color: #2b313c;">
                      <children>
                         <Label layoutX="14.0" layoutY="14.0" text="N°" textFill="WHITE" />
@@ -60,7 +60,7 @@
             </Pane>
             <Pane fx:id="TemporaryEmployeesButton" prefHeight="140.0" prefWidth="140.0" style="-fx-background-color: #2b313c;">
                <children>
-                  <Label layoutX="18.0" layoutY="90.0" prefHeight="36.0" prefWidth="104.0" text="Temporary Employees" textAlignment="CENTER" textFill="WHITE" wrapText="true" />
+                  <Label layoutX="19.0" layoutY="90.0" prefHeight="36.0" prefWidth="104.0" text="Temporary Employees" textAlignment="CENTER" textFill="WHITE" wrapText="true" />
                   <Pane prefHeight="43.0" prefWidth="140.0" style="-fx-background-color: #2b313c;">
                      <children>
                         <Label layoutX="14.0" layoutY="14.0" text="N°" textFill="WHITE" />
@@ -73,7 +73,7 @@
             </Pane>
             <Pane fx:id="EquipmentButton" prefHeight="140.0" prefWidth="140.0" style="-fx-background-color: #2b313c;">
                <children>
-                  <Label layoutX="35.0" layoutY="101.0" text="Equipment" textFill="WHITE" />
+                  <Label layoutX="41.0" layoutY="100.0" text="Equipment" textFill="WHITE" />
                   <FontAwesomeIconView fill="WHITE" glyphName="LAPTOP" layoutX="54.0" layoutY="80.0" size="30" />
                   <Label layoutX="14.0" layoutY="14.0" text="N°" textFill="WHITE" />
                   <Label fx:id="EquipmentNumLabel" layoutX="52.0" layoutY="14.0" text="0" textFill="WHITE" />
