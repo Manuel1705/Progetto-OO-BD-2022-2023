@@ -50,13 +50,16 @@ public class TemporaryEmployeeListController implements Initializable {
 
     Controller controller;
     static public ObservableList<TemporaryEmployee>list= FXCollections.observableArrayList();
-    public void loadList(){
+    public void reloadList(){
+        controller=Controller.getInstance();
+        list.clear();
         list.addAll(controller.getTemporaryEmployeeController().getTemporaryEmployeeArrayList());
     }
     public void addList(TemporaryEmployee employee){
         list.add(employee);
     }
     public void initialize(URL url, ResourceBundle rb){
+        controller=Controller.getInstance();
         FirstNameTemporaryEmployeeTable.setCellValueFactory(new PropertyValueFactory<TemporaryEmployee,String>("firstName"));
         LastNameTemporaryEmployeeTable.setCellValueFactory(new PropertyValueFactory<TemporaryEmployee, String>("lastName"));
         AddressTemporaryEmployeeTable.setCellValueFactory(new PropertyValueFactory<TemporaryEmployee, String>("address"));
@@ -73,6 +76,7 @@ public class TemporaryEmployeeListController implements Initializable {
         return TemporaryEmployeesTable.getSelectionModel().getSelectedIndex();
     }
     @FXML public void fireTemporaryEmployee(){
+        controller.getTemporaryEmployeeController().fireTemporaryEmployee(getSelectedTemporaryEmployeeIndex());
         list.remove(getSelectedTemporaryEmployeeIndex());
     }
     private Stage stage;

@@ -1,5 +1,6 @@
 package GUI;
 import Model.Project;
+import Model.TemporaryEmployee;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -13,10 +14,9 @@ import javafx.scene.control.Button;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
-import javafx.scene.input.MouseEvent;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
-
+import Controller.Controller;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -33,6 +33,7 @@ public class ProjectListController implements Initializable {
     @FXML private Button addProjectButton;
     @FXML private Button dismissProjectButton;
     @FXML private Button modifyProjectButton;
+    Controller controller;
     @FXML void AddProject() throws IOException{
         Parent root = FXMLLoader.load(getClass().getResource("../GUI/addProject.fxml"));
         scene = new Scene(root);
@@ -42,7 +43,10 @@ public class ProjectListController implements Initializable {
         stage.showAndWait();
     }
     @FXML public void dismissProject() {
+        controller.getProjectController().dismissProject(getSelectedProjectIndex());
         list.remove(getSelectedProjectIndex());
+        TemporaryEmployeeListController temporaryEmployee= new TemporaryEmployeeListController();
+        temporaryEmployee.reloadList();
     }
     @FXML public int getSelectedProjectIndex() {
         return ProjectTable.getSelectionModel().getSelectedIndex();
@@ -63,7 +67,7 @@ public class ProjectListController implements Initializable {
     private Scene scene;
     private Parent root;
     @FXML void switchToHomeScene(ActionEvent event) throws IOException {
-        Parent root = FXMLLoader.load(getClass().getResource("../GUI/Home.fxml"));
+        root = FXMLLoader.load(getClass().getResource("../GUI/Home.fxml"));
         stage = (Stage)((Node)event.getSource()).getScene().getWindow();
         scene = new Scene(root);
        // stage.setMaximized(true);
@@ -78,6 +82,7 @@ static public ObservableList<Project> list= FXCollections.observableArrayList();
         return list;
     }
     @Override public void initialize(URL url, ResourceBundle resourceBundle) {
+        controller=Controller.getInstance();
         ProjectNameTable.setCellValueFactory(new PropertyValueFactory<Project,String>("name"));
         ProjectCupTable.setCellValueFactory(new PropertyValueFactory<Project,String>("cup"));
         ProjectBudgetTable.setCellValueFactory(new PropertyValueFactory<Project,String>("budget"));

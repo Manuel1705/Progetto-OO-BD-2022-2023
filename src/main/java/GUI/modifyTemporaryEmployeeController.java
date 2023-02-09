@@ -69,17 +69,59 @@ public class modifyTemporaryEmployeeController {
 }
     @FXML
     void modifyTemporaryEmployee() {
-        controller.getTemporaryEmployeeController().modifyTemporaryEmployeeList(index,
-                firstNameModifyTemporaryEmployee.getText(),
-                lastNameModifyTemporaryEmployee.getText(),
-                phoneNumberModifyTemporaryEmployee.getText(),
-                salaryModifyTemporaryEmployee.getText(),
-                labModifyTemporaryEmployee.getValue(),
-                addressModifyTemporaryEmployee.getText(),
-                emailModifyTemporaryEmployee.getText(),
-                projectModifyTemporaryEmployee.getValue());
-        Stage stage = (Stage) modifyTemporaryEmployeeButton.getScene().getWindow();
-        stage.close();
+        boolean check = true;
+        if (ssnModifyTemporaryEmployee.getText().length() != 15) {
+            check = false;
+        } else {
+            for (char c : ssnModifyTemporaryEmployee.getText().toCharArray()) {
+                if (!Character.isDigit(c)) {
+                    check = false;
+                    break;
+                }
+            }
+        }
+        if(firstNameModifyTemporaryEmployee.getText().length()>30){
+            check=false;
+        }else {
+            for (char c : firstNameModifyTemporaryEmployee.getText().toCharArray()) {
+                if (Character.isDigit(c)) {
+                    check = false;
+                    break;
+                }
+            }
+        }
+        if(lastNameModifyTemporaryEmployee.getText().length()>30){
+            check=false;
+        }else {
+            for (char c : lastNameModifyTemporaryEmployee.getText().toCharArray()) {
+                if (Character.isDigit(c)) {
+                    check = false;
+                    break;
+                }
+            }
+        }
+        if (phoneNumberModifyTemporaryEmployee.getText().length() != 10) {
+            check = false;
+        } else {
+            for (char c : phoneNumberModifyTemporaryEmployee.getText().toCharArray()) {
+                if (!Character.isDigit(c)) {
+                    check = false;
+                    break;
+                }
+            }
+        }
+        if (check) {
+            controller.getTemporaryEmployeeController().modifyTemporaryEmployeeList(index,
+                    firstNameModifyTemporaryEmployee.getText(),
+                    lastNameModifyTemporaryEmployee.getText(),
+                    phoneNumberModifyTemporaryEmployee.getText(),
+                    salaryModifyTemporaryEmployee.getText(),
+                    labModifyTemporaryEmployee.getValue(),
+                    addressModifyTemporaryEmployee.getText(),
+                    emailModifyTemporaryEmployee.getText(),
+                    projectModifyTemporaryEmployee.getValue());
+            Stage stage = (Stage) modifyTemporaryEmployeeButton.getScene().getWindow();
+            stage.close();
+        }
     }
-
 }

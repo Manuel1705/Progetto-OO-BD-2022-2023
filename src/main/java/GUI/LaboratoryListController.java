@@ -77,7 +77,7 @@ public class LaboratoryListController implements Initializable {
         private Scene scene;
         private Parent root;
     @FXML void switchToHomeScene(ActionEvent event)  throws IOException {
-            Parent root = FXMLLoader.load(getClass().getResource("../GUI/Home.fxml"));
+            root = FXMLLoader.load(getClass().getResource("../GUI/Home.fxml"));
             stage = (Stage)((Node)event.getSource()).getScene().getWindow();
             scene = new Scene(root);
             //stage.setMaximized(true);

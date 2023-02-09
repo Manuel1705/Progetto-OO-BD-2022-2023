@@ -97,8 +97,8 @@ public class Project{
     public void setBudget(Float budget) {
         this.budget = budget;
     }
-    public void setRemainingFunds(){
-        remainingFunds=budget;
+    public void setRemainingFunds(float remainingFunds){
+        this.remainingFunds=remainingFunds;
     }
     public void setEndDate(LocalDate endDate){
         this.endDate=endDate;

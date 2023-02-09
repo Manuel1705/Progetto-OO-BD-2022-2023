@@ -41,12 +41,24 @@ public class modifyLaboratoryController {
         SrespModifyLaboratory.setValue(laboratoryArrayList.get(index).getSrespSSN());
     }
     @FXML void modifyLaboratory() {
-                controller.getLaboratoryController().modifyLaboratory(index,
-                        topicModifyLaboratory.getText(),
-                        SrespModifyLaboratory.getValue(),
-                        projectModifyLaboratory.getValue());
-        Stage stage = (Stage) modifyLaboratoryButton.getScene().getWindow();
-        stage.close();
+        boolean check = true;
+        if(nameModifyLaboratory.getText().length()>30){
+            check=false;
+        }else {
+            for (char c : nameModifyLaboratory.getText().toCharArray()) {
+                if (Character.isDigit(c)) {
+                    check = false;
+                    break;
+                }
+            }
+        }
+        if (check) {
+            controller.getLaboratoryController().modifyLaboratory(index,
+                    topicModifyLaboratory.getText(),
+                    SrespModifyLaboratory.getValue(),
+                    projectModifyLaboratory.getValue());
+            Stage stage = (Stage) modifyLaboratoryButton.getScene().getWindow();
+            stage.close();
+        }
     }
-
 }

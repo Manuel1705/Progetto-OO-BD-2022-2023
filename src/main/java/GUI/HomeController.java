@@ -54,7 +54,7 @@ public class HomeController
                 Controller controller;
                 @FXML
                 public void switchToEmployeeListScene(ActionEvent event) throws IOException {
-                        Parent root = FXMLLoader.load(getClass().getResource("../GUI/EmployeeList.fxml"));
+                        root = FXMLLoader.load(getClass().getResource("../GUI/EmployeeList.fxml"));
                         stage = (Stage)((Node)event.getSource()).getScene().getWindow();
                         scene = new Scene(root);
                         //stage.setMaximized(true);
@@ -63,16 +63,16 @@ public class HomeController
                 }
                 @FXML
                 public void switchToLabListScene(ActionEvent event) throws IOException {
-                        Parent root = FXMLLoader.load(getClass().getResource("../GUI/LaboratoryList.fxml"));
+                        root = FXMLLoader.load(getClass().getResource("../GUI/LaboratoryList.fxml"));
                         stage = (Stage)((Node)event.getSource()).getScene().getWindow();
                         scene = new Scene(root);
-                        //stage.setMaximized(true);
+                        stage.setMaximized(true);
                         stage.setScene(scene);
                         stage.show();
                 }
                 @FXML
                 public void switchToProjectsListScene(ActionEvent event) throws IOException {
-                        Parent root = FXMLLoader.load(getClass().getResource("../GUI/ProjectList.fxml"));
+                        root = FXMLLoader.load(getClass().getResource("../GUI/ProjectList.fxml"));
                         stage = (Stage)((Node)event.getSource()).getScene().getWindow();
                         scene = new Scene(root);
                         //stage.setMaximized(true);
@@ -81,7 +81,7 @@ public class HomeController
                 }
                 @FXML
                 public void switchToEquipmentListScene(ActionEvent event) throws IOException {
-                        Parent root = FXMLLoader.load(getClass().getResource("../GUI/EquipmentList.fxml"));
+                        root = FXMLLoader.load(getClass().getResource("../GUI/EquipmentList.fxml"));
                         stage = (Stage)((Node)event.getSource()).getScene().getWindow();
                         scene = new Scene(root);
                         //stage.setMaximized(true);
@@ -90,7 +90,7 @@ public class HomeController
                 }
                 @FXML
                 public void switchToTemporaryEmployeeListScene(ActionEvent event)throws IOException{
-                        Parent root = FXMLLoader.load(getClass().getResource("../GUI/TemporaryEmployeeList.fxml"));
+                        root = FXMLLoader.load(getClass().getResource("../GUI/TemporaryEmployeeList.fxml"));
                         stage = (Stage)((Node)event.getSource()).getScene().getWindow();
                         scene = new Scene(root);
                         //stage.setMaximized(true);

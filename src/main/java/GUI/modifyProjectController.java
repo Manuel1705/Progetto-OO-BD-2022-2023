@@ -61,15 +61,29 @@ public class modifyProjectController {
     }
     @FXML
     void modifyProject() {
-        controller.getProjectController().modifyProjectList(index,
-                cupModifyProject.getText(),
-                nameModifyProject.getText(),
-                budgetModifyProject.getText(),
-                endDateModifyProject.getValue(),
-                SrefModifyProject.getValue(),
-                SrespModifyProject.getValue());
-        Stage stage = (Stage) modifyProjectButton.getScene().getWindow();
-        stage.close();
+        boolean check = true;
+        if (cupModifyProject.getText().length() != 15) {
+            check = false;
+        }
+        if(nameModifyProject.getText().length()>30){
+            check=false;
+        }else {
+            for (char c : nameModifyProject.getText().toCharArray()) {
+                if (Character.isDigit(c)) {
+                    check = false;
+                }
+            }
+        }
+        if (check) {
+            controller.getProjectController().modifyProjectList(index,
+                    cupModifyProject.getText(),
+                    nameModifyProject.getText(),
+                    budgetModifyProject.getText(),
+                    endDateModifyProject.getValue(),
+                    SrefModifyProject.getValue(),
+                    SrespModifyProject.getValue());
+            Stage stage = (Stage) modifyProjectButton.getScene().getWindow();
+            stage.close();
+        }
     }
-
 }

@@ -21,16 +21,28 @@ public class addLaboratoryController implements Initializable {
     @FXML private TextArea topicAddLaboratory;
     Controller controller;
     @FXML void addLaboratory() {
-        if (!nameAddLaboratory.getText().isBlank())
-        {
-                    controller.getLaboratoryController().addLaboratoryList(
-                    nameAddLaboratory.getText(),
-                    topicAddLaboratory.getText(),
-                    SrespAddLaboratory.getValue(),
-                    projectAddLaboratory.getValue());
+        if (!nameAddLaboratory.getText().isBlank()) {
+            boolean check = true;
+            if(nameAddLaboratory.getText().length()>30){
+                check=false;
+            }else {
+                for (char c : nameAddLaboratory.getText().toCharArray()) {
+                    if (Character.isDigit(c)) {
+                        check = false;
+                        break;
+                    }
+                }
+            }
+            if (check) {
+                controller.getLaboratoryController().addLaboratoryList(
+                        nameAddLaboratory.getText(),
+                        topicAddLaboratory.getText(),
+                        SrespAddLaboratory.getValue(),
+                        projectAddLaboratory.getValue());
 
-            Stage stage = (Stage) addLaboratoryButton.getScene().getWindow();
-            stage.close();
+                Stage stage = (Stage) addLaboratoryButton.getScene().getWindow();
+                stage.close();
+            }
         }
     }
     @Override

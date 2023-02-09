@@ -25,18 +25,33 @@ public class addProjectController implements Initializable {
         if(!cupAddProject.getText().isBlank()&&
             !nameAddProject.getText().isBlank()&&
             !budgetAddProject.getText().isBlank()&&
-            endDateAddProject.getValue().compareTo(LocalDate.now())>0)
-        {
-            controller.getProjectController().addProjectList(
-                    cupAddProject.getText(),
-                    nameAddProject.getText(),
-                    budgetAddProject.getText(),
-                    endDateAddProject.getValue(),
-                    SrespAddProject.getValue(),
-                    SrefAddProject.getValue());
+            endDateAddProject.getValue().compareTo(LocalDate.now())>0) {
+            boolean check = true;
+            if (cupAddProject.getText().length() != 15) {
+                check = false;
+            }
+            if(nameAddProject.getText().length()>30){
+                check=false;
+            }else {
+                for (char c : nameAddProject.getText().toCharArray()) {
+                    if (Character.isDigit(c)) {
+                        check = false;
+                        break;
+                    }
+                }
+            }
+            if (check) {
+                controller.getProjectController().addProjectList(
+                        cupAddProject.getText(),
+                        nameAddProject.getText(),
+                        budgetAddProject.getText(),
+                        endDateAddProject.getValue(),
+                        SrespAddProject.getValue(),
+                        SrefAddProject.getValue());
 
-            Stage stage = (Stage) addProjectButton.getScene().getWindow();
-            stage.close();
+                Stage stage = (Stage) addProjectButton.getScene().getWindow();
+                stage.close();
+            }
         }
     }
     @Override public void initialize(URL url, ResourceBundle resourceBundle) {

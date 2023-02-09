@@ -1,4 +1,5 @@
 package GUI;
+import Model.CareerDevelopment;
 import Model.Employee;
 import Model.Laboratory;
 import javafx.fxml.FXML;
@@ -42,18 +43,63 @@ public class modifyEmployeeController {
         ssnModifyEmployee.setText(employeeArrayList.get(index).getSSN());
         emailModifyEmployee.setText(employeeArrayList.get(index).getEmail());
     }
-    @FXML void modifyEmployee(){
-        controller.getEmployeeController().modifyEmployeeList(index,
-                firstNameModifyEmployee.getText(),
-                lastNameModifyEmployee.getText(),
-                phoneNumberModifyEmployee.getText(),
-                roleModifyEmployee.getValue(),
-                salaryModifyEmployee.getText(),
-                labModifyEmployee.getValue(),
-                addressModifyEmployee.getText(),
-                emailModifyEmployee.getText());
-
-        Stage stage = (Stage) modifyEmployeeButton.getScene().getWindow();
-        stage.close();
+    @FXML void modifyEmployee() {
+        boolean check = true;
+        if (ssnModifyEmployee.getText().length() != 15) {
+            check = false;
+        } else {
+            for (char c : ssnModifyEmployee.getText().toCharArray()) {
+                if (!Character.isDigit(c)) {
+                    check = false;
+                    break;
+                }
+            }
+        }
+        if(firstNameModifyEmployee.getText().length()>30){
+            check=false;
+        }else {
+            for (char c : firstNameModifyEmployee.getText().toCharArray()) {
+                if (Character.isDigit(c)) {
+                    check = false;
+                    break;
+                }
+            }
+        }
+        if(lastNameModifyEmployee.getText().length()>30){
+            check=false;
+        }else {
+            for (char c : lastNameModifyEmployee.getText().toCharArray()) {
+                if (Character.isDigit(c)) {
+                    check = false;
+                    break;
+                }
+            }
+        }
+        if (phoneNumberModifyEmployee.getText().length() != 10) {
+            check = false;
+        } else {
+            for (char c : phoneNumberModifyEmployee.getText().toCharArray()) {
+                if (!Character.isDigit(c)) {
+                    check = false;
+                    break;
+                }
+            }
+        }
+        if (check) {
+            CareerDevelopment careerDevelopment=controller.getEmployeeController().modifyEmployeeList(index,
+                    firstNameModifyEmployee.getText(),
+                    lastNameModifyEmployee.getText(),
+                    phoneNumberModifyEmployee.getText(),
+                    roleModifyEmployee.getValue(),
+                    salaryModifyEmployee.getText(),
+                    labModifyEmployee.getValue(),
+                    addressModifyEmployee.getText(),
+                    emailModifyEmployee.getText());
+            if (careerDevelopment!=null){
+                CareerDevelopmentListController.list.add(careerDevelopment);
+            }
+            Stage stage = (Stage) modifyEmployeeButton.getScene().getWindow();
+            stage.close();
+        }
     }
 }

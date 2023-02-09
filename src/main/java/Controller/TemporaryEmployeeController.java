@@ -8,13 +8,14 @@ import Model.Project;
 import Model.TemporaryEmployee;
 
 import java.time.LocalDate;
+import java.time.Period;
 import java.util.ArrayList;
 public class TemporaryEmployeeController {
     Controller controller;
     ArrayList<TemporaryEmployee> temporaryEmployeeArrayList= new ArrayList<TemporaryEmployee>();
     public ArrayList<TemporaryEmployee> getTemporaryEmployeeArrayList(){ return temporaryEmployeeArrayList; }
     public void addTemporaryEmployeeList(TemporaryEmployee employee){temporaryEmployeeArrayList.add(employee);}
-    public void addTemporaryEmployeeList(String ssn, String firstName, String lastName,
+    public TemporaryEmployee addTemporaryEmployeeList(String ssn, String firstName, String lastName,
                                 String phoneNum, String address,
                                 String email, LocalDate employmentDate,
                                 String salary, String lab,String project)
@@ -36,7 +37,11 @@ public class TemporaryEmployeeController {
                 }
             }
         }
-        if(!exists && prj!=null) {
+        Boolean verifySalary=prj.getRemainingFunds()/2 //50%
+                - Float.parseFloat(salary) //meno salario
+                * (Period.between(LocalDate.now(),prj.getEndDate()).getMonths()+(Period.between(LocalDate.now(),prj.getEndDate()).getYears()*12))>=0;//per i mesi da pagare
+        if(!exists && verifySalary)
+            {
             TemporaryEmployee employee = new TemporaryEmployee(ssn, firstName, lastName, phoneNum, Float.parseFloat(salary), employmentDate, prj);
             if (!lab.equals("Null")) {
                 ArrayList<Laboratory> labs = controller.getLaboratoryController().getLaboratoryArrayList();
@@ -59,8 +64,9 @@ public class TemporaryEmployeeController {
                 employee.setEmail("Null");
 
             temporaryEmployeeArrayList.add(employee);
-            TemporaryEmployeeListController.list.add(employee);
-        }else System.out.println("L'impigato esiste già");
+            return employee;
+        }else System.out.println("Errore");
+        return null;
     }
     public void modifyTemporaryEmployeeList(int index , String firstName, String lastName,
                                    String phoneNumber, String salary,
@@ -71,7 +77,7 @@ public class TemporaryEmployeeController {
         employee.setFirstName(firstName);
         employee.setLastName(lastName);
         employee.setPhoneNum(phoneNumber);
-        employee.setSalary(Float.parseFloat(salary));
+
 
         if (!lab.equals("Null")) {
             ArrayList<Laboratory> labs = controller.getLaboratoryController().getLaboratoryArrayList();
@@ -84,8 +90,13 @@ public class TemporaryEmployeeController {
         if (!project.equals("Null")) {
             ArrayList<Project> projectArrayList = controller.getProjectController().getProjectArrayList();
             for (Project prj : projectArrayList) {
-                if(prj.getName().equals(lab)){
+                if(prj.getName().equals(project)){
                     employee.setProject(prj);
+                    Boolean verifySalary=prj.getRemainingFunds()/2 //50%
+                            - Float.parseFloat(salary) //meno salario
+                            * (Period.between(LocalDate.now(),prj.getEndDate()).getMonths()+(Period.between(LocalDate.now(),prj.getEndDate()).getYears()*12))>=0;//per i mesi da pagare
+                    if(verifySalary)
+                        employee.setSalary(Float.parseFloat(salary));
                 }
             }
         } else employee.setProject(null);
@@ -97,5 +108,30 @@ public class TemporaryEmployeeController {
         if(!email.isEmpty()){
             employee.setEmail(email);
         }
+    }
+    public void fireTemporaryEmployee(int index){
+        controller=Controller.getInstance();
+        TemporaryEmployee temporaryEmployee=temporaryEmployeeArrayList.get(index);
+        Project project=null;
+        ArrayList<Project>projectArrayList=controller.getProjectController().getProjectArrayList();
+        for (Project prj: projectArrayList){
+            if(prj.getCup().equals(temporaryEmployee.getProjectCup())){
+                System.out.println(prj.getCup());
+                System.out.println(temporaryEmployee.getProjectCup());
+                project=prj;
+                break;
+          }
+        }
+        int remainingMonths;
+        if(project!=null){
+            remainingMonths = Period.between(LocalDate.now(),project.getEndDate()).getMonths()+(Period.between(LocalDate.now(),project.getEndDate()).getYears()*12);
+            System.out.println(remainingMonths);
+            float  recoveredBudget = temporaryEmployee.getSalary()*remainingMonths;
+            System.out.println(recoveredBudget);
+            System.out.println(project.getRemainingFunds());
+            project.setRemainingFunds(project.getRemainingFunds()+recoveredBudget);
+            System.out.println(project.getRemainingFunds());
+        }
+        temporaryEmployeeArrayList.remove(index);
     }
 }

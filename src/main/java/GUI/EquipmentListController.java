@@ -1,4 +1,5 @@
 package GUI;
+import Controller.Controller;
 import Model.Equipment;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -29,6 +30,7 @@ public class EquipmentListController implements Initializable {
     @FXML private TableColumn<Equipment , String>  equipmentPurchaseDateTable;
     @FXML private TableColumn<Equipment , String>  idEquipmentTable;
     @FXML private Button modifyEquipmentButton;
+    Controller controller;
     @FXML void modifyEquipment() throws IOException{
         FXMLLoader loader = new FXMLLoader(getClass().getResource("../GUI/modifyEquipment.fxml"));
         root=loader.load();
@@ -52,6 +54,7 @@ public class EquipmentListController implements Initializable {
     }
     @FXML private Button sellEquipmentButton;
     @FXML public void sellEquipment(){
+        controller.getEquipmentController().deleteEquipment(getSelectedEquipmentIndex());
         list.remove(getSelectedEquipmentIndex());
     }
     @FXML public int getSelectedEquipmentIndex(){
@@ -61,7 +64,7 @@ public class EquipmentListController implements Initializable {
     private Scene scene;
     private Parent root;
     @FXML void switchToHomeScene(ActionEvent event) throws IOException {
-        Parent root = FXMLLoader.load(getClass().getResource("../GUI/Home.fxml"));
+        root = FXMLLoader.load(getClass().getResource("../GUI/Home.fxml"));
         stage = (Stage)((Node)event.getSource()).getScene().getWindow();
         scene = new Scene(root);
         //stage.setMaximized(true);
@@ -73,6 +76,7 @@ public class EquipmentListController implements Initializable {
         list.add(equipment);
     }
     @Override public void initialize(URL url, ResourceBundle resourceBundle) {
+        controller=Controller.getInstance();
         idEquipmentTable.setCellValueFactory(new PropertyValueFactory<Equipment,String>("id"));
         equipmentDealerTable.setCellValueFactory(new PropertyValueFactory<Equipment,String>("dealer"));
         equipmentDescriptionTable.setCellValueFactory(new PropertyValueFactory<Equipment,String>("description"));

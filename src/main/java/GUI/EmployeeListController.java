@@ -35,6 +35,7 @@ public class EmployeeListController implements Initializable {
     @FXML private Button fireButton;
     @FXML private Button hireButton;
     @FXML private Button modifyButton;
+    @FXML private Button CareerChanges;
     Controller controller;
     static public ObservableList<Employee> list= FXCollections.observableArrayList();
     public void loadList(){
@@ -69,10 +70,18 @@ public class EmployeeListController implements Initializable {
     private Scene scene;
     private Parent root;
     @FXML public void switchToHomeScene(ActionEvent event) throws IOException {
-        Parent root = FXMLLoader.load(getClass().getResource("../GUI/Home.fxml"));
+        root = FXMLLoader.load(getClass().getResource("../GUI/Home.fxml"));
         stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
         scene = new Scene(root);
        // stage.setMaximized(true);
+        stage.setScene(scene);
+        stage.show();
+    }
+    @FXML public void careerChanges(ActionEvent event) throws IOException {
+        root = FXMLLoader.load(getClass().getResource("../GUI/CareerDevelopment.fxml"));
+        stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+        scene = new Scene(root);
+        // stage.setMaximized(true);
         stage.setScene(scene);
         stage.show();
     }

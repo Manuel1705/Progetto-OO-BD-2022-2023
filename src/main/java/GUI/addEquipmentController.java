@@ -26,16 +26,29 @@ public class addEquipmentController implements Initializable {
             if(!idEquipmentAddEquipment.getText().isBlank() &&
             !nameAddEquipment.getText().isBlank() &&
             !priceAddEquipment.getText().isBlank() &&
-            !dealerAddEquipment.getText().isBlank()){
-                controller.getEquipmentController().addEquipmentList(idEquipmentAddEquipment.getText(),
-                        nameAddEquipment.getText(),
-                        descriptionAddEquipment.getText(),
-                        priceAddEquipment.getText(),
-                        dealerAddEquipment.getText(),
-                        labAddEquipment.getValue(),
-                        projectAddEquipment.getValue());
-                Stage stage = (Stage) buyEquipmentButton.getScene().getWindow();
-                stage.close();
+            !dealerAddEquipment.getText().isBlank()) {
+                boolean check = true;
+                if (nameAddEquipment.getText().length() > 30) {
+                    check = false;
+                } else {
+                    for (char c : nameAddEquipment.getText().toCharArray()) {
+                        if (Character.isDigit(c)) {
+                            check = false;
+                            break;
+                        }
+                    }
+                }
+                if (check) {
+                    controller.getEquipmentController().addEquipmentList(idEquipmentAddEquipment.getText(),
+                            nameAddEquipment.getText(),
+                            descriptionAddEquipment.getText(),
+                            priceAddEquipment.getText(),
+                            dealerAddEquipment.getText(),
+                            labAddEquipment.getValue(),
+                            projectAddEquipment.getValue());
+                    Stage stage = (Stage) buyEquipmentButton.getScene().getWindow();
+                    stage.close();
+                }
             }
     }
     @Override public void initialize(URL url, ResourceBundle resourceBundle) {

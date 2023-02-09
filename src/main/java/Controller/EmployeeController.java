@@ -1,6 +1,5 @@
 package Controller;
-import GUI.EmployeeListController;
-import GUI.LaboratoryListController;
+import Model.CareerDevelopment;
 import Model.Employee;
 import Model.Laboratory;
 import Model.Project;
@@ -12,10 +11,10 @@ public class EmployeeController {
     ArrayList<Employee> employeeArrayList= new ArrayList<Employee>();
     public ArrayList<Employee> getEmployeeArrayList(){ return employeeArrayList; }
     public void addEmployeeList(Employee employee){employeeArrayList.add(employee);}
-    public void addEmployeeList(String ssn, String firstName, String lastName,
-                                String phoneNum, String address, String role,
-                                String email, LocalDate employmentDate,
-                                String salary, String lab)
+    public Employee addEmployeeList(String ssn, String firstName, String lastName,
+                                    String phoneNum, String address, String role,
+                                    String email, LocalDate employmentDate,
+                                    String salary, String lab)
     {
         boolean exists=false;
         for (Employee employee:employeeArrayList) {
@@ -47,18 +46,23 @@ public class EmployeeController {
                 employee.setEmail("Null");
 
             employeeArrayList.add(employee);
-            EmployeeListController.list.add(employee);
+            return employee;
         }else System.out.println("L'impigato esiste già");
+        return null;
     }
-    public void modifyEmployeeList(int index , String firstName, String lastName,
-                                   String phoneNumber, String role, String salary,
-                                   String lab,String address,String email)
+    public CareerDevelopment modifyEmployeeList(int index , String firstName, String lastName,
+                                                String phoneNumber, String role, String salary,
+                                                String lab, String address, String email)
     {
         controller=Controller.getInstance();
+        CareerDevelopment careerDevelopment = null;
         Employee employee = controller.getEmployeeController().getEmployeeArrayList().get(index);
         employee.setFirstName(firstName);
         employee.setLastName(lastName);
         employee.setPhoneNum(phoneNumber);
+        if(!employee.getRole().equals(role)){
+            careerDevelopment=controller.getCareerDevelopmentController().addCareerDevelopment(employee,role,salary);
+        }
         employee.setRole(role);
         employee.setSalary(Float.parseFloat(salary));
 
@@ -79,6 +83,7 @@ public class EmployeeController {
         if(!email.isBlank()){
             employee.setEmail(email);
         }else employee.setEmail("Null");
+        return careerDevelopment;
     }
     public void fireEmployee(int index){
         //ottimizzare in base al ruolo

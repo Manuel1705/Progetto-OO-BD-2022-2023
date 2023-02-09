@@ -1,5 +1,6 @@
 package GUI;
 import Controller.Controller;
+import Model.Employee;
 import Model.Laboratory;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -11,6 +12,9 @@ import java.net.URL;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
+import java.lang.Object;
+import java.util.regex.Pattern;
+
 public class addEmployeeController implements Initializable {
     @FXML private TextField lastNameAddEmployee;
     @FXML private TextField addressAddEmployee;
@@ -29,9 +33,50 @@ public class addEmployeeController implements Initializable {
                 !firstNameAddEmployee.getText().isBlank() &&
                 !lastNameAddEmployee.getText().isBlank()&&
                 !salaryAddEmployee.getText().isBlank() &&
-                !phoneNumberAddEmployee.getText().isBlank())
-        {
-                    controller.getEmployeeController().addEmployeeList(
+                !phoneNumberAddEmployee.getText().isBlank()) {
+            boolean check = true;
+            if (ssnAddEmployee.getText().length() != 15) {
+                check = false;
+            } else {
+                for (char c : ssnAddEmployee.getText().toCharArray()) {
+                    if (!Character.isDigit(c)) {
+                        check = false;
+                        break;
+                    }
+                }
+            }
+            if(firstNameAddEmployee.getText().length()>30){
+                check=false;
+            }else {
+                for (char c : firstNameAddEmployee.getText().toCharArray()) {
+                    if (Character.isDigit(c)) {
+                        check = false;
+                        break;
+                    }
+                }
+            }
+            if (lastNameAddEmployee.getText().length()>30){
+                check=false;
+            }else {
+                for (char c : lastNameAddEmployee.getText().toCharArray()) {
+                    if (Character.isDigit(c)) {
+                        check = false;
+                        break;
+                    }
+                }
+            }
+            if (phoneNumberAddEmployee.getText().length() != 10) {
+                check = false;
+            } else {
+                for (char c : phoneNumberAddEmployee.getText().toCharArray()) {
+                    if (!Character.isDigit(c)) {
+                        check = false;
+                        break;
+                    }
+                }
+            }
+            if (check) {
+                Employee employee=controller.getEmployeeController().addEmployeeList(
                         ssnAddEmployee.getText(),
                         firstNameAddEmployee.getText(),
                         lastNameAddEmployee.getText(),
@@ -42,10 +87,14 @@ public class addEmployeeController implements Initializable {
                         LocalDate.now(),
                         salaryAddEmployee.getText(),
                         labAddEmployee.getValue());
-                    //chiusura finestra pop up
-                    Stage stage = (Stage) hireEmployeeButton.getScene().getWindow();
-                    stage.close();
+                if(employee!=null){
+                    EmployeeListController.list.add(employee);
                 }
+                //chiusura finestra pop up
+                Stage stage = (Stage) hireEmployeeButton.getScene().getWindow();
+                stage.close();
+            }
+        }
     }
     @Override public void initialize(URL url, ResourceBundle resourceBundle) {
         String[] roles={"Junior","Executive"};

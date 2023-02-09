@@ -21,32 +21,40 @@ public class EquipmentController {
                 break;
             }
         }
-        if (!exists){
-            controller=Controller.getInstance();
-            Equipment equipment= new Equipment(id_equipment,name,
-                    Float.parseFloat(price),dealer);
-            if(!lab.equals("Null")){
-                ArrayList<Laboratory>laboratoryArrayList = controller.getLaboratoryController().getLaboratoryArrayList();
-                for (Laboratory laboratory:laboratoryArrayList) {
-                    if(laboratory.getName().equals(lab)){
-                        equipment.setLab(laboratory);
+        if (!exists) {
+            controller = Controller.getInstance();
+            Equipment equipment = null;
+            boolean verifyPrice = false;
+            if (!project.equals("Null")) {
+                ArrayList<Project> projectArrayList = controller.getProjectController().getProjectArrayList();
+                for (Project prj : projectArrayList) {
+                    if (prj.getCup().equals(project)) {
+                        if (prj.getRemainingFunds() / 2 - Float.parseFloat(price) >= 0) {
+                            equipment = new Equipment(id_equipment, name,
+                                    Float.parseFloat(price), dealer);
+                            equipment.setProject(prj);
+                            verifyPrice = true;
+                        }
                     }
                 }
-            }else equipment.setLab(null);
-            if(!project.equals("Null")){
-                ArrayList<Project>projectArrayList = controller.getProjectController().getProjectArrayList();
-                for (Project prj:projectArrayList) {
-                    if(prj.getCup().equals(project)){
-                        equipment.setProject(prj);
+            } else equipment.setProject(null);
+            if (verifyPrice) {
+                if (!lab.equals("Null")) {
+                    ArrayList<Laboratory> laboratoryArrayList = controller.getLaboratoryController().getLaboratoryArrayList();
+                    for (Laboratory laboratory : laboratoryArrayList) {
+                        if (laboratory.getName().equals(lab)) {
+                            equipment.setLab(laboratory);
+                        }
                     }
-                }
-            }else equipment.setProject(null);
-            if(!description.isBlank()){
-                equipment.setDescription(description);
-            }else equipment.setDescription("No description");
+                } else equipment.setLab(null);
 
-            equipmentArrayList.add(equipment);
-            EquipmentListController.list.add(equipment);
+                if (!description.isBlank()) {
+                    equipment.setDescription(description);
+                } else equipment.setDescription("No description");
+
+                equipmentArrayList.add(equipment);
+                EquipmentListController.list.add(equipment);
+            }
         }
     }
     public void modifyEquipment(int index,String name,
@@ -74,6 +82,9 @@ public class EquipmentController {
                 }
             }
         }else equipment.setProject(null);
+        }
+        public void deleteEquipment(int index){
+            equipmentArrayList.remove(index);
         }
     }
 

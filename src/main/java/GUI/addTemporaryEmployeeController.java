@@ -2,6 +2,7 @@ package GUI;
 import Controller.Controller;
 import Model.Laboratory;
 import Model.Project;
+import Model.TemporaryEmployee;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
@@ -55,21 +56,65 @@ public class addTemporaryEmployeeController implements Initializable {
                 !salaryAddTemporaryEmployee.getText().isBlank() &&
                 !phoneNumberAddTemporaryEmployee.getText().isBlank() &&
                 !projectAddTemporaryEmployee.getValue().isBlank()) {
-            controller.getTemporaryEmployeeController().addTemporaryEmployeeList(ssnAddTemporaryEmployee.getText(),
-                    firstNameAddTemporaryEmployee.getText(),
-                    lastNameAddTemporaryEmployee.getText(),
-                    phoneNumberAddTemporaryEmployee.getText(),
-                    addressAddTemporaryEmployee.getText(),
-                    emailAddTemporaryEmployee.getText(),
-                    LocalDate.now(),
-                    salaryAddTemporaryEmployee.getText(),
-                    labAddTemporaryEmployee.getValue(),
-                    projectAddTemporaryEmployee.getValue());
-            Stage stage = (Stage) hireTemporaryEmployeeButton.getScene().getWindow();
-            stage.close();
+            boolean check = true;
+            if (ssnAddTemporaryEmployee.getText().length() != 15) {
+                check = false;
+            } else {
+                for (char c : ssnAddTemporaryEmployee.getText().toCharArray()) {
+                    if (!Character.isDigit(c)) {
+                        check = false;
+                        break;
+                    }
+                }
+            }
+            if(firstNameAddTemporaryEmployee.getText().length()>30){
+                check=false;
+            }else {
+                for (char c : firstNameAddTemporaryEmployee.getText().toCharArray()) {
+                    if (Character.isDigit(c)) {
+                        check = false;
+                        break;
+                    }
+                }
+            }
+            if(lastNameAddTemporaryEmployee.getText().length()>30){
+                check=false;
+            }else {
+                for (char c : lastNameAddTemporaryEmployee.getText().toCharArray()) {
+                    if (Character.isDigit(c)) {
+                        check = false;
+                        break;
+                    }
+                }
+            }
+            if (phoneNumberAddTemporaryEmployee.getText().length() != 10) {
+                check = false;
+            } else {
+                for (char c : phoneNumberAddTemporaryEmployee.getText().toCharArray()) {
+                    if (!Character.isDigit(c)) {
+                        check = false;
+                        break;
+                    }
+                }
+            }
+            if (check) {
+                TemporaryEmployee temporaryEmployee = controller.getTemporaryEmployeeController().addTemporaryEmployeeList(ssnAddTemporaryEmployee.getText(),
+                        firstNameAddTemporaryEmployee.getText(),
+                        lastNameAddTemporaryEmployee.getText(),
+                        phoneNumberAddTemporaryEmployee.getText(),
+                        addressAddTemporaryEmployee.getText(),
+                        emailAddTemporaryEmployee.getText(),
+                        LocalDate.now(),
+                        salaryAddTemporaryEmployee.getText(),
+                        labAddTemporaryEmployee.getValue(),
+                        projectAddTemporaryEmployee.getValue());
+                if (temporaryEmployee != null) {
+                    TemporaryEmployeeListController.list.add(temporaryEmployee);
+                }
+                Stage stage = (Stage) hireTemporaryEmployeeButton.getScene().getWindow();
+                stage.close();
+            }
         }
-
-
     }
 
     @Override public void initialize(URL url, ResourceBundle resourceBundle) {

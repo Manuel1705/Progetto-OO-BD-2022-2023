@@ -1,8 +1,7 @@
 package Controller;
 import GUI.ProjectListController;
-import Model.Employee;
-import Model.Laboratory;
-import Model.Project;
+import Model.*;
+
 import java.time.LocalDate;
 import java.util.ArrayList;
 public class ProjectController {
@@ -56,25 +55,44 @@ public class ProjectController {
                                   String budget,LocalDate endDate,
                                   String Sref,String Sresp) {
         Project project = controller.getProjectController().getProjectArrayList().get(index);
-        ArrayList<Employee> employeeArrayList = controller.getEmployeeController().getEmployeeArrayList();
-        if (!Sref.equals("Empty Position")) {
-            for (Employee employee : employeeArrayList) {
-                if (employee.getSSN().equals(Sref)) {
-                    project.setSref(employee);
+        if (project.getBudget()<=Float.parseFloat(budget)) {
+            ArrayList<Employee> employeeArrayList = controller.getEmployeeController().getEmployeeArrayList();
+            if (!Sref.equals("Empty Position")) {
+                for (Employee employee : employeeArrayList) {
+                    if (employee.getSSN().equals(Sref)) {
+                        project.setSref(employee);
+                    }
                 }
-            }
-        } else project.setSref(null);
-        if (!Sresp.equals("Empty Position")) {
-            for (Employee employee : employeeArrayList) {
-                if (employee.getSSN().equals(Sresp)) {
-                    project.setSresp(employee);
+            } else project.setSref(null);
+            if (!Sresp.equals("Empty Position")) {
+                for (Employee employee : employeeArrayList) {
+                    if (employee.getSSN().equals(Sresp)) {
+                        project.setSresp(employee);
+                    }
                 }
-            }
-        } else project.setSresp(null);
-    project.setName(name);
-    project.setBudget(Float.parseFloat(budget));
-    project.setRemainingFunds();
-    project.setEndDate(endDate);
+            } else project.setSresp(null);
+            project.setName(name);
+            project.setRemainingFunds(project.getRemainingFunds()+(Float.parseFloat(budget)-project.getBudget()));
+            project.setBudget(Float.parseFloat(budget));
 
+            project.setEndDate(endDate);
+        }else System.out.println("Il budget può essere solo maggiorato");
+    }
+    public void dismissProject(int index){
+        controller=Controller.getInstance();
+        Project project=projectArrayList.get(index);
+        ArrayList<Equipment>equipmentArrayList=controller.getEquipmentController().equipmentArrayList;
+        for(Equipment equipment: equipmentArrayList){
+            if(equipment.getProjectCup().equals(project.getCup())){
+                equipment.setProject(null);
+            }
+        }
+        ArrayList<TemporaryEmployee>temporaryEmployeeArrayList=controller.getTemporaryEmployeeController().temporaryEmployeeArrayList;
+        for (int i=0;i<temporaryEmployeeArrayList.size();i++){
+            if(temporaryEmployeeArrayList.get(i).getProjectCup().equals(project.getCup())){
+                temporaryEmployeeArrayList.remove(i);
+            }
+        }
+        projectArrayList.remove(index);
     }
 }

@@ -44,13 +44,25 @@ public class modifyEquipmentController {
         projectModifyEquipment.setValue(equipmentArrayList.get(index).getProjectCup());
     }
     @FXML void modifyEquipment() {
+        boolean check = true;
+        if (nameModifyEquipment.getText().length() > 30) {
+            check = false;
+        } else {
+            for (char c : nameModifyEquipment.getText().toCharArray()) {
+                if (Character.isDigit(c)) {
+                    check = false;
+                    break;
+                }
+            }
+        }
+        if (check) {
             controller.getEquipmentController().modifyEquipment(index,
                     nameModifyEquipment.getText(),
                     descriptionModifyEquipment.getText(),
                     labModifyEquipment.getValue(),
                     projectModifyEquipment.getValue());
-        Stage stage = (Stage) modifyEquipmentButton.getScene().getWindow();
-        stage.close();
+            Stage stage = (Stage) modifyEquipmentButton.getScene().getWindow();
+            stage.close();
+        }
     }
-
 }
