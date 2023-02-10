@@ -81,6 +81,12 @@ ArrayList<CareerDevelopment> careerChanges = new ArrayList<CareerDevelopment>();
             System.out.println("Cambio ruolo non consentito");
         }
     }
+    
+    /**
+     * Metodo che controlla la coerenza del ruolo di un impiegato con i suoi anni di servizio.
+     * Un impiegato che lavora per l'azienda da più di tre anni, ma da meno di sette, assume ruolo "Middle".
+     * Un impiegato che lavora per l'azienda da più di sette anni assume ruolo "Senior".
+     */
     public void CheckRole(){
         if (getEmploymentTime().getYears()>=3 && getEmploymentTime().getYears()<7 &&
                 !role.equals("Executive")){
@@ -187,7 +193,11 @@ ArrayList<CareerDevelopment> careerChanges = new ArrayList<CareerDevelopment>();
     public LocalDate getEmploymentDate(){
         return employmentDate;
     }
-
+    
+    /**
+     * Metodo che aggiorna il nome del laboratorio per cui lavora l'impiegato
+     * @param lab Nuovo nome di laboratorio
+     */
     public void setLab(Laboratory lab){
         this.lab=lab;
     }
@@ -232,10 +242,18 @@ ArrayList<CareerDevelopment> careerChanges = new ArrayList<CareerDevelopment>();
         this.phoneNum = phoneNum;
     }
 
-
+    /**
+     * Metodo che aggiorna il ruolo dell'impiegato
+     * @param role Nuovo ruolo dell'impiegato
+     */
     public void setRole(String role){
         this.role = role;
     }
+    
+    /**
+     * Metodo che aggiorna il salario dell'impiegato
+     * @param salary Nuovo salario dell'impiegato
+     */
     public void setSalary(float salary){
         this.salary = salary;
     }
