@@ -51,7 +51,7 @@ public class EmployeeController {
         return null;
     }
     public CareerDevelopment modifyEmployeeList(int index , String firstName, String lastName,
-                                                String phoneNumber, String role, String salary,
+                                                String phoneNumber, String newRole, String newSalary,
                                                 String lab, String address, String email)
     {
         controller=Controller.getInstance();
@@ -60,11 +60,11 @@ public class EmployeeController {
         employee.setFirstName(firstName);
         employee.setLastName(lastName);
         employee.setPhoneNum(phoneNumber);
-        if(!employee.getRole().equals(role)){
-            careerDevelopment=controller.getCareerDevelopmentController().addCareerDevelopment(employee,role,salary);
+        if(!employee.getRole().equals(newRole)){
+            careerDevelopment=controller.getCareerDevelopmentController().addCareerDevelopment(employee,newRole,newSalary);
+            employee.setRole(newRole);
         }
-        employee.setRole(role);
-        employee.setSalary(Float.parseFloat(salary));
+        employee.setSalary(Float.parseFloat(newSalary));
 
         if(!lab.equals("Null")) {
             ArrayList<Laboratory>laboratoryArrayList=controller.getLaboratoryController().getLaboratoryArrayList();

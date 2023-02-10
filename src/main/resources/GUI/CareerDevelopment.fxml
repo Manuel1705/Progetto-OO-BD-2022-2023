@@ -36,7 +36,7 @@
       </FlowPane>
       <Pane prefHeight="36.0" prefWidth="101.0" style="-fx-background-color: #2b313c;" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="0.0">
          <children>
-            <Button alignment="CENTER" contentDisplay="CENTER" layoutX="6.0" layoutY="6.0" lineSpacing="100.0" mnemonicParsing="false" onAction="#switchToHomeScene" style="-fx-background-color: none;" text="Dashboard" textFill="WHITE" />
+            <Button alignment="CENTER" contentDisplay="CENTER" layoutX="6.0" layoutY="6.0" lineSpacing="100.0" mnemonicParsing="false" onAction="#switchToEmployeeList" style="-fx-background-color: none;" text="Employee List" textFill="WHITE" />
          </children>
       </Pane>
       <FlowPane alignment="CENTER_RIGHT" columnHalignment="CENTER" hgap="50.0" prefHeight="0.0" prefWidth="1060.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">

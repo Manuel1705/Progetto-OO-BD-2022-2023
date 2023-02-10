@@ -1,24 +1,31 @@
 package Model;
 
-import Controller.Controller;
-
 import java.time.LocalDate;
-import java.util.ArrayList;
 
 public class CareerDevelopment {
     String oldRole, newRole;
     LocalDate date;
     float salaryChange;
     Employee employee;
+    float oldSalary,newSalary;
 
     public CareerDevelopment(Employee employee,String oldRole, String newRole,  float salaryChange ){
+        this.employee=employee;
             this.oldRole=oldRole;
             this.newRole=newRole;
             date=LocalDate.now();
             this.salaryChange=salaryChange;
+            this.oldSalary=employee.getSalary();
+            this.newSalary=employee.getSalary()+salaryChange;
     }
     public String getSSN(){
         return employee.getSSN();
+    }
+    public String getFirstName(){
+        return employee.getFirstName();
+    }
+    public String getLastName(){
+        return employee.getLastName();
     }
     public String getOldRole(){
         return oldRole;
@@ -26,11 +33,9 @@ public class CareerDevelopment {
     public String getNewRole(){
         return newRole;
     }
-    public float getOldSalary(){
-        return employee.getSalary()-salaryChange;
-    }
+    public float getOldSalary(){ return oldSalary; }
     public float getNewSalary(){
-        return employee.getSalary();
+        return newSalary;
     }
     public LocalDate getDate(){
         return date;

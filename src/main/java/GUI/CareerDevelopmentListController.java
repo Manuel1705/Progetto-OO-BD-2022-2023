@@ -53,21 +53,21 @@ public class CareerDevelopmentListController implements Initializable {
 
     public void initialize(URL url, ResourceBundle rb){
         controller= Controller.getInstance();
-        firstNameCarrerDevelpmentTable.setCellValueFactory(new PropertyValueFactory<CareerDevelopment,String>("firstName"));
-        lastNameCarrerDevelpmentTable.setCellValueFactory(new PropertyValueFactory<CareerDevelopment, String>("lastName"));
-        newRoleCarrerDevelpmentTable.setCellValueFactory(new PropertyValueFactory<CareerDevelopment, String>("newRole"));
-        oldRoleCarrerDevelpmentTable.setCellValueFactory(new PropertyValueFactory<CareerDevelopment, String>("oldRole"));
+        firstNameCarrerDevelpmentTable.setCellValueFactory(new PropertyValueFactory<CareerDevelopment,String>("FirstName"));
+        lastNameCarrerDevelpmentTable.setCellValueFactory(new PropertyValueFactory<CareerDevelopment, String>("LastName"));
+        newRoleCarrerDevelpmentTable.setCellValueFactory(new PropertyValueFactory<CareerDevelopment, String>("NewRole"));
+        oldRoleCarrerDevelpmentTable.setCellValueFactory(new PropertyValueFactory<CareerDevelopment, String>("OldRole"));
         newSalaryCarrerDevelpmentTable.setCellValueFactory(new PropertyValueFactory<CareerDevelopment, String>("newSalary"));
         oldSalaryCarrerDevelpmentTable.setCellValueFactory(new PropertyValueFactory<CareerDevelopment, String>("oldSalary"));
-        ssnCarrerDevelpmentTable.setCellValueFactory(new PropertyValueFactory<CareerDevelopment, String>("ssn"));
+        ssnCarrerDevelpmentTable.setCellValueFactory(new PropertyValueFactory<CareerDevelopment, String>("SSN"));
         dateCarrerDevelpmentTable.setCellValueFactory(new PropertyValueFactory<CareerDevelopment, String>("date"));
         CarrerDevelpmentTable.setItems(list);
     }
     private Stage stage;
     private Scene scene;
     private Parent root;
-    @FXML public void switchToHomeScene(ActionEvent event) throws IOException {
-        root = FXMLLoader.load(getClass().getResource("../GUI/Home.fxml"));
+    @FXML public void switchToEmployeeList(ActionEvent event) throws IOException {
+        root = FXMLLoader.load(getClass().getResource("../GUI/EmployeeList.fxml"));
         stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
         scene = new Scene(root);
         // stage.setMaximized(true);

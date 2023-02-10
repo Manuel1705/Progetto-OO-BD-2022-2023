@@ -73,7 +73,7 @@ ArrayList<CareerDevelopment> careerChanges = new ArrayList<CareerDevelopment>();
             role.equals("Senior") && getEmploymentTime().getYears() >= 7 ||
             role.equals("Executive"))
         {
-            careerChanges.add(new CareerDevelopment(this, this.role,role,this.salary-salary));
+            careerChanges.add(new CareerDevelopment(this, this.role,role,salary-this.salary));
             this.role = role;
             this.salary = salary;
         }

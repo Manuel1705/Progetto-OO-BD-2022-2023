@@ -47,6 +47,9 @@ public class EmployeeListController implements Initializable {
     public void initialize(URL url, ResourceBundle rb){
         //aggiorna la tabella
         controller=Controller.getInstance();
+        for (Employee employee:list){
+            employee.CheckRole();
+        }
         FirstNameEmployeeTable.setCellValueFactory(new PropertyValueFactory<Employee,String>("firstName"));
         LastNameEmployeeTable.setCellValueFactory(new PropertyValueFactory<Employee, String>("lastName"));
         AddressEmployeeTable.setCellValueFactory(new PropertyValueFactory<Employee, String>("address"));
