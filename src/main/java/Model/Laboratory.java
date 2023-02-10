@@ -1,6 +1,7 @@
 package Model;
 
 public class Laboratory {
+
     public Laboratory(String name, String topic, Employee Sresp, Project project){
         this.name=name;
         this.topic=topic;
