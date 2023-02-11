@@ -9,8 +9,8 @@ public class Employee {
     private String ssn, firstName, lastName, phoneNum, role, email, address;
     LocalDate employmentDate;
     float salary;
-    private Laboratory lab;
-ArrayList<CareerDevelopment> careerChanges = new ArrayList<CareerDevelopment>();
+    private Laboratory lab; //laboratorio dove lavora l'impiegato
+    ArrayList<CareerDevelopment> careerChanges = new ArrayList<CareerDevelopment>(); //lista degli scatti di carriera che interessano un determinato impiegato
 
     /**
      * Costruttore della classe Employee. Riceve in input i dati necessari per la creazione dell'oggetto Employee e inizializza i suoi attributi.
