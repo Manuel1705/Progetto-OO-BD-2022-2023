@@ -21,7 +21,7 @@ public class Laboratory {
     }
     
     /**
-     * Costruttore della classe Laboratory con inizializzazione del responsabile di laboratorio e del progetto a null
+     * Costruttore della classe Laboratory con inizializzazione del responsabile di laboratorio e del progetto a null.
      * @param name      Nome del laboratorio
      * @param topic     Argomento di studio del laboratorio
      */
