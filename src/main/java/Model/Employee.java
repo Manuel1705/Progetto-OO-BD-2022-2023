@@ -61,7 +61,7 @@ ArrayList<CareerDevelopment> careerChanges = new ArrayList<CareerDevelopment>();
     /**
      * Metodo che permette di aggiornare il ruolo dell'impiegato e modificarne il salario.
      * Se il nuovo ruolo e' legato al numero di anni di servizio dell'impiegato, la modifica viene fatta solo se valida.
-     * Inoltre il metodo registra il cambio di ruolo creando un oggetto CareerDeelopment {@link CareerDevelopment}
+     * Inoltre il metodo registra il cambio di ruolo creando un oggetto CareerDevelopment {@link CareerDevelopment}
      * e lo inserisce nell'ArrayList careerChanges dell'impiegato.
      *
      * @param role    Il nuovo ruolo dell'impiegato
@@ -164,7 +164,7 @@ ArrayList<CareerDevelopment> careerChanges = new ArrayList<CareerDevelopment>();
 
     /**
      * Metodo che restituisce l'indirizzo email dell'impiegato
-     * @return Indirzzio email dell'impiegato
+     * @return Indirizzo email dell'impiegato
      */
     public String getEmail(){
         return email;
@@ -211,7 +211,7 @@ ArrayList<CareerDevelopment> careerChanges = new ArrayList<CareerDevelopment>();
     }
 
     /**
-     * Metodo che aggiorna l'indirzzo email dell'impiegato
+     * Metodo che aggiorna l'indirizzo email dell'impiegato
      * @param email Nuovo indirizzo email dell'impiegato
      */
     public void setEmail(String email){
