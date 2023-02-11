@@ -34,7 +34,7 @@ public class Laboratory {
     
     /**
      * Metodo che inizializza Sresp ma solo se l'impiegato ha ruolo "Senior".
-     * @param employee Impiegato scelto come responsabile scientifico
+     * @param employee Riferimento all'oggetto impiegato scelto come responsabile scientifico
      */
     public void addScientificResponsible(Employee employee){
             if(employee.getRole().equals("Senior")){
@@ -44,7 +44,7 @@ public class Laboratory {
     
     /**
      * Metodo che associa un progetto a un laboratorio ma solo se tale progetto non ha già tre laboratori che si occupano di esso.
-     * @param project Cup del progetto che vogliamo aggiungere
+     * @param project Riferimento all'oggetto progetto che vogliamo aggiungere
      */
     public void addProject(Project project){
         if(project.getLabsNum()<3) {
@@ -65,7 +65,7 @@ public class Laboratory {
     
      /**
      * Metodo che restituisce l'argomento di cui tratta il laboratorio
-     * @return Argomento del laboratorio
+     * @return L'argomento del laboratorio
      */
      public String getTopic(){
         return topic;
@@ -73,7 +73,7 @@ public class Laboratory {
     
     /**
      * Metodo che restituisce il nome del progetto di cui si occupa il laboratorio se esso esiste, altrimenti restituisce null
-     * @return Nome del progetto del laboratorio oppure Null
+     * @return Il nome del progetto del laboratorio oppure Null
      */
      public String getProjectName(){
         if(project !=null){
@@ -84,7 +84,7 @@ public class Laboratory {
      
      /**
      * Metodo che restituisce la Cup del progetto di cui di occupa il laboratorio se esso esiste, altrimenti restituisce null
-     * @return Cup del progetto oppure Null
+     * @return La cup del progetto oppure Null
      */
      public String getProjectCup(){
         if(project !=null){
@@ -95,7 +95,7 @@ public class Laboratory {
      
      /**
      * Metodo che restituisce l'SSN del responsabile scientifico del laboratorio se esso esiste, altrimenti restituisce null
-     * @return SSN del responsabile scientifico oppure Null
+     * @return L'SSN del responsabile scientifico oppure Null
      */
      public String getSrespSSN(){
         if (Sresp!=null){
@@ -105,7 +105,7 @@ public class Laboratory {
     
     /**
      * Metodo che aggiorna il responsabile scientifico del laboratorio
-     * @param employee SSN dell'impiegato che vogliamo sia il nuovo responsabile scientifico
+     * @param employee Riferimento all'oggetto impiegato che vogliamo sia il nuovo responsabile scientifico
      */
     public void setSresp(Employee employee){
         Sresp=employee;
@@ -113,14 +113,14 @@ public class Laboratory {
     
     /**
      * Metodo che aggiorna il progetto di cui si occupa il laboratorio
-     * @param project Cup del nuovo progetto
+     * @param project Riferimento all'oggetto progetto 
      */
     public void setProject(Project project){
         this.project=project;
     }
     
     /**
-     * Metodo che aggiorna l'Argomento di cui si occupa il laboratorio
+     * Metodo che aggiorna l'argomento di cui si occupa il laboratorio
      * @param topic Nuovo argomento del laboratorio
      */
     public void setTopic(String topic){this.topic=topic;}
