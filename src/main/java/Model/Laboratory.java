@@ -8,10 +8,10 @@ public class Laboratory {
     
     /**
      * Costruttore della classe Laboratory. Riceve in input i dati necessari per la creazione dell'oggetto Laboratory e inizializza i suoi attributi.
-     * @param name Nome del laboratorio
-     * @param topic Argomento di studio del laboratorio
-     * @param Sresp È l'impiegato che viene scelto come responsabile scientifico del laboratorio
-     * @param project È il progetto di cui si occuperà il laboratorio
+     * @param name      Nome del laboratorio
+     * @param topic     Argomento di studio del laboratorio
+     * @param Sresp     È l'impiegato che viene scelto come responsabile scientifico del laboratorio
+     * @param project   È il progetto di cui si occuperà il laboratorio
      */
     public Laboratory(String name, String topic, Employee Sresp, Project project){
         this.name=name;
@@ -22,8 +22,8 @@ public class Laboratory {
     
     /**
      * Costruttore della classe Laboratory con inizializzazione del responsabile di laboratorio e del progetto a null
-     * @param name Nome del laboratorio
-     * @param topic Argomento di studio del laboratorio
+     * @param name      Nome del laboratorio
+     * @param topic     Argomento di studio del laboratorio
      */
     public Laboratory(String name, String topic){
         this.name=name;
@@ -113,7 +113,7 @@ public class Laboratory {
     
     /**
      * Metodo che aggiorna il progetto di cui si occupa il laboratorio
-     * @param project cup del nuovo progetto
+     * @param project Cup del nuovo progetto
      */
     public void setProject(Project project){
         this.project=project;
