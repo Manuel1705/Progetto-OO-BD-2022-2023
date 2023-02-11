@@ -45,6 +45,11 @@ public class EmployeeListController implements Initializable {
         list.add(employee);
     }
     public void initialize(URL url, ResourceBundle rb){
+        //PROVA (Il caricamento da DB non funziona senza queste 2 righe -Alessandro)
+        controller = Controller.getInstance();
+        loadList();
+        //FINE PROVA
+
         //aggiorna la tabella
         controller=Controller.getInstance();
         for (Employee employee:list){

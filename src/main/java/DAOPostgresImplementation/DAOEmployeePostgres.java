@@ -35,11 +35,11 @@ public class DAOEmployeePostgres implements DAOEmployee {
      * @param laboratory
      */
     public void addEmployeeDB (String ssn, String firstName, String lastName, String phoneNum,
-                String role,float salary, LocalDate employmentDate, String email,
+                String role,float salary, Date employmentDate, String email,
                 String address, String laboratory)
     {
         String query = "INSERT INTO azienda.employee " +
-                "VALUES (?, ?, ?, ?, ?, ?, ?, ?,  ?, ?)";
+                "VALUES (?, ?, ?, ?, ?, ?, ?, ?,  ?, ?);";
 
         try {
             PreparedStatement prst = connection.prepareStatement(query);
@@ -49,7 +49,7 @@ public class DAOEmployeePostgres implements DAOEmployee {
             prst.setString(4, phoneNum);
             prst.setString(5, email);
             prst.setString(6, address);
-            prst.setDate(7, Date.valueOf(employmentDate));
+            prst.setDate(7, employmentDate);
             prst.setFloat(8, salary);
             prst.setString(9, role);
             prst.setString(10, laboratory);
@@ -68,7 +68,7 @@ public class DAOEmployeePostgres implements DAOEmployee {
      */
     public void removeEmployeeDB(String ssn){
         try {
-            PreparedStatement prst = connection.prepareStatement("DELETE FROM azienda.employee WHERE ssn LIKE ?");
+            PreparedStatement prst = connection.prepareStatement("DELETE FROM azienda.employee WHERE ssn LIKE ?;");
             prst.setString(1, ssn);
             prst.executeUpdate();
             prst.close();
@@ -94,14 +94,14 @@ public class DAOEmployeePostgres implements DAOEmployee {
      * @param laboratory
      */
     public void updateEmployeeDB(String oldSsn, String newSsn, String firstName, String lastName, String phoneNum,
-                                 String role, float salary, LocalDate employmentDate, String email,
+                                 String role, float salary, Date employmentDate, String email,
                                  String address, String laboratory)
     {
 
         String query = "UPDATE azienda.employee " +
                 "SET ssn = ?, first_name = ?, last_name = ?, phone_num = ?, email = ?, address = ?," +
                 "employment_date = ?, salary = ?, role = ?, laboratory_name = ?" +
-                "WHERE ssn LIKE ?";
+                "WHERE ssn LIKE ?;";
 
         try {
             PreparedStatement prst = connection.prepareStatement(query);
@@ -111,7 +111,7 @@ public class DAOEmployeePostgres implements DAOEmployee {
             prst.setString(4, phoneNum);
             prst.setString(5, email);
             prst.setString(6, address);
-            prst.setDate(7, Date.valueOf(employmentDate));
+            prst.setDate(7, employmentDate);
             prst.setFloat(8, salary);
             prst.setString(9, role);
             prst.setString(10, laboratory);
@@ -139,12 +139,12 @@ public class DAOEmployeePostgres implements DAOEmployee {
      * @param laboratoryList
      */
     public void loadEmployeeDB(ArrayList<String> ssnList, ArrayList<String> firstNameList, ArrayList<String> lastNameList, ArrayList<String> phoneNumList,
-                               ArrayList<String> roleList, ArrayList<Float> salaryList, ArrayList<LocalDate> employmentDateList, ArrayList<String> emailList,
+                               ArrayList<String> roleList, ArrayList<Float> salaryList, ArrayList<Date> employmentDateList, ArrayList<String> emailList,
                                ArrayList<String> addressList, ArrayList<String> laboratoryList)
     {
         try {
             Statement st = connection.createStatement();
-            ResultSet rs = st.executeQuery("SELECT * FROM azienda.employee");
+            ResultSet rs = st.executeQuery("SELECT * FROM azienda.employee;");
 
             while (rs.next()) {
                 ssnList.add(rs.getString("ssn"));
@@ -153,14 +153,13 @@ public class DAOEmployeePostgres implements DAOEmployee {
                 phoneNumList.add(rs.getString("phone_num"));
                 roleList.add(rs.getString("role"));
                 salaryList.add(rs.getFloat("salary"));
-                employmentDateList.add(LocalDate.ofInstant(rs.getDate("employment_date").toInstant(), ZoneId.systemDefault()));
+                employmentDateList.add(rs.getDate("employment_date"));
                 emailList.add(rs.getString("email"));
                 addressList.add(rs.getString("address"));
                 laboratoryList.add(rs.getString("laboratory_name"));
-                rs.close();
-                st.close();
-
             }
+            rs.close();
+            st.close();
         } catch (SQLException ex) {
             System.out.println("Load failed: " + ex.getMessage());
             ex.printStackTrace();

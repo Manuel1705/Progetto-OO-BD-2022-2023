@@ -1,6 +1,7 @@
 package DAO;
 
 
+import java.sql.Date;
 import java.time.LocalDate;
 import java.util.ArrayList;
 
@@ -23,7 +24,7 @@ public interface DAOEmployee {
      * @param laboratory
      */
     public void addEmployeeDB(String ssn, String firstName, String lastName, String phoneNum,
-                              String role, float salary, LocalDate employmentDate, String email,
+                              String role, float salary, Date employmentDate, String email,
                               String address, String laboratory);
 
     /**
@@ -47,7 +48,7 @@ public interface DAOEmployee {
      * @param laboratory
      */
     public void updateEmployeeDB(String oldSsn, String newSsn, String firstName, String lastName, String phoneNum,
-                                 String role, float salary, LocalDate employmentDate, String email,
+                                 String role, float salary, Date employmentDate, String email,
                                  String address, String laboratory);
 
     /**
@@ -65,7 +66,7 @@ public interface DAOEmployee {
      * @param laboratory
      */
     public void loadEmployeeDB(ArrayList<String> ssn, ArrayList<String> firstName, ArrayList<String> lastName, ArrayList<String> phoneNum,
-                               ArrayList<String> role, ArrayList<Float> salary, ArrayList<LocalDate> employmentDate, ArrayList<String> email,
+                               ArrayList<String> role, ArrayList<Float> salary, ArrayList<Date> employmentDate, ArrayList<String> email,
                                ArrayList<String> address, ArrayList<String> laboratory);
 
 }

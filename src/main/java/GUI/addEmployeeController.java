@@ -26,7 +26,7 @@ public class addEmployeeController implements Initializable {
     @FXML private ChoiceBox<String> roleAddEmployee;
     @FXML private TextField salaryAddEmployee;
     @FXML private TextField ssnAddEmployee;
-    Controller controller;
+    private Controller controller;
     @FXML void hireEmployee(){
         if(!roleAddEmployee.getValue().isBlank() &&
                 !ssnAddEmployee.getText().isBlank() &&

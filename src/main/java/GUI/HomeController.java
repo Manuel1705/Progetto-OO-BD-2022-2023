@@ -12,6 +12,7 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.scene.layout.Pane;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
 
 import java.io.IOException;
@@ -96,5 +97,15 @@ public class HomeController
                         //stage.setMaximized(true);
                         stage.setScene(scene);
                         stage.show();
+                }
+
+                @FXML
+                public void switchToDBConnectScene(ActionEvent event)throws IOException{
+                        Parent root = FXMLLoader.load(getClass().getResource("../GUI/DBConnect.fxml"));
+                        scene = new Scene(root);
+                        stage= new Stage();
+                        stage.initModality(Modality.APPLICATION_MODAL);
+                        stage.setScene(scene);
+                        stage.showAndWait();
                 }
     }

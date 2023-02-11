@@ -63,6 +63,7 @@
                   <Font name="System Bold Italic" size="17.0" />
                </font>
             </Label>
+            <Button layoutX="1159.0" layoutY="22.0" mnemonicParsing="false" onAction="#switchToDBConnectScene" text="Connect Database" />
          </children>
       </Pane>
    </children>
