@@ -127,7 +127,7 @@ public class Employee {
      */
     public String getLabName(){
         if(lab != null) return lab.getName();
-        else return "Null";
+        else return null;
     }
 
     /**

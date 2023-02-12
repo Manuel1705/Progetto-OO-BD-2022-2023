@@ -6,7 +6,7 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 
 /**
- * Interfaccia per implementare i DAO della classe Employee
+ * Interfaccia per implementare i DAO Employee
  */
 public interface DAOEmployee {
 
