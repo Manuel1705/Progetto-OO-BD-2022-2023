@@ -1,11 +1,10 @@
 package DAO;
 
-import Model.Laboratory;
 
 import java.util.ArrayList;
 
 /**
- * Interfaccia che permette di implementare i DAO Laboratory
+ * Interfaccia che permette di implementare i DAO della tabella Laboratory
  */
 public interface DAOLaboratory {
     /**
@@ -18,7 +17,7 @@ public interface DAOLaboratory {
     public void addLaboratoryDB(String name, String topic, String sresp, String project);
 
     /**
-     * Metodo che rimuove una tupla dalla tabella Laboratorio, individuandola usando la sua chiave primaria.
+     * Metodo che rimuove una tupla dalla tabella Laboratory, individuandola usando la sua chiave primaria.
      * @param name Chiave primaria della tupla da eliminare.
      */
     public void removeLaboratoryDB(String name);
