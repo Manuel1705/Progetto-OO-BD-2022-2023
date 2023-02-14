@@ -60,7 +60,7 @@ public class DAOProjectPostgres implements DAOProject {
      */
     public void removeProjectDB(String cup){
         try {
-            PreparedStatement prst = connection.prepareStatement("DELETE FROM azienda.project WHERE name LIKE ?;");
+            PreparedStatement prst = connection.prepareStatement("DELETE FROM azienda.project WHERE cup LIKE ?;");
             prst.setString(1, cup);
             prst.executeUpdate();
             prst.close();
@@ -87,7 +87,7 @@ public class DAOProjectPostgres implements DAOProject {
                                 String sResp, String sRef){
         String query = "UPDATE azienda.project" +
                 "SET cup = ?, name = ?, budget = ?, remaining_funds = ?, start_date = ?, end_date = ?, sresp = ?, sref = ?" +
-                "WHERE name LIKE ?";
+                "WHERE cup LIKE ?";
         try{
             PreparedStatement prst = connection.prepareStatement(query);
             prst.setString(1, newCup);

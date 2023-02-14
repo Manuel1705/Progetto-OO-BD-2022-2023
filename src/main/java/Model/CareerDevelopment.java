@@ -16,7 +16,7 @@ public class CareerDevelopment {
      * @param newRole           Nuovo ruolo ricoperto dall'impiegato
      * @param salaryChange      Differenza di salario da aggiungere al vecchio salario dell'impiegato
     */
-    public CareerDevelopment(Employee employee,String oldRole, String newRole,  float salaryChange ){
+    public CareerDevelopment(Employee employee, String oldRole, String newRole, float salaryChange ){
         this.employee=employee;
             this.oldRole=oldRole;
             this.newRole=newRole;
