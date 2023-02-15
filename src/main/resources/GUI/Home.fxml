@@ -15,9 +15,12 @@
          <children>
             <Pane fx:id="LabButton" prefHeight="140.0" prefWidth="140.0" style="-fx-background-color: #2b313c;">
                <children>
-                  <Label layoutX="37.0" layoutY="100.0" text="Laboratories" textFill="WHITE" />
+                  <Label layoutX="35.0" layoutY="104.0" text="Laboratories" textFill="WHITE">
+                     <font>
+                        <Font name="System Italic" size="13.0" />
+                     </font></Label>
                   <FontAwesomeIconView fill="WHITE" glyphName="TABLE" layoutX="56.0" layoutY="80.0" size="30" />
-                  <Button alignment="CENTER" contentDisplay="CENTER" layoutY="-1.0" mnemonicParsing="false" onAction="#switchToLabListScene" prefHeight="140.0" prefWidth="140.0" style="-fx-background-color: none;" textFill="WHITE" />
+                  <Button alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#switchToLabListScene" prefHeight="140.0" prefWidth="140.0" style="-fx-background-color: none;" textFill="WHITE" />
                </children>
                <FlowPane.margin>
                   <Insets />
@@ -25,15 +28,21 @@
             </Pane>
             <Pane fx:id="ProjectButton" prefHeight="140.0" prefWidth="140.0" style="-fx-background-color: #2b313c;">
                <children>
-                  <Label layoutX="49.0" layoutY="100.0" text="Projects" textFill="WHITE" />
-                  <FontAwesomeIconView fill="WHITE" glyphName="BOOK" layoutX="55.0" layoutY="80.0" size="30" />
+                  <FontAwesomeIconView fill="WHITE" glyphName="BOOK" layoutX="57.0" layoutY="80.0" size="30" />
+                  <Label layoutX="49.0" layoutY="104.0" text="Projects" textFill="WHITE">
+                     <font>
+                        <Font name="System Italic" size="13.0" />
+                     </font></Label>
                   <Button alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#switchToProjectsListScene" prefHeight="140.0" prefWidth="140.0" style="-fx-background-color: none;" textFill="WHITE" />
                </children>
             </Pane>
             <Pane fx:id="EmployeesButton" prefHeight="140.0" prefWidth="140.0" style="-fx-background-color: #2b313c;">
                <children>
-                  <Label layoutX="43.0" layoutY="101.0" text="Employees" textFill="WHITE" />
-                  <FontAwesomeIconView fill="WHITE" glyphName="USERS" layoutX="55.0" layoutY="80.0" size="30" />
+                  <FontAwesomeIconView fill="WHITE" glyphName="USERS" layoutX="54.0" layoutY="80.0" size="30" />
+                  <Label layoutX="38.0" layoutY="104.0" text="Employees" textFill="WHITE">
+                     <font>
+                        <Font name="System Italic" size="13.0" />
+                     </font></Label>
                   <Button alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#switchToEmployeeListScene" prefHeight="140.0" prefWidth="140.0" style="-fx-background-color: none;" textFill="WHITE" />
                </children>
                <FlowPane.margin>
@@ -42,16 +51,22 @@
             </Pane>
             <Pane fx:id="TemporaryEmployeesButton" prefHeight="140.0" prefWidth="140.0" style="-fx-background-color: #2b313c;">
                <children>
-                  <Label layoutX="19.0" layoutY="90.0" prefHeight="36.0" prefWidth="104.0" text="Temporary Employees" textAlignment="CENTER" textFill="WHITE" wrapText="true" />
                   <FontAwesomeIconView fill="WHITE" glyphName="USERS" layoutX="55.0" layoutY="80.0" size="30" />
+                  <Label alignment="CENTER" layoutX="15.0" layoutY="90.0" prefHeight="36.0" prefWidth="110.0" text="Temporary Employees" textAlignment="CENTER" textFill="WHITE" wrapText="true">
+                     <font>
+                        <Font name="System Italic" size="12.0" />
+                     </font></Label>
                   <Button alignment="CENTER" contentDisplay="CENTER" layoutX="1.0" mnemonicParsing="false" onAction="#switchToTemporaryEmployeeListScene" prefHeight="140.0" prefWidth="140.0" style="-fx-background-color: none;" textFill="WHITE" />
                </children>
             </Pane>
             <Pane fx:id="EquipmentButton" prefHeight="140.0" prefWidth="140.0" style="-fx-background-color: #2b313c;">
                <children>
-                  <Button alignment="CENTER" contentDisplay="CENTER" layoutY="-1.0" mnemonicParsing="false" onAction="#switchToEquipmentListScene" prefHeight="140.0" prefWidth="140.0" style="-fx-background-color: none;" textFill="WHITE" />
-                  <Label layoutX="41.0" layoutY="100.0" text="Equipment" textFill="WHITE" />
                   <FontAwesomeIconView fill="WHITE" glyphName="LAPTOP" layoutX="54.0" layoutY="80.0" size="30" />
+                  <Label layoutX="40.0" layoutY="104.0" text="Equipment" textFill="WHITE">
+                     <font>
+                        <Font name="System Italic" size="13.0" />
+                     </font></Label>
+                  <Button alignment="CENTER" contentDisplay="CENTER" layoutY="-1.0" mnemonicParsing="false" onAction="#switchToEquipmentListScene" prefHeight="140.0" prefWidth="140.0" style="-fx-background-color: none;" textFill="WHITE" />
                </children>
             </Pane>
          </children>
@@ -63,7 +78,10 @@
                   <Font name="System Bold Italic" size="17.0" />
                </font>
             </Label>
-            <Button layoutX="1159.0" layoutY="22.0" mnemonicParsing="false" onAction="#switchToDBConnectScene" text="Connect Database" />
+            <Button layoutX="1159.0" layoutY="22.0" mnemonicParsing="false" onAction="#switchToDBConnectScene" style="-fx-background-color: #21252f;" text="Connect Database" textFill="WHITE">
+               <font>
+                  <Font name="System Bold Italic" size="13.0" />
+               </font></Button>
          </children>
       </Pane>
    </children>
