@@ -1,6 +1,5 @@
 package GUI;
 import Controller.Controller;
-import Model.Employee;
 import Model.Laboratory;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -12,8 +11,7 @@ import java.net.URL;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
-import java.lang.Object;
-import java.util.regex.Pattern;
+
 
 public class addEmployeeController implements Initializable {
     @FXML private TextField lastNameAddEmployee;
@@ -27,14 +25,23 @@ public class addEmployeeController implements Initializable {
     @FXML private TextField salaryAddEmployee;
     @FXML private TextField ssnAddEmployee;
     private Controller controller;
+
+    /**
+     * Metodo che viene chiamato quando l'utente conferma l'inserimento.
+     * Esegue i controlli sulla validita' dell'input e passa i dati inseriti dall'utente al controller che crea l'oggetto impiegato.
+     */
     @FXML void hireEmployee(){
+
+        //Controllo sulla validita' dei campi obbligatori.
         if(!roleAddEmployee.getValue().isBlank() &&
                 !ssnAddEmployee.getText().isBlank() &&
                 !firstNameAddEmployee.getText().isBlank() &&
                 !lastNameAddEmployee.getText().isBlank()&&
                 !salaryAddEmployee.getText().isBlank() &&
-                !phoneNumberAddEmployee.getText().isBlank()) {
+                !phoneNumberAddEmployee.getText().isBlank())
+        {
             boolean check = true;
+            //Controllo sul dominio dell'SSN
             if (ssnAddEmployee.getText().length() != 15) {
                 check = false;
             } else {
@@ -45,26 +52,15 @@ public class addEmployeeController implements Initializable {
                     }
                 }
             }
+            //Controllo sulla lunghezza del nome
             if(firstNameAddEmployee.getText().length()>30){
                 check=false;
-            }else {
-                for (char c : firstNameAddEmployee.getText().toCharArray()) {
-                    if (Character.isDigit(c)) {
-                        check = false;
-                        break;
-                    }
-                }
             }
+            //Controllo sulla lunghezza del cognome
             if (lastNameAddEmployee.getText().length()>30){
                 check=false;
-            }else {
-                for (char c : lastNameAddEmployee.getText().toCharArray()) {
-                    if (Character.isDigit(c)) {
-                        check = false;
-                        break;
-                    }
-                }
             }
+            //Controllo sul dominio del numero di telefono
             if (phoneNumberAddEmployee.getText().length() != 10) {
                 check = false;
             } else {
@@ -75,8 +71,9 @@ public class addEmployeeController implements Initializable {
                     }
                 }
             }
+           //Se tutti i controlli sono risultati validi il metodo passa i dati al controller.
             if (check) {
-                Employee employee=controller.getEmployeeController().addEmployeeList(
+                controller.getEmployeeController().addEmployeeList(
                         ssnAddEmployee.getText(),
                         firstNameAddEmployee.getText(),
                         lastNameAddEmployee.getText(),
@@ -87,15 +84,18 @@ public class addEmployeeController implements Initializable {
                         LocalDate.now(),
                         salaryAddEmployee.getText(),
                         labAddEmployee.getValue());
-                if(employee!=null){
-                    EmployeeListController.list.add(employee);
-                }
-                //chiusura finestra pop up
-                Stage stage = (Stage) hireEmployeeButton.getScene().getWindow();
-                stage.close();
             }
+                //chiusura finestra pop up
+            Stage stage = (Stage) hireEmployeeButton.getScene().getWindow();
+            stage.close();
+
         }
     }
+
+    /**
+     * Metodo che inizializza la finestra
+     */
+
     @Override public void initialize(URL url, ResourceBundle resourceBundle) {
         String[] roles={"Junior","Executive"};
         roleAddEmployee.getItems().addAll(roles);

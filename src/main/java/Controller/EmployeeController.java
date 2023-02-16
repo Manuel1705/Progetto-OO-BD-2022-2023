@@ -9,9 +9,38 @@ import java.util.ArrayList;
 public class EmployeeController {
     Controller controller;
     ArrayList<Employee> employeeArrayList= new ArrayList<Employee>();
-    public ArrayList<Employee> getEmployeeArrayList(){ return employeeArrayList; }
+
+    /**
+     * Metodo che restituisce la lista degli impiegati e la aggiorna in base alla data attuale.
+     * @return
+     */
+    public ArrayList<Employee> getEmployeeArrayList(){
+        for (Employee employee:employeeArrayList){
+            employee.CheckRole();
+        }
+        return employeeArrayList;
+
+    }
+
+    /**
+     * Metodo che restituisce l'impiegato con l'ssn fornito in input, se non esiste restituisce null.
+     * @param ssn
+     * @return
+     */
+    public Employee findEmployee(String ssn){
+        for(Employee employee: employeeArrayList){
+            if (employee.getSSN().equals(ssn)) return employee;
+        }
+        return null;
+    }
+
+
+    /**
+     * Metodo che aggiunge un oggetto Employee passato in input alla lista.
+     * @param employee
+     */
     public void addEmployeeList(Employee employee){employeeArrayList.add(employee);}
-    public Employee addEmployeeList(String ssn, String firstName, String lastName,
+    public void addEmployeeList(String ssn, String firstName, String lastName,
                                     String phoneNum, String address, String role,
                                     String email, LocalDate employmentDate,
                                     String salary, String lab)
@@ -46,17 +75,15 @@ public class EmployeeController {
                 employee.setEmail("Null");
 
             employeeArrayList.add(employee);
-            return employee;
         }else System.out.println("L'impigato esiste già");
-        return null;
+
     }
-    public CareerDevelopment modifyEmployeeList(int index , String firstName, String lastName,
+    public void modifyEmployeeList(String ssn, String firstName, String lastName,
                                                 String phoneNumber, String newRole, String newSalary,
                                                 String lab, String address, String email)
-    {
-        controller=Controller.getInstance();
+    {   Controller controller = Controller.getInstance();
         CareerDevelopment careerDevelopment = null;
-        Employee employee = controller.getEmployeeController().getEmployeeArrayList().get(index);
+        Employee employee = findEmployee(ssn);
         employee.setFirstName(firstName);
         employee.setLastName(lastName);
         employee.setPhoneNum(phoneNumber);
@@ -83,12 +110,11 @@ public class EmployeeController {
         if(!email.isBlank()){
             employee.setEmail(email);
         }else employee.setEmail("Null");
-        return careerDevelopment;
     }
-    public void fireEmployee(int index){
+    public void fireEmployee(String ssn){
         //ottimizzare in base al ruolo
         controller=Controller.getInstance();
-        Employee employee=employeeArrayList.get(index);
+        Employee employee = findEmployee(ssn);
         ArrayList<Laboratory>laboratoryArrayList=controller.getLaboratoryController().getLaboratoryArrayList();
         for (Laboratory laboratory:laboratoryArrayList) {
             if(laboratory.getSrespSSN().equals(employee.getSSN())){
@@ -104,6 +130,6 @@ public class EmployeeController {
                 project.setSref(null);
             }
         }
-        employeeArrayList.remove(index);
+        employeeArrayList.remove(employee);
     }
 }

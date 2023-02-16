@@ -18,17 +18,18 @@ import javafx.stage.Modality;
 import javafx.stage.Stage;
 import java.io.IOException;
 import java.net.URL;
+import java.time.LocalDate;
 import java.util.ResourceBundle;
 public class EmployeeListController implements Initializable {
 
     @FXML public TableView<Employee> EmployeesTable;
     @FXML private TableColumn<Employee, String> AddressEmployeeTable;
-    @FXML private TableColumn<Employee, String> EmploymentDateEmployeeTable;
+    @FXML private TableColumn<Employee, LocalDate> EmploymentDateEmployeeTable;
     @FXML private TableColumn<Employee, String> FirstNameEmployeeTable;
     @FXML private TableColumn<Employee, String> LaboratoryEmployeeTable;
     @FXML private TableColumn<Employee, String> LastNameEmployeeTable;
     @FXML private TableColumn<Employee, String> RoleEmployeeTable;
-    @FXML private TableColumn<Employee, String> SalaryEmployeeTable;
+    @FXML private TableColumn<Employee, Float> SalaryEmployeeTable;
     @FXML private TableColumn<Employee, String> emailEmployeeTable;
     @FXML private TableColumn<Employee, String> phoneNumEmployeeTable;
     @FXML private TableColumn<Employee, String> ssnEmployeeTable;
@@ -37,46 +38,68 @@ public class EmployeeListController implements Initializable {
     @FXML private Button modifyButton;
     @FXML private Button CareerChanges;
     Controller controller;
-    static public ObservableList<Employee> list= FXCollections.observableArrayList();
+    public ObservableList<Employee> list= FXCollections.observableArrayList();
+
+    /**
+     * Metodo che carica gli impiegati salvati dal controller nell'Observable List
+     */
     public void loadList(){
+        list.clear();
         list.addAll(controller.getEmployeeController().getEmployeeArrayList());
     }
-    public void addList(Employee employee){
-        list.add(employee);
-    }
-    public void initialize(URL url, ResourceBundle rb){
-        //PROVA (Il caricamento da DB non funziona senza queste 2 righe -Alessandro)
-        controller = Controller.getInstance();
-        loadList();
-        //FINE PROVA
 
-        //aggiorna la tabella
-        controller=Controller.getInstance();
-        for (Employee employee:list){
-            employee.CheckRole();
-        }
+    /**
+     * Metodo che inizializza la finestra.
+     * @param url
+     * @param rb
+     */
+    public void initialize(URL url, ResourceBundle rb){
+        //Il metodo trova il controller
+        controller = Controller.getInstance();
+
+        //Quando viene inizializzata la finestra i dati vengono caricati dal controller.
+        loadList();
+
+
+        //Inserisce gli elementi della lista in tabella
+
         FirstNameEmployeeTable.setCellValueFactory(new PropertyValueFactory<Employee,String>("firstName"));
         LastNameEmployeeTable.setCellValueFactory(new PropertyValueFactory<Employee, String>("lastName"));
         AddressEmployeeTable.setCellValueFactory(new PropertyValueFactory<Employee, String>("address"));
-        EmploymentDateEmployeeTable.setCellValueFactory(new PropertyValueFactory<Employee, String>("employmentDate"));
+        EmploymentDateEmployeeTable.setCellValueFactory(new PropertyValueFactory<Employee, LocalDate>("employmentDate"));
         LaboratoryEmployeeTable.setCellValueFactory(new PropertyValueFactory<Employee, String>("labName"));
         RoleEmployeeTable.setCellValueFactory(new PropertyValueFactory<Employee, String>("role"));
-        SalaryEmployeeTable.setCellValueFactory(new PropertyValueFactory<Employee, String>("salary"));
+        SalaryEmployeeTable.setCellValueFactory(new PropertyValueFactory<Employee, Float>("salary"));
         emailEmployeeTable.setCellValueFactory(new PropertyValueFactory<Employee, String>("email"));
         phoneNumEmployeeTable.setCellValueFactory(new PropertyValueFactory<Employee,String>("phoneNum"));
         ssnEmployeeTable.setCellValueFactory(new PropertyValueFactory<Employee,String>("SSN"));
         EmployeesTable.setItems(list);
     }
+
+    /**
+     * Metodo che restituisce l'indice della riga selezionata dall'utente nella tabella.
+     * @return
+     */
     @FXML public int getSelectedEmployeeIndex(){
         return EmployeesTable.getSelectionModel().getSelectedIndex();
     }
+
+    /**
+     * Metodo che elimina l'impiegato selezionato dall'utente usando il controller.
+     */
     @FXML public void fireEmployee(){
-        controller.getEmployeeController().fireEmployee(getSelectedEmployeeIndex());
-        list.remove(getSelectedEmployeeIndex());
+        controller.getEmployeeController().fireEmployee(ssnEmployeeTable.getCellObservableValue(getSelectedEmployeeIndex()).getValue());
+        loadList();
     }
     private Stage stage;
     private Scene scene;
     private Parent root;
+
+    /**
+     * Metodo che ritorna alla finestra Home.
+     * @param event
+     * @throws IOException
+     */
     @FXML public void switchToHomeScene(ActionEvent event) throws IOException {
         root = FXMLLoader.load(getClass().getResource("../GUI/Home.fxml"));
         stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
@@ -85,6 +108,12 @@ public class EmployeeListController implements Initializable {
         stage.setScene(scene);
         stage.show();
     }
+
+    /**
+     * Metodo che apre la finestra degli scatti di carriera.
+     * @param event
+     * @throws IOException
+     */
     @FXML public void careerChanges(ActionEvent event) throws IOException {
         root = FXMLLoader.load(getClass().getResource("../GUI/CareerDevelopment.fxml"));
         stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
@@ -93,6 +122,11 @@ public class EmployeeListController implements Initializable {
         stage.setScene(scene);
         stage.show();
     }
+
+    /**
+     * Metodo che apre la finestra per assumere un nuovo impiegato.
+     * @throws IOException
+     */
     @FXML public void hireEmployee() throws IOException {
         Parent root = FXMLLoader.load(getClass().getResource("../GUI/addEmployee.fxml"));
         scene = new Scene(root);
@@ -100,7 +134,13 @@ public class EmployeeListController implements Initializable {
         stage.initModality(Modality.APPLICATION_MODAL);
         stage.setScene(scene);
         stage.showAndWait();
+        loadList();
     }
+
+    /**
+     * Metodo che apre la finestra per modificare l'impiegato selezionato dall'utente.
+     * @throws IOException
+     */
     @FXML void modifyEmployee()throws IOException  {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("../GUI/modifyEmployee.fxml"));
         root=loader.load();
@@ -108,9 +148,20 @@ public class EmployeeListController implements Initializable {
         scene = new Scene(root);
         stage.setScene(scene);
         stage.initModality(Modality.APPLICATION_MODAL);
-        modifyEmployeeController controller= loader.getController();
-        controller.setEmployeeIndex(getSelectedEmployeeIndex());
+
+        modifyEmployeeController modifyController = loader.getController();
+        int i = getSelectedEmployeeIndex();
+        modifyController.setDefaultFields(ssnEmployeeTable.getCellObservableValue(i).getValue(),
+                FirstNameEmployeeTable.getCellObservableValue(i).getValue(),
+                LastNameEmployeeTable.getCellObservableValue(i).getValue(),
+                phoneNumEmployeeTable.getCellObservableValue(i).getValue(),
+                AddressEmployeeTable.getCellObservableValue(i).getValue(),
+                RoleEmployeeTable.getCellObservableValue(i).getValue(),
+                LaboratoryEmployeeTable.getCellObservableValue(i).getValue(),
+                SalaryEmployeeTable.getCellObservableValue(i).getValue().toString() ,
+                emailEmployeeTable.getCellObservableValue(i).getValue(),
+                EmploymentDateEmployeeTable.getCellObservableValue(i).getValue().toString());
         stage.showAndWait();
-        EmployeesTable.refresh();
+        loadList();
     }
 }
