@@ -78,17 +78,7 @@ public class modifyEmployeeController {
      */
     @FXML void modifyEmployee() {
         boolean check = true;
-        //SSN non puo' essere modificato
-        /*if (ssnModifyEmployee.getText().length() != 15) {
-            check = false;
-        } else {
-            for (char c : ssnModifyEmployee.getText().toCharArray()) {
-                if (!Character.isDigit(c)) {
-                    check = false;
-                    break;
-                }
-            }
-        }*/
+
         //Controllo lunghezza nome
         if(firstNameModifyEmployee.getText().length()>30){
             check=false;

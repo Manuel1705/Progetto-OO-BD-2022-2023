@@ -19,44 +19,57 @@ public class addLaboratoryController implements Initializable {
     @FXML private TextField nameAddLaboratory;
     @FXML private ChoiceBox<String> projectAddLaboratory;
     @FXML private TextArea topicAddLaboratory;
-    Controller controller;
+    private Controller controller;
+
+    /**
+     * Metodo che viene chiamato quando l'utente conferma l'inserimento dei dati. Effettua controlli sulla validita' dell'input
+     * e tramite il controller inserisce i dati relativi al laboratorio.
+     */
     @FXML void addLaboratory() {
-        if (!nameAddLaboratory.getText().isBlank()) {
-            boolean check = true;
-            if(nameAddLaboratory.getText().length()>30){
-                check=false;
-            }else {
-                for (char c : nameAddLaboratory.getText().toCharArray()) {
-                    if (Character.isDigit(c)) {
-                        check = false;
-                        break;
-                    }
-                }
+        boolean check = true;
+        if (!nameAddLaboratory.getText().isBlank() && !SrespAddLaboratory.getValue().isBlank()) {
+            //Controllo sulla lunghezza del nome
+            if (nameAddLaboratory.getText().length() > 30) {
+                check = false;
             }
+            //Controllo sulla lunghezza del topic.
+            if (topicAddLaboratory.getText().length() > 50) {
+                check = false;
+            }
+
             if (check) {
                 controller.getLaboratoryController().addLaboratoryList(
-                        nameAddLaboratory.getText(),
-                        topicAddLaboratory.getText(),
-                        SrespAddLaboratory.getValue(),
-                        projectAddLaboratory.getValue());
+                    nameAddLaboratory.getText(),
+                    topicAddLaboratory.getText(),
+                    SrespAddLaboratory.getValue(),
+                    projectAddLaboratory.getValue());
 
                 Stage stage = (Stage) addLaboratoryButton.getScene().getWindow();
                 stage.close();
             }
         }
     }
+
+    /**
+     * Metodo che inizializza la finestra.
+     * @param url
+     * @param resourceBundle
+     */
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        controller=Controller.getInstance();
-        ArrayList<Employee> employeeArrayList=controller.getEmployeeController().getEmployeeArrayList();
+        controller = Controller.getInstance();
+        ArrayList<Employee> employeeArrayList = controller.getEmployeeController().getEmployeeArrayList();
+
+        //Inizializza il menu a tendina dei possibili responsabili scientifici
         ArrayList<String> Sresp= new ArrayList<>();
-        Sresp.add("Null");
         for (Employee employee: employeeArrayList) {
             if(employee.getRole().equals("Senior")) {
                 Sresp.add(employee.getSSN());
             }
         }
         SrespAddLaboratory.getItems().addAll(Sresp);
+
+        //Inizializza il menu a tendina dei potenziali progetti
         ArrayList<Project>projectArrayList=controller.getProjectController().getProjectArrayList();
         ArrayList<String>projects= new ArrayList<>();
         projects.add("Null");

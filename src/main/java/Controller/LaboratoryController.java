@@ -46,12 +46,11 @@ public class LaboratoryController {
                 }
             }
             laboratoryArrayList.add(laboratory);
-            LaboratoryListController.list.add(laboratory);
         } else System.out.println("il laboratorio esiste già");
     }
 
-    public void modifyLaboratory(int index, String topic, String Sresp, String project) {
-        Laboratory laboratory = controller.getLaboratoryController().getLaboratoryArrayList().get(index);
+    public void modifyLaboratory(String name, String topic, String Sresp, String project) {
+        Laboratory laboratory = findLaboratory(name);
         if (!topic.isBlank()) {
             laboratory.setTopic(topic);
         } else laboratory.setTopic("No Description");
@@ -64,7 +63,7 @@ public class LaboratoryController {
                     break;
                 }
             }
-        }laboratory.setSresp(null);
+        }
 
         if(!project.equals("Null")){
             ArrayList<Project>projectArrayList=controller.getProjectController().getProjectArrayList();
@@ -76,27 +75,35 @@ public class LaboratoryController {
             }
         }laboratory.setProject(null);
     }
-public void dismissLaboratory(int index){
-      controller=Controller.getInstance();
-      Laboratory laboratory=laboratoryArrayList.get(index);
-      ArrayList<Employee>employeeArrayList=controller.getEmployeeController().getEmployeeArrayList();
-    for (Employee employee:employeeArrayList) {
-        if(employee.getLabName().equals(laboratory.getName())){
-            employee.setLab(null);
+
+    public Laboratory findLaboratory(String name){
+        for(Laboratory laboratory: laboratoryArrayList){
+            if (laboratory.getName().equals(name)) return laboratory;
         }
+        return null;
     }
-    ArrayList<TemporaryEmployee>temporaryEmployeeArrayList=controller.getTemporaryEmployeeController().temporaryEmployeeArrayList;
-    for (TemporaryEmployee temporaryEmployee:temporaryEmployeeArrayList) {
-        if(temporaryEmployee.getLabName().equals(laboratory.getName())){
-            temporaryEmployee.setLab(null);
+
+    public void dismissLaboratory(String name) {
+        controller = Controller.getInstance();
+        Laboratory laboratory = findLaboratory(name);
+        ArrayList<Employee> employeeArrayList = controller.getEmployeeController().getEmployeeArrayList();
+        for (Employee employee : employeeArrayList) {
+            if (employee.getLabName().equals(laboratory.getName())) {
+                employee.setLab(null);
+            }
         }
-    }
-    ArrayList<Equipment>equipmentArrayList=controller.getEquipmentController().getEquipmentArrayList();
-    for (Equipment equipment:equipmentArrayList) {
-        if(equipment.getLabName().equals(laboratory.getName())){
-            equipment.setLab(null);
+        ArrayList<TemporaryEmployee> temporaryEmployeeArrayList = controller.getTemporaryEmployeeController().temporaryEmployeeArrayList;
+        for (TemporaryEmployee temporaryEmployee : temporaryEmployeeArrayList) {
+            if (temporaryEmployee.getLabName().equals(laboratory.getName())) {
+                temporaryEmployee.setLab(null);
+            }
         }
+        ArrayList<Equipment> equipmentArrayList = controller.getEquipmentController().getEquipmentArrayList();
+        for (Equipment equipment : equipmentArrayList) {
+            if (equipment.getLabName().equals(laboratory.getName())) {
+                equipment.setLab(null);
+            }
+        }
+        laboratoryArrayList.remove(laboratory);
     }
-    laboratoryArrayList.remove(index);
-}
 }

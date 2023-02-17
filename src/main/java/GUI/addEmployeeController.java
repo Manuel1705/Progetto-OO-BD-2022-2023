@@ -84,10 +84,11 @@ public class addEmployeeController implements Initializable {
                         LocalDate.now(),
                         salaryAddEmployee.getText(),
                         labAddEmployee.getValue());
-            }
                 //chiusura finestra pop up
-            Stage stage = (Stage) hireEmployeeButton.getScene().getWindow();
-            stage.close();
+                Stage stage = (Stage) hireEmployeeButton.getScene().getWindow();
+                stage.close();
+            }
+
 
         }
     }

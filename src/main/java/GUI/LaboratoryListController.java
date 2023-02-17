@@ -21,23 +21,38 @@ import java.net.URL;
 import java.util.ResourceBundle;
 import Controller.Controller;
 public class LaboratoryListController implements Initializable {
-        @FXML private TableView<Laboratory> LabTable;
-        @FXML private TableColumn<Laboratory, String> LabNameTable;
-        @FXML private TableColumn<Laboratory, String> LabTopicTable;
-        @FXML private TableColumn<Laboratory, String> LabProjectTable;
-        @FXML private TableColumn<Laboratory, String> SrespLabTable;
-        @FXML private Button addLabButton;
-        @FXML private Button dismissLabButton;
-        @FXML private Button modifyLabButton;
-        Controller controller;
+    @FXML private TableView<Laboratory> LabTable;
+    @FXML private TableColumn<Laboratory, String> LabNameTable;
+    @FXML private TableColumn<Laboratory, String> LabTopicTable;
+    @FXML private TableColumn<Laboratory, String> LabProjectTable;
+    @FXML private TableColumn<Laboratory, String> SrespLabTable;
+    @FXML private Button addLabButton;
+    @FXML private Button dismissLabButton;
+    @FXML private Button modifyLabButton;
+    Controller controller;
 
-        static public ObservableList<Laboratory> list = FXCollections.observableArrayList();
-        public ObservableList<Laboratory> getLaboratoryList(){
+    public ObservableList<Laboratory> list = FXCollections.observableArrayList();
+
+    /**
+     * Metodo che carica i dati dal controller.
+     */
+    public void loadList(){
+            list.clear();
+            list.addAll(controller.getLaboratoryController().getLaboratoryArrayList());
+    }
+
+    /**
+     * Metodo che restituisce list.
+     * @return
+     */
+    public ObservableList<Laboratory> getLaboratoryList(){
             return list;
-        }
-        public void AddLaboratoryList(Laboratory lab) {
-            list.add(lab);
-        }
+    }
+
+    /**
+     * Metodo che apre la finestra per aggiungere un nuovo laboratorio.
+     * @throws IOException
+     */
     @FXML void AddLaboratory() throws IOException {
         Parent root = FXMLLoader.load(getClass().getResource("../GUI/addLaboratory.fxml"));
         scene = new Scene(root);
@@ -45,37 +60,75 @@ public class LaboratoryListController implements Initializable {
         stage.initModality(Modality.APPLICATION_MODAL);
         stage.setScene(scene);
         stage.showAndWait();
+        loadList();
     }
-        @FXML void modifyLaboratory() throws IOException{
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("../GUI/modifyLaboratory.fxml"));
-            root=loader.load();
-            stage= new Stage();
-            scene = new Scene(root);
-            stage.setScene(scene);
-            stage.initModality(Modality.APPLICATION_MODAL);
-            modifyLaboratoryController controller= loader.getController();
-            controller.setLaboratoryIndex(getSelectedLabIndex());
-            stage.showAndWait();
-            LabTable.refresh();
-        }
-        @FXML void dismissLaboratory() {
-            controller.getLaboratoryController().dismissLaboratory(getSelectedLabIndex());
-            list.remove(getSelectedLabIndex());
-        }
-        @Override public void initialize(URL url, ResourceBundle resourceBundle) {
-            controller=Controller.getInstance();
-            LabNameTable.setCellValueFactory(new PropertyValueFactory<Laboratory,String>("name"));
-            LabTopicTable.setCellValueFactory(new PropertyValueFactory<Laboratory,String>("topic"));
-            LabProjectTable.setCellValueFactory(new PropertyValueFactory<Laboratory,String>("ProjectCup"));
-            SrespLabTable.setCellValueFactory(new PropertyValueFactory<Laboratory,String>("SrespSSN"));
-            LabTable.setItems(getLaboratoryList());
+
+    /**
+     * Metodo che apre la finestra per modificare il laboratorio selezionato dall'utente.
+     * @throws IOException
+     */
+    @FXML
+    void modifyLaboratory() throws IOException {
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("../GUI/modifyLaboratory.fxml"));
+        root = loader.load();
+        stage = new Stage();
+        scene = new Scene(root);
+        stage.setScene(scene);
+        stage.initModality(Modality.APPLICATION_MODAL);
+        modifyLaboratoryController controller = loader.getController();
+        int i = getSelectedLabIndex();
+        controller.setDefaultFields(LabNameTable.getCellObservableValue(i).getValue(),
+                LabTopicTable.getCellObservableValue(i).getValue(),
+                SrespLabTable.getCellObservableValue(i).getValue(),
+                LabProjectTable.getCellObservableValue(i).getValue());
+        stage.showAndWait();
+        loadList();
     }
+
+    /**
+     * Metodo che rimuove il laboratorio selezionato dall'utente.
+     */
+    @FXML
+    void dismissLaboratory() {
+        controller.getLaboratoryController().dismissLaboratory(LabNameTable.getCellObservableValue(getSelectedLabIndex()).getValue());
+        loadList();
+    }
+
+    /**
+     * Metodo che inizializza la tabella.
+     * @param url
+     * @param resourceBundle
+     */
+    @Override
+    public void initialize(URL url, ResourceBundle resourceBundle) {
+        //Il metodo ottiene il controller
+        controller = Controller.getInstance();
+        //Il metodo carica i dati salvati nel controller
+        loadList();
+        //Vengono inizializzate le righe della tabella
+        LabNameTable.setCellValueFactory(new PropertyValueFactory<Laboratory, String>("name"));
+        LabTopicTable.setCellValueFactory(new PropertyValueFactory<Laboratory, String>("topic"));
+        LabProjectTable.setCellValueFactory(new PropertyValueFactory<Laboratory, String>("ProjectCup"));
+        SrespLabTable.setCellValueFactory(new PropertyValueFactory<Laboratory, String>("SrespSSN"));
+        LabTable.setItems(getLaboratoryList());
+    }
+
+    /**
+     * Metodo che restituisce l'indice del laboratorio selezionato nella tabella.
+     * @return
+     */
     @FXML public int getSelectedLabIndex() {
-                return LabTable.getSelectionModel().getSelectedIndex();
-        }
-        private Stage stage;
-        private Scene scene;
-        private Parent root;
+        return LabTable.getSelectionModel().getSelectedIndex();
+    }
+    private Stage stage;
+    private Scene scene;
+    private Parent root;
+
+    /**
+     * Metodo che apre la finestra Home.
+     * @param event
+     * @throws IOException
+     */
     @FXML void switchToHomeScene(ActionEvent event)  throws IOException {
             root = FXMLLoader.load(getClass().getResource("../GUI/Home.fxml"));
             stage = (Stage)((Node)event.getSource()).getScene().getWindow();
