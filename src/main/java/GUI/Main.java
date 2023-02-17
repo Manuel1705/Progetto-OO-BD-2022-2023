@@ -1,10 +1,10 @@
 package GUI;
 
-import Model.Employee;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.image.Image;
 import javafx.stage.Stage;
 
 public class Main extends Application{
@@ -16,6 +16,7 @@ public class Main extends Application{
         stage.setTitle("Project2022-2023");
         //stage.setMaximized(true);
         stage.setScene(home);
+        stage.getIcons().add(new Image("app-icon.png"));
         stage.show();
     }
     public static void main(String[] args){

@@ -1,9 +1,5 @@
 package GUI;
 import Controller.Controller;
-import Model.Employee;
-import Model.Equipment;
-import Model.Laboratory;
-import Model.Project;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -14,24 +10,18 @@ import javafx.scene.control.Label;
 import javafx.scene.layout.Pane;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
-
 import java.io.IOException;
-import java.time.LocalDate;
 
 public class HomeController
         {
                 @FXML
                 private Label EmpNumLabel;
-
                 @FXML
                 private Pane EmployeesButton;
-
                 @FXML
                 private Pane EquipmentButton;
-
                 @FXML
                 private Label EquipmentNumLabel;
-
                 @FXML
                 private Pane LabButton;
 

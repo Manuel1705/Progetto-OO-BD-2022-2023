@@ -14,6 +14,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.image.Image;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import java.io.IOException;
@@ -133,6 +134,7 @@ public class EmployeeListController implements Initializable {
         stage= new Stage();
         stage.initModality(Modality.APPLICATION_MODAL);
         stage.setScene(scene);
+        stage.getIcons().add(new Image("app-icon.png"));
         stage.showAndWait();
         loadList();
     }
@@ -161,6 +163,7 @@ public class EmployeeListController implements Initializable {
                 SalaryEmployeeTable.getCellObservableValue(i).getValue().toString() ,
                 emailEmployeeTable.getCellObservableValue(i).getValue(),
                 EmploymentDateEmployeeTable.getCellObservableValue(i).getValue().toString());
+        stage.getIcons().add(new Image("app-icon.png"));
         stage.showAndWait();
         loadList();
     }

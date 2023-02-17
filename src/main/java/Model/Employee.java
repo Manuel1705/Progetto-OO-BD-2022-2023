@@ -28,7 +28,7 @@ public class Employee {
         this.firstName = firstName;
         this.lastName = lastName;
         this.phoneNum = phoneNum;
-        this.employmentDate = LocalDate.now();
+        this.employmentDate = LocalDate.now(); //setta la data di assunzione dell'impiegato con la data attuale
         this.role = role;
         this.salary = salary;
         email="Null";
