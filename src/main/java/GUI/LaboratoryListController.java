@@ -5,6 +5,7 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.scene.image.Image;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Node;
@@ -59,6 +60,7 @@ public class LaboratoryListController implements Initializable {
         stage= new Stage();
         stage.initModality(Modality.APPLICATION_MODAL);
         stage.setScene(scene);
+        stage.getIcons().add(new Image("app-icon.png"));
         stage.showAndWait();
         loadList();
     }
@@ -81,6 +83,7 @@ public class LaboratoryListController implements Initializable {
                 LabTopicTable.getCellObservableValue(i).getValue(),
                 SrespLabTable.getCellObservableValue(i).getValue(),
                 LabProjectTable.getCellObservableValue(i).getValue());
+        stage.getIcons().add(new Image("app-icon.png"));
         stage.showAndWait();
         loadList();
     }
