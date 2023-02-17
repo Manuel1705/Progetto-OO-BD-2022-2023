@@ -60,7 +60,7 @@ public class PostgresDBConnection {
 
     /**
      * Metodo statico che implementa il pattern Singleton. Permette al metodo chiamante di
-     * ottenere l'istanza della classe PostgresDBConnection se essa e' gia' stata creata,
+     * ottenere l'istanza della classe PostgresDBConnection se essa è già stata creata,
      * altrimenti la crea usando il metodo costruttore privato.
      *
      * @return instance Istanza della classe PostgresDBConnection
@@ -90,7 +90,7 @@ public class PostgresDBConnection {
 
     /**
      * Metodo che restituisce l'oggetto connection
-     * @return Connnection
+     * @return Connection
      */
     public Connection getConnection() {
         return connection;
