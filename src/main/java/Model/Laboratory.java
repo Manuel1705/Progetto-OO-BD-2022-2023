@@ -2,7 +2,6 @@ package Model;
 
 public class Laboratory {
     private String name, topic;
-    private int numEmployees;
     private Employee Sresp;
     private Project project;
     
