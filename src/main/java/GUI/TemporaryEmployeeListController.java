@@ -15,6 +15,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.image.Image;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 
@@ -96,6 +97,7 @@ public class TemporaryEmployeeListController implements Initializable {
         stage= new Stage();
         stage.initModality(Modality.APPLICATION_MODAL);
         stage.setScene(scene);
+        stage.getIcons().add(new Image("app-icon.png"));
         stage.showAndWait();
     }
     @FXML void modifyTemporaryEmployee()throws IOException  {
@@ -107,6 +109,7 @@ public class TemporaryEmployeeListController implements Initializable {
         stage.initModality(Modality.APPLICATION_MODAL);
         modifyTemporaryEmployeeController controller= loader.getController();
         controller.setTemporaryEmployeeIndex(getSelectedTemporaryEmployeeIndex());
+        stage.getIcons().add(new Image("app-icon.png"));
         stage.showAndWait();
         TemporaryEmployeesTable.refresh();
     }

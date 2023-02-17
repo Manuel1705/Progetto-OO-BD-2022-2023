@@ -14,6 +14,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.image.Image;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import Controller.Controller;
@@ -40,6 +41,7 @@ public class ProjectListController implements Initializable {
         Stage stage= new Stage();
         stage.initModality(Modality.APPLICATION_MODAL);
         stage.setScene(scene);
+        stage.getIcons().add(new Image("app-icon.png"));
         stage.showAndWait();
     }
     @FXML public void dismissProject() {
@@ -60,6 +62,7 @@ public class ProjectListController implements Initializable {
         stage.initModality(Modality.APPLICATION_MODAL);
         modifyProjectController controller= loader.getController();
         controller.setProjectIndex(getSelectedProjectIndex());
+        stage.getIcons().add(new Image("app-icon.png"));
         stage.showAndWait();
         ProjectTable.refresh();
     }

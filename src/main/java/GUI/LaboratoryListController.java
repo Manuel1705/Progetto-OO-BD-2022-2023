@@ -14,6 +14,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.image.Image;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import java.io.IOException;
@@ -44,6 +45,7 @@ public class LaboratoryListController implements Initializable {
         stage= new Stage();
         stage.initModality(Modality.APPLICATION_MODAL);
         stage.setScene(scene);
+        stage.getIcons().add(new Image("app-icon.png"));
         stage.showAndWait();
     }
         @FXML void modifyLaboratory() throws IOException{
@@ -55,6 +57,7 @@ public class LaboratoryListController implements Initializable {
             stage.initModality(Modality.APPLICATION_MODAL);
             modifyLaboratoryController controller= loader.getController();
             controller.setLaboratoryIndex(getSelectedLabIndex());
+            stage.getIcons().add(new Image("app-icon.png"));
             stage.showAndWait();
             LabTable.refresh();
         }
