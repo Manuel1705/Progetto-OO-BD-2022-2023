@@ -21,7 +21,7 @@ public class modifyEmployeeController {
     @FXML private ChoiceBox<String> roleModifyEmployee;
     @FXML private TextField salaryModifyEmployee;
     @FXML private TextField ssnModifyEmployee;
-    Controller controller;
+    private Controller controller;
 
     private String ssn;
 

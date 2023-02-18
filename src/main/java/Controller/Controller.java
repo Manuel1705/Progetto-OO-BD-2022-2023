@@ -90,10 +90,10 @@ public class Controller
             for(int i = 0; i < ssnList.size(); i++){
                 System.out.println(ssnList.get(i));
                 Employee employee = new Employee(ssnList.get(i), firstNameList.get(i),
-                        lastNameList.get(i), phoneNumList.get(i), roleList.get(i), salaryList.get(i), employmentDateList.get(i).toLocalDate());
+                        lastNameList.get(i), phoneNumList.get(i), employeeController.convertRole(roleList.get(i)), salaryList.get(i), employmentDateList.get(i).toLocalDate());
                 employee.setEmail(emailList.get(i));
                 employee.setAddress(addressList.get(i));
-                employeeController.employeeArrayList.add(employee);
+                employeeController.addEmployeeList(employee);
             }
         }
         catch (SQLException ex){

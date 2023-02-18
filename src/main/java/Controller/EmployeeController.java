@@ -132,4 +132,17 @@ public class EmployeeController {
         }
         employeeArrayList.remove(employee);
     }
+    public String convertRole(String role){
+        switch(role){
+            case "executive":
+                return "Executive";
+            case "senior":
+                return "Senior";
+            case "middle":
+                return "Middle";
+            case "junior":
+                return "Junior";
+        }
+        return null;
+    }
 }

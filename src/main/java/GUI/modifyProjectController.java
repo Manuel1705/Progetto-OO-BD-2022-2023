@@ -35,14 +35,25 @@ public class modifyProjectController {
 
     @FXML
     private TextField nameModifyProject;
-    Controller controller;
-    int index;
-    public void setProjectIndex(int index){
+    private Controller controller;
+
+    private String cup;
+
+    /**
+     * Metodo che inizializza i campi della finestra.
+     * @param cup
+     * @param name
+     * @param budget
+     * @param sResp
+     * @param sRef
+     * @param endDate
+     */
+    public void setDefaultFields(String cup, String name, String budget, String sResp, String sRef,
+                                 String endDate)
+    {
         controller=Controller.getInstance();
-        this.index=index;
+        this.cup = cup;
         ArrayList<Employee> employeeArrayList=controller.getEmployeeController().getEmployeeArrayList();
-        SrefModifyProject.getItems().add("Empty Position");
-        SrespModifyProject.getItems().add("Empty Position");
         for (Employee employee: employeeArrayList) {
             if(employee.getRole().equals("Executive")){
                 SrespModifyProject.getItems().add(employee.getSSN());
@@ -52,13 +63,18 @@ public class modifyProjectController {
             }
         }
         ArrayList<Project>projectArrayList=controller.getProjectController().getProjectArrayList();
-        cupModifyProject.setText(projectArrayList.get(index).getCup());
-        nameModifyProject.setText(projectArrayList.get(index).getName());
-        budgetModifyProject.setText(Float.toString(projectArrayList.get(index).getBudget()));
-        endDateModifyProject.setValue(projectArrayList.get(index).getEndDate());
-        SrefModifyProject.setValue(projectArrayList.get(index).getSrefSSN());
-        SrespModifyProject.setValue(projectArrayList.get(index).getSrespSSN());
+        cupModifyProject.setText(cup);
+        nameModifyProject.setText(name);
+        budgetModifyProject.setText(budget);
+        endDateModifyProject.setValue(LocalDate.parse(endDate));
+        SrefModifyProject.setValue(sRef);
+        SrespModifyProject.setValue(sResp);
     }
+
+    /**
+     * Metodo che viene chiamato quando l'utente conferma la modifica del progetto.
+     * Verifica la validita' dell'input e passa i dati al controller.
+     */
     @FXML
     void modifyProject() {
         boolean check = true;
@@ -67,16 +83,9 @@ public class modifyProjectController {
         }
         if(nameModifyProject.getText().length()>30){
             check=false;
-        }else {
-            for (char c : nameModifyProject.getText().toCharArray()) {
-                if (Character.isDigit(c)) {
-                    check = false;
-                }
-            }
         }
         if (check) {
-            controller.getProjectController().modifyProjectList(index,
-                    cupModifyProject.getText(),
+            controller.getProjectController().modifyProjectList(cup,
                     nameModifyProject.getText(),
                     budgetModifyProject.getText(),
                     endDateModifyProject.getValue(),

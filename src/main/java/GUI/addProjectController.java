@@ -20,25 +20,26 @@ public class addProjectController implements Initializable {
     @FXML private TextField nameAddProject;
     @FXML private ChoiceBox<String> SrefAddProject;
     @FXML private ChoiceBox<String> SrespAddProject;
-    Controller controller;
+    private Controller controller;
+
+    /**
+     * Metodo che verifica la validita' dell'input e passa al controller i dati inseriti dall'utente.
+     */
     @FXML void addProject() {
-        if(!cupAddProject.getText().isBlank()&&
-            !nameAddProject.getText().isBlank()&&
-            !budgetAddProject.getText().isBlank()&&
+        if(!cupAddProject.getText().isBlank() &&
+            !nameAddProject.getText().isBlank() &&
+            !budgetAddProject.getText().isBlank() &&
+            !SrefAddProject.getValue().isBlank() &&
+            !SrespAddProject.getValue().isBlank() &&
             endDateAddProject.getValue().compareTo(LocalDate.now())>0) {
             boolean check = true;
+            //Controllo sulla lunghezza del CUP
             if (cupAddProject.getText().length() != 15) {
                 check = false;
             }
+            //Controllo sulla lunghezza del nome
             if(nameAddProject.getText().length()>30){
                 check=false;
-            }else {
-                for (char c : nameAddProject.getText().toCharArray()) {
-                    if (Character.isDigit(c)) {
-                        check = false;
-                        break;
-                    }
-                }
             }
             if (check) {
                 controller.getProjectController().addProjectList(
@@ -54,11 +55,17 @@ public class addProjectController implements Initializable {
             }
         }
     }
+
+    /**
+     * Metodo che inizializza la finestra.
+     * @param url
+     * @param resourceBundle
+     */
     @Override public void initialize(URL url, ResourceBundle resourceBundle) {
         controller=Controller.getInstance();
         ArrayList<Employee> employeeArrayList=controller.getEmployeeController().getEmployeeArrayList();
-        SrefAddProject.getItems().add("Empty Position");
-        SrespAddProject.getItems().add("Empty Position");
+        //SrefAddProject.getItems().add("Empty Position");
+        //SrespAddProject.getItems().add("Empty Position");
         for (Employee employee: employeeArrayList) {
             if(employee.getRole().equals("Executive")){
                 SrespAddProject.getItems().add(employee.getSSN());

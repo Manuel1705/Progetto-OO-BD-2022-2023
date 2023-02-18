@@ -13,6 +13,13 @@ public class ProjectController {
     public void addProjectList(Project project){
         projectArrayList.add(project);
     }
+
+    private Project findProject(String cup){
+        for(Project project: projectArrayList){
+            if (project.getCup().equals(cup)) return project;
+        }
+        return null;
+    }
     public void addProjectList(String cup, String name, String budget,
                                LocalDate endDate, String SrespSSN,
                                String SrefSSN)
@@ -47,14 +54,12 @@ public class ProjectController {
 
             Project project = new Project(cup, name, Float.parseFloat(budget), endDate, Sresp, Sref);
             projectArrayList.add(project);
-            ProjectListController.list.add(project);
         }else System.out.println("Il progetto esiste già");
     }
-    public void modifyProjectList(int index,
-                                  String cup,String name,
+    public void modifyProjectList(String cup,String name,
                                   String budget,LocalDate endDate,
                                   String Sref,String Sresp) {
-        Project project = controller.getProjectController().getProjectArrayList().get(index);
+        Project project = findProject(cup);
         if (project.getBudget()<=Float.parseFloat(budget)) {
             ArrayList<Employee> employeeArrayList = controller.getEmployeeController().getEmployeeArrayList();
             if (!Sref.equals("Empty Position")) {
@@ -78,9 +83,9 @@ public class ProjectController {
             project.setEndDate(endDate);
         }else System.out.println("Il budget può essere solo maggiorato");
     }
-    public void dismissProject(int index){
+    public void dismissProject(String cup){
         controller=Controller.getInstance();
-        Project project=projectArrayList.get(index);
+        Project project= findProject(cup);
         ArrayList<Equipment>equipmentArrayList=controller.getEquipmentController().equipmentArrayList;
         for(Equipment equipment: equipmentArrayList){
             if(equipment.getProjectCup().equals(project.getCup())){
@@ -93,6 +98,6 @@ public class ProjectController {
                 temporaryEmployeeArrayList.remove(i);
             }
         }
-        projectArrayList.remove(index);
+        projectArrayList.remove(project);
     }
 }

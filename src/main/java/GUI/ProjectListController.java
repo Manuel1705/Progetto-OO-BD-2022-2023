@@ -20,21 +20,37 @@ import javafx.stage.Stage;
 import Controller.Controller;
 import java.io.IOException;
 import java.net.URL;
+import java.time.LocalDate;
 import java.util.ResourceBundle;
 public class ProjectListController implements Initializable {
     @FXML private TableView<Project> ProjectTable;
-    @FXML private TableColumn<Project, String> ProjectBudgetTable;
+    @FXML private TableColumn<Project, Float> ProjectBudgetTable;
     @FXML private TableColumn<Project, String> ProjectCupTable;
-    @FXML private TableColumn<Project, String> ProjectEndDateTable;
+    @FXML private TableColumn<Project, LocalDate> ProjectEndDateTable;
     @FXML private TableColumn<Project, String> ProjectNameTable;
-    @FXML private TableColumn<Project, String> ProjectRemainingFundsTable;
-    @FXML private TableColumn<Project, String> ProjectStartDateTable;
+    @FXML private TableColumn<Project, Float> ProjectRemainingFundsTable;
+    @FXML private TableColumn<Project, LocalDate> ProjectStartDateTable;
     @FXML private TableColumn<Project, String> scientificReferentTable;
     @FXML private TableColumn<Project, String> scientificResponsibleTable;
     @FXML private Button addProjectButton;
     @FXML private Button dismissProjectButton;
     @FXML private Button modifyProjectButton;
-    Controller controller;
+
+    public ObservableList<Project> list= FXCollections.observableArrayList();
+    private Controller controller;
+
+    /**
+     * Metodo che carica i progetti salvati nel controller nell'Observable List
+     */
+    private void loadList(){
+        list.clear();
+        list.addAll(controller.getProjectController().getProjectArrayList());
+    }
+
+    /**
+     * Metodo che apre la finestra per inserire un progetto.
+     * @throws IOException
+     */
     @FXML void AddProject() throws IOException{
         Parent root = FXMLLoader.load(getClass().getResource("../GUI/addProject.fxml"));
         scene = new Scene(root);
@@ -43,16 +59,30 @@ public class ProjectListController implements Initializable {
         stage.setScene(scene);
         stage.getIcons().add(new Image("app-icon.png"));
         stage.showAndWait();
+        loadList();
     }
+
+    /**
+     * Metodo che rimuove il progetto selezionato dall'utente.
+     */
     @FXML public void dismissProject() {
-        controller.getProjectController().dismissProject(getSelectedProjectIndex());
-        list.remove(getSelectedProjectIndex());
-        TemporaryEmployeeListController temporaryEmployee= new TemporaryEmployeeListController();
-        temporaryEmployee.reloadList();
+        controller.getProjectController().dismissProject(ProjectCupTable.getCellObservableValue(getSelectedProjectIndex()).getValue());
+        loadList();
+
     }
+
+    /**
+     * Metodo che restituisce l'indice del progetto selezionato dall'utente nella tabella.
+     * @return
+     */
     @FXML public int getSelectedProjectIndex() {
         return ProjectTable.getSelectionModel().getSelectedIndex();
     }
+
+    /**
+     * Metodo che apre la finestra per modificare il progetto selezionato dall'utente.
+     * @throws IOException
+     */
     @FXML void modifyProject() throws IOException{
         FXMLLoader loader = new FXMLLoader(getClass().getResource("../GUI/modifyProject.fxml"));
         root=loader.load();
@@ -61,14 +91,26 @@ public class ProjectListController implements Initializable {
         stage.setScene(scene);
         stage.initModality(Modality.APPLICATION_MODAL);
         modifyProjectController controller= loader.getController();
-        controller.setProjectIndex(getSelectedProjectIndex());
+        int i = getSelectedProjectIndex();
+        controller.setDefaultFields(ProjectCupTable.getCellObservableValue(i).getValue(),
+                ProjectNameTable.getCellObservableValue(i).getValue(),
+                ProjectBudgetTable.getCellObservableValue(i).getValue().toString(),
+                scientificResponsibleTable.getCellObservableValue(i).getValue(),
+                scientificReferentTable.getCellObservableValue(i).getValue(),
+                ProjectEndDateTable.getCellObservableValue(i).getValue().toString());
         stage.getIcons().add(new Image("app-icon.png"));
         stage.showAndWait();
-        ProjectTable.refresh();
+        loadList();
     }
     private Stage stage;
     private Scene scene;
     private Parent root;
+
+    /**
+     * Metodo che ritorna alla schermata iniziale
+     * @param event
+     * @throws IOException
+     */
     @FXML void switchToHomeScene(ActionEvent event) throws IOException {
         root = FXMLLoader.load(getClass().getResource("../GUI/Home.fxml"));
         stage = (Stage)((Node)event.getSource()).getScene().getWindow();
@@ -77,21 +119,32 @@ public class ProjectListController implements Initializable {
         stage.setScene(scene);
         stage.show();
     }
-static public ObservableList<Project> list= FXCollections.observableArrayList();
-    void addList(Project project) {
-        list.add(project);
-    }
+
+    /**
+     * Metodo che restituisce la lista della tabella.
+     * @return
+     */
     public ObservableList<Project> getProjectsList(){
         return list;
     }
+
+    /**
+     * Metodo che inizializza la finestra
+     * @param url
+     * @param resourceBundle
+     */
     @Override public void initialize(URL url, ResourceBundle resourceBundle) {
+        //Viene inizializzato il controller
         controller=Controller.getInstance();
+        //Vengono caricati i dati salvati nel controller
+        loadList();
+        //Vengono inizializzate le celle della tabella
         ProjectNameTable.setCellValueFactory(new PropertyValueFactory<Project,String>("name"));
         ProjectCupTable.setCellValueFactory(new PropertyValueFactory<Project,String>("cup"));
-        ProjectBudgetTable.setCellValueFactory(new PropertyValueFactory<Project,String>("budget"));
-        ProjectStartDateTable.setCellValueFactory(new PropertyValueFactory<Project,String>("startDate"));
-        ProjectEndDateTable.setCellValueFactory(new PropertyValueFactory<Project,String>("endDate"));
-        ProjectRemainingFundsTable.setCellValueFactory(new PropertyValueFactory<Project,String>("remainingFunds"));
+        ProjectBudgetTable.setCellValueFactory(new PropertyValueFactory<Project,Float>("budget"));
+        ProjectStartDateTable.setCellValueFactory(new PropertyValueFactory<Project,LocalDate>("startDate"));
+        ProjectEndDateTable.setCellValueFactory(new PropertyValueFactory<Project,LocalDate>("endDate"));
+        ProjectRemainingFundsTable.setCellValueFactory(new PropertyValueFactory<Project,Float>("remainingFunds"));
         scientificResponsibleTable.setCellValueFactory(new PropertyValueFactory<Project,String>("SrespSSN"));
         scientificReferentTable.setCellValueFactory(new PropertyValueFactory<Project,String>("SrefSSN"));
         ProjectTable.setItems(getProjectsList());
