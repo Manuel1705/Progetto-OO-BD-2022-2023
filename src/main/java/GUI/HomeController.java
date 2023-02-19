@@ -7,6 +7,7 @@ import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Label;
+import javafx.scene.image.Image;
 import javafx.scene.layout.Pane;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
@@ -96,6 +97,7 @@ public class HomeController
                         stage= new Stage();
                         stage.initModality(Modality.APPLICATION_MODAL);
                         stage.setScene(scene);
+                        stage.getIcons().add(new Image("app-icon.png"));
                         stage.showAndWait();
                 }
     }
