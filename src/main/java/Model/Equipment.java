@@ -3,7 +3,8 @@ package Model;
 import java.time.LocalDate;
 
 public class Equipment {
-    String id,name, description, dealer;
+    int id;
+    String name, description, dealer;
     Laboratory lab;
     Project project;
     float price;
@@ -18,7 +19,7 @@ public class Equipment {
      * @param lab       Il laboratorio che ha acquistato tale equipaggiamento
      * @param dealer    Colui che ha venduto l'equipaggiamento
     */
-    public Equipment(String id, String name, float price, Project project,Laboratory lab, String dealer){
+    public Equipment(int id, String name, float price, Project project,Laboratory lab, String dealer){
         this.name=name;
         this.id=id;
         this.lab=lab;
@@ -35,7 +36,7 @@ public class Equipment {
      * @param price     Prezzo dell'equipaggiamento
      * @param dealer    Colui che ha venduto l'equipaggiamento
     */
-    public Equipment(String id, String name, float price,String dealer){
+    public Equipment(int id, String name, float price, String dealer){
         this.name=name;
         this.id=id;
         lab=null;
@@ -95,7 +96,7 @@ public class Equipment {
      * Metodo che restituisce l'identificativo dell'equipaggiamento
      * @return L'id dell'equipaggiamento
     */
-    public String getId(){return id;  }
+    public int getId(){return id;  }
     
     /**
      * Metodo che restituisce il prezzo dell'equipaggiamento

@@ -21,28 +21,38 @@ public class addEquipmentController implements Initializable {
     @FXML private TextField nameAddEquipment;
     @FXML private TextField priceAddEquipment;
     @FXML private ChoiceBox<String> projectAddEquipment;
-    Controller controller;
+    private Controller controller;
+
+    /**
+     * Metodo che viene chiamato quando l'utente conferma l'inserimento dei dati. Effettua i controlli sulla validita' dell'input.
+     */
     @FXML void buyEquipment() {
             if(!idEquipmentAddEquipment.getText().isBlank() &&
             !nameAddEquipment.getText().isBlank() &&
             !priceAddEquipment.getText().isBlank() &&
             !dealerAddEquipment.getText().isBlank()) {
                 boolean check = true;
+                //Controllo sulla lunghezza dell'input
                 if (nameAddEquipment.getText().length() > 30) {
                     check = false;
-                } else {
-                    for (char c : nameAddEquipment.getText().toCharArray()) {
-                        if (Character.isDigit(c)) {
-                            check = false;
-                            break;
-                        }
-                    }
+                }
+                //Controllo sulla lunghezza del nome del fornitore
+                if (dealerAddEquipment.getText().length() > 30) {
+                    check = false;
+                }
+                //Controllo sulla lunghezza del nome
+                if (nameAddEquipment.getText().length() > 30) {
+                    check = false;
+                }
+                //Controllo sulla lunghezza della descrizione
+                if (descriptionAddEquipment.getText().length() > 200) {
+                    check = false;
                 }
                 if (check) {
-                    controller.getEquipmentController().addEquipmentList(idEquipmentAddEquipment.getText(),
+                    controller.getEquipmentController().addEquipmentList(Integer.parseInt(idEquipmentAddEquipment.getText()),
                             nameAddEquipment.getText(),
                             descriptionAddEquipment.getText(),
-                            priceAddEquipment.getText(),
+                            Float.parseFloat(priceAddEquipment.getText()),
                             dealerAddEquipment.getText(),
                             labAddEquipment.getValue(),
                             projectAddEquipment.getValue());
@@ -51,14 +61,22 @@ public class addEquipmentController implements Initializable {
                 }
             }
     }
+
+    /**
+     * Metodo che inizializza la finestra.
+     * @param url
+     * @param resourceBundle
+     */
     @Override public void initialize(URL url, ResourceBundle resourceBundle) {
         controller=Controller.getInstance();
-        ArrayList<Laboratory> labs= controller.getLaboratoryController().getLaboratoryArrayList();
+        //Il metodo inizializza il menu' a tendina dei laboratori.
+        ArrayList<Laboratory> labs = controller.getLaboratoryController().getLaboratoryArrayList();
         labAddEquipment.getItems().add("Null");
         for (Laboratory lab: labs) {
             labAddEquipment.getItems().add(lab.getName());
         }
-        ArrayList<Project>projectArrayList=controller.getProjectController().getProjectArrayList();
+        //Il metodo inizializza il menu' a tendina dei progetti.
+        ArrayList<Project>projectArrayList = controller.getProjectController().getProjectArrayList();
         for (Project project:projectArrayList) {
             projectAddEquipment.getItems().add(project.getCup());
         }

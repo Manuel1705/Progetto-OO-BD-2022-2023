@@ -19,12 +19,24 @@ public class modifyEquipmentController {
     @FXML private TextField nameModifyEquipment;
     @FXML private TextField priceModifyEquipment;
     @FXML private ChoiceBox<String> projectModifyEquipment;
-    Controller controller;
-    int index;
-    public void setEquipmentIndex(int index){
+    private Controller controller;
+    int id;
+
+    /**
+     * Metodo che inizializza i campi della finestra.
+     * @param id
+     * @param description
+     * @param dealer
+     * @param labName
+     * @param projectCup
+     * @param price
+     * @param name
+     */
+    public void setDefaultFields(int id, String description, String dealer, String labName, String projectCup, float price,
+                                  String name){
         controller=Controller.getInstance();
-        this.index=index;
-        ArrayList<Laboratory> labs= controller.getLaboratoryController().getLaboratoryArrayList();
+        this.id = id;
+        ArrayList<Laboratory> labs = controller.getLaboratoryController().getLaboratoryArrayList();
         labModifyEquipment.getItems().add("Null");
         for (Laboratory lab: labs) {
             labModifyEquipment.getItems().add(lab.getName());
@@ -34,35 +46,50 @@ public class modifyEquipmentController {
         for (Project project:projectArrayList) {
             projectModifyEquipment.getItems().add(project.getCup());
         }
-        ArrayList<Equipment>equipmentArrayList=controller.getEquipmentController().getEquipmentArrayList();
-        idEquipmentModifyEquipment.setText(equipmentArrayList.get(index).getId());
-        nameModifyEquipment.setText(equipmentArrayList.get(index).getName());
-        dealerModifyEquipment.setText(equipmentArrayList.get(index).getDealer());
-        descriptionModifyEquipment.setText(equipmentArrayList.get(index).getDescription());
-        priceModifyEquipment.setText(Float.toString(equipmentArrayList.get(index).getPrice()));
-        labModifyEquipment.setValue(equipmentArrayList.get(index).getLabName());
-        projectModifyEquipment.setValue(equipmentArrayList.get(index).getProjectCup());
+
+        idEquipmentModifyEquipment.setText(Integer.toString(id));
+        nameModifyEquipment.setText(name);
+        dealerModifyEquipment.setText(dealer);
+        descriptionModifyEquipment.setText(description);
+        priceModifyEquipment.setText(Float.toString(price));
+        labModifyEquipment.setValue(labName);
+        projectModifyEquipment.setValue(projectCup);
     }
+
+    /**
+     * Metodo che viene chiamato quando l'utente conferma la modifica.
+     */
     @FXML void modifyEquipment() {
-        boolean check = true;
-        if (nameModifyEquipment.getText().length() > 30) {
-            check = false;
-        } else {
-            for (char c : nameModifyEquipment.getText().toCharArray()) {
-                if (Character.isDigit(c)) {
-                    check = false;
-                    break;
-                }
+        if(!idEquipmentModifyEquipment.getText().isBlank() &&
+                !nameModifyEquipment.getText().isBlank() &&
+                !priceModifyEquipment.getText().isBlank() &&
+                !dealerModifyEquipment.getText().isBlank()) {
+            boolean check = true;
+            //Controllo sulla lunghezza dell'input
+            if (nameModifyEquipment.getText().length() > 30) {
+                check = false;
             }
-        }
-        if (check) {
-            controller.getEquipmentController().modifyEquipment(index,
-                    nameModifyEquipment.getText(),
-                    descriptionModifyEquipment.getText(),
-                    labModifyEquipment.getValue(),
-                    projectModifyEquipment.getValue());
-            Stage stage = (Stage) modifyEquipmentButton.getScene().getWindow();
-            stage.close();
+            //Controllo sulla lunghezza del nome del fornitore
+            if (dealerModifyEquipment.getText().length() > 30) {
+                check = false;
+            }
+            //Controllo sulla lunghezza del nome
+            if (nameModifyEquipment.getText().length() > 30) {
+                check = false;
+            }
+            //Controllo sulla lunghezza della descrizione
+            if (descriptionModifyEquipment.getText().length() > 200) {
+                check = false;
+            }
+            if (check) {
+                controller.getEquipmentController().modifyEquipment(id,
+                        nameModifyEquipment.getText(),
+                        descriptionModifyEquipment.getText(),
+                        labModifyEquipment.getValue(),
+                        projectModifyEquipment.getValue());
+                Stage stage = (Stage) modifyEquipmentButton.getScene().getWindow();
+                stage.close();
+            }
         }
     }
 }

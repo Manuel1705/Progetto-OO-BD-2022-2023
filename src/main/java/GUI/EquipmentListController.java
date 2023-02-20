@@ -19,6 +19,7 @@ import javafx.stage.Modality;
 import javafx.stage.Stage;
 import java.io.IOException;
 import java.net.URL;
+import java.time.LocalDate;
 import java.util.ResourceBundle;
 public class EquipmentListController implements Initializable {
     @FXML private TableView<Equipment> EquipmentTable;
@@ -26,12 +27,27 @@ public class EquipmentListController implements Initializable {
     @FXML private TableColumn<Equipment , String>  equipmentDescriptionTable;
     @FXML private TableColumn<Equipment , String>  equipmentLaboratoryTable;
     @FXML private TableColumn<Equipment , String>  equipmentNameTable;
-    @FXML private TableColumn<Equipment , String>  equipmentPriceTable;
+    @FXML private TableColumn<Equipment , Float>  equipmentPriceTable;
     @FXML private TableColumn<Equipment , String>  equipmentProjectTable;
-    @FXML private TableColumn<Equipment , String>  equipmentPurchaseDateTable;
-    @FXML private TableColumn<Equipment , String>  idEquipmentTable;
+    @FXML private TableColumn<Equipment , LocalDate>  equipmentPurchaseDateTable;
+    @FXML private TableColumn<Equipment , Integer>  idEquipmentTable;
+    @FXML private Button buyEquipmentButton;
     @FXML private Button modifyEquipmentButton;
-    Controller controller;
+    public ObservableList<Equipment> list = FXCollections.observableArrayList();
+    private Controller controller;
+
+    /**
+     * Metodo che carica l'equipaggiamento salvato dal controller nell'Observable List
+     */
+    private void loadList(){
+        list.clear();
+        list.addAll(controller.getEquipmentController().getEquipmentArrayList());
+    }
+
+    /**
+     * Metodo che apre la finestra che permette di modificare l'equipaggiamento selezionato dall'utente.
+     * @throws IOException
+     */
     @FXML void modifyEquipment() throws IOException{
         FXMLLoader loader = new FXMLLoader(getClass().getResource("../GUI/modifyEquipment.fxml"));
         root=loader.load();
@@ -40,12 +56,23 @@ public class EquipmentListController implements Initializable {
         stage.setScene(scene);
         stage.initModality(Modality.APPLICATION_MODAL);
         modifyEquipmentController controller= loader.getController();
-        controller.setEquipmentIndex(getSelectedEquipmentIndex());
+        int i = getSelectedEquipmentIndex();
+        controller.setDefaultFields(idEquipmentTable.getCellObservableValue(i).getValue(),
+                equipmentDescriptionTable.getCellObservableValue(i).getValue(),
+                equipmentDealerTable.getCellObservableValue(i).getValue(),
+                equipmentLaboratoryTable.getCellObservableValue(i).getValue(),
+                equipmentProjectTable.getCellObservableValue(i).getValue(),
+                equipmentPriceTable.getCellObservableValue(i).getValue(),
+                equipmentNameTable.getCellObservableValue(i).getValue());
         stage.getIcons().add(new Image("app-icon.png"));
         stage.showAndWait();
-        EquipmentTable.refresh();
+        loadList();
     }
-    @FXML private Button buyEquipmentButton;
+
+    /**
+     * Metodo che apre la finestra che permette di acquistare nuovo equipaggiamento.
+     * @throws IOException
+     */
     @FXML void buyEquipment()throws IOException{
         Parent root = FXMLLoader.load(getClass().getResource("../GUI/addEquipment.fxml"));
         scene = new Scene(root);
@@ -54,18 +81,34 @@ public class EquipmentListController implements Initializable {
         stage.setScene(scene);
         stage.getIcons().add(new Image("app-icon.png"));
         stage.showAndWait();
+        loadList();
     }
     @FXML private Button sellEquipmentButton;
+
+    /**
+     * Metodo che permette di rimuovere l'quipaggiamento selezionato dall'utente.
+     */
     @FXML public void sellEquipment(){
-        controller.getEquipmentController().deleteEquipment(getSelectedEquipmentIndex());
-        list.remove(getSelectedEquipmentIndex());
+        controller.getEquipmentController().deleteEquipment(idEquipmentTable.getCellObservableValue(getSelectedEquipmentIndex()).getValue());
+        loadList();
     }
+
+    /**
+     * Metodo che restituisce l'indice della riga selezionata dall'utente.
+     * @return
+     */
     @FXML public int getSelectedEquipmentIndex(){
         return EquipmentTable.getSelectionModel().getSelectedIndex();
     }
     private Stage stage;
     private Scene scene;
     private Parent root;
+
+    /**
+     * Metodo che permette di ritornare alla schermata home.
+     * @param event
+     * @throws IOException
+     */
     @FXML void switchToHomeScene(ActionEvent event) throws IOException {
         root = FXMLLoader.load(getClass().getResource("../GUI/Home.fxml"));
         stage = (Stage)((Node)event.getSource()).getScene().getWindow();
@@ -74,22 +117,33 @@ public class EquipmentListController implements Initializable {
         stage.setScene(scene);
         stage.show();
     }
-    public static ObservableList<Equipment> list = FXCollections.observableArrayList();
-    public void addEquipment(Equipment equipment){
-        list.add(equipment);
-    }
+
+    /**
+     * Metodo che inizializza la finestra.
+     * @param url
+     * @param resourceBundle
+     */
     @Override public void initialize(URL url, ResourceBundle resourceBundle) {
+        //Il metodo ottiene un'istanza del controller.
         controller=Controller.getInstance();
-        idEquipmentTable.setCellValueFactory(new PropertyValueFactory<Equipment,String>("id"));
+        //Vengono caricati i dati del controller.
+        loadList();
+        //Vengono inizializzate le celle della tabella.
+        idEquipmentTable.setCellValueFactory(new PropertyValueFactory<Equipment, Integer>("id"));
         equipmentDealerTable.setCellValueFactory(new PropertyValueFactory<Equipment,String>("dealer"));
         equipmentDescriptionTable.setCellValueFactory(new PropertyValueFactory<Equipment,String>("description"));
         equipmentLaboratoryTable.setCellValueFactory(new PropertyValueFactory<Equipment,String>("labName"));
         equipmentNameTable.setCellValueFactory(new PropertyValueFactory<Equipment,String>("name"));
-        equipmentPriceTable.setCellValueFactory(new PropertyValueFactory<Equipment,String>("price"));
-        equipmentPurchaseDateTable.setCellValueFactory(new PropertyValueFactory<Equipment,String>("purchaseDate"));
+        equipmentPriceTable.setCellValueFactory(new PropertyValueFactory<Equipment, Float>("price"));
+        equipmentPurchaseDateTable.setCellValueFactory(new PropertyValueFactory<Equipment, LocalDate>("purchaseDate"));
         equipmentProjectTable.setCellValueFactory(new PropertyValueFactory<Equipment,String>("projectCup"));
         EquipmentTable.setItems(getEquipmentList());
     }
+
+    /**
+     * Metodo che restituisce l'Observable List usata dalla tabella.
+     * @return
+     */
     public ObservableList<Equipment> getEquipmentList(){
         return list;
     }
