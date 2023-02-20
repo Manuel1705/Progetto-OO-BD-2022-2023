@@ -63,13 +63,6 @@ public class addEmployeeController implements Initializable {
             //Controllo sul dominio del numero di telefono
             if (phoneNumberAddEmployee.getText().length() != 10) {
                 check = false;
-            } else {
-                for (char c : phoneNumberAddEmployee.getText().toCharArray()) {
-                    if (!Character.isDigit(c)) {
-                        check = false;
-                        break;
-                    }
-                }
             }
            //Se tutti i controlli sono risultati validi il metodo passa i dati al controller.
             if (check) {

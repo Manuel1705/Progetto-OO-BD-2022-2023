@@ -43,33 +43,41 @@ public class modifyTemporaryEmployeeController {
     @FXML
     private TextField ssnModifyTemporaryEmployee;
     Controller controller;
-    int index;
-    public void setTemporaryEmployeeIndex(int index)  {
+    String ssn;
+    public void setDefaultFields(String ssn, String firstName, String lastName, String phoneNumber, String address,
+                                 String project, String labName, String salary, String email)
+    {
     controller=Controller.getInstance();
-    this.index=index;
-    ArrayList<Laboratory> labs= controller.getLaboratoryController().getLaboratoryArrayList();
+    this.ssn = ssn;
+    ArrayList<Laboratory> labs = controller.getLaboratoryController().getLaboratoryArrayList();
+    //Inizializzazione menu a tendina laboratori
     labModifyTemporaryEmployee.getItems().add("Null");
     for (Laboratory lab: labs){
         labModifyTemporaryEmployee.getItems().add(lab.getName());
     }
-        ArrayList<Project> projects= controller.getProjectController().getProjectArrayList();
-        for (Project prj: projects){
-            projectModifyTemporaryEmployee.getItems().add(prj.getName());
-        }
+    //Inizializzazione menu a tendina progetti
+    ArrayList<Project> projects= controller.getProjectController().getProjectArrayList();
+    for (Project prj: projects){
+        projectModifyTemporaryEmployee.getItems().add(prj.getCup());
+    }
     ArrayList<TemporaryEmployee>employeeArrayList=controller.getTemporaryEmployeeController().getTemporaryEmployeeArrayList();
-    firstNameModifyTemporaryEmployee.setText(employeeArrayList.get(index).getFirstName());
-    lastNameModifyTemporaryEmployee.setText(employeeArrayList.get(index).getLastName());
-    phoneNumberModifyTemporaryEmployee.setText(employeeArrayList.get(index).getPhoneNum());
-    addressModifyTemporaryEmployee.setText(employeeArrayList.get(index).getAddress());
-    labModifyTemporaryEmployee.setValue(employeeArrayList.get(index).getLabName());
-    salaryModifyTemporaryEmployee.setText(Float.toString(employeeArrayList.get(index).getSalary()));
-    ssnModifyTemporaryEmployee.setText(employeeArrayList.get(index).getSSN());
-    emailModifyTemporaryEmployee.setText(employeeArrayList.get(index).getEmail());
-    projectModifyTemporaryEmployee.setValue(employeeArrayList.get(index).getProjectCup());
+    firstNameModifyTemporaryEmployee.setText(firstName);
+    lastNameModifyTemporaryEmployee.setText(lastName);
+    phoneNumberModifyTemporaryEmployee.setText(phoneNumber);
+    addressModifyTemporaryEmployee.setText(address);
+    labModifyTemporaryEmployee.setValue(labName);
+    salaryModifyTemporaryEmployee.setText(salary);
+    ssnModifyTemporaryEmployee.setText(ssn);
+    emailModifyTemporaryEmployee.setText(email);
+    projectModifyTemporaryEmployee.setValue(project);
 }
+    /**
+     * Metodo che effettua i controlli sulla validita' dell'input e passa i dati al controller che modifica i dati dell'impiegato.
+     */
     @FXML
     void modifyTemporaryEmployee() {
         boolean check = true;
+        //Controllo sul dominio del SSN
         if (ssnModifyTemporaryEmployee.getText().length() != 15) {
             check = false;
         } else {
@@ -80,38 +88,21 @@ public class modifyTemporaryEmployeeController {
                 }
             }
         }
+        //Controllo lunghezza nome
         if(firstNameModifyTemporaryEmployee.getText().length()>30){
             check=false;
-        }else {
-            for (char c : firstNameModifyTemporaryEmployee.getText().toCharArray()) {
-                if (Character.isDigit(c)) {
-                    check = false;
-                    break;
-                }
-            }
         }
+        //Controllo lunghezza cognome
         if(lastNameModifyTemporaryEmployee.getText().length()>30){
             check=false;
-        }else {
-            for (char c : lastNameModifyTemporaryEmployee.getText().toCharArray()) {
-                if (Character.isDigit(c)) {
-                    check = false;
-                    break;
-                }
-            }
         }
+        //Controllo lunghezza numero telefonico
         if (phoneNumberModifyTemporaryEmployee.getText().length() != 10) {
             check = false;
-        } else {
-            for (char c : phoneNumberModifyTemporaryEmployee.getText().toCharArray()) {
-                if (!Character.isDigit(c)) {
-                    check = false;
-                    break;
-                }
-            }
         }
+
         if (check) {
-            controller.getTemporaryEmployeeController().modifyTemporaryEmployeeList(index,
+            controller.getTemporaryEmployeeController().modifyTemporaryEmployeeList(ssn,
                     firstNameModifyTemporaryEmployee.getText(),
                     lastNameModifyTemporaryEmployee.getText(),
                     phoneNumberModifyTemporaryEmployee.getText(),

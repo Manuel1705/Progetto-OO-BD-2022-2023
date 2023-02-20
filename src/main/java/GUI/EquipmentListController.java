@@ -86,7 +86,7 @@ public class EquipmentListController implements Initializable {
     @FXML private Button sellEquipmentButton;
 
     /**
-     * Metodo che permette di rimuovere l'quipaggiamento selezionato dall'utente.
+     * Metodo che permette di rimuovere l'equipaggiamento selezionato dall'utente.
      */
     @FXML public void sellEquipment(){
         controller.getEquipmentController().deleteEquipment(idEquipmentTable.getCellObservableValue(getSelectedEquipmentIndex()).getValue());

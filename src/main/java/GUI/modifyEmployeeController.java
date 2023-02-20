@@ -90,13 +90,6 @@ public class modifyEmployeeController {
         //Controllo dominio numero telefonico
         if (phoneNumberModifyEmployee.getText().length() != 10) {
             check = false;
-        } else {
-            for (char c : phoneNumberModifyEmployee.getText().toCharArray()) {
-                if (!Character.isDigit(c)) {
-                    check = false;
-                    break;
-                }
-            }
         }
         //Chiamata a controller
         if (check) {

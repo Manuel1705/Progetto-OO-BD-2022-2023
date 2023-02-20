@@ -14,6 +14,19 @@ public class TemporaryEmployeeController {
     Controller controller;
     ArrayList<TemporaryEmployee> temporaryEmployeeArrayList= new ArrayList<TemporaryEmployee>();
     public ArrayList<TemporaryEmployee> getTemporaryEmployeeArrayList(){ return temporaryEmployeeArrayList; }
+
+    /**
+     * Metodo che cerca l'impiegato temporaneo con l'ssn fornito e se esso esiste viene restituito. Altrimenti il metodo
+     * restituisce null.
+     * @param ssn
+     * @return
+     */
+    private TemporaryEmployee findTemporaryEmployee(String ssn){
+        for(TemporaryEmployee temporaryEmployee: temporaryEmployeeArrayList){
+            if(temporaryEmployee.getSSN().equals(ssn)) return temporaryEmployee;
+        }
+        return null;
+    }
     public void addTemporaryEmployeeList(TemporaryEmployee employee){temporaryEmployeeArrayList.add(employee);}
     public TemporaryEmployee addTemporaryEmployeeList(String ssn, String firstName, String lastName,
                                 String phoneNum, String address,
@@ -68,12 +81,12 @@ public class TemporaryEmployeeController {
         }else System.out.println("Errore");
         return null;
     }
-    public void modifyTemporaryEmployeeList(int index , String firstName, String lastName,
+    public void modifyTemporaryEmployeeList(String ssn, String firstName, String lastName,
                                    String phoneNumber, String salary,
                                    String lab,String address,String email,String project)
     {
 
-        TemporaryEmployee employee = controller.getTemporaryEmployeeController().getTemporaryEmployeeArrayList().get(index);
+        TemporaryEmployee employee = findTemporaryEmployee(ssn);
         employee.setFirstName(firstName);
         employee.setLastName(lastName);
         employee.setPhoneNum(phoneNumber);
@@ -109,9 +122,9 @@ public class TemporaryEmployeeController {
             employee.setEmail(email);
         }
     }
-    public void fireTemporaryEmployee(int index){
+    public void fireTemporaryEmployee(String ssn){
         controller=Controller.getInstance();
-        TemporaryEmployee temporaryEmployee=temporaryEmployeeArrayList.get(index);
+        TemporaryEmployee temporaryEmployee = findTemporaryEmployee(ssn);
         Project project=null;
         ArrayList<Project>projectArrayList=controller.getProjectController().getProjectArrayList();
         for (Project prj: projectArrayList){
@@ -132,6 +145,6 @@ public class TemporaryEmployeeController {
             project.setRemainingFunds(project.getRemainingFunds()+recoveredBudget);
             System.out.println(project.getRemainingFunds());
         }
-        temporaryEmployeeArrayList.remove(index);
+        temporaryEmployeeArrayList.remove(temporaryEmployee);
     }
 }

@@ -46,8 +46,12 @@ public class addTemporaryEmployeeController implements Initializable {
 
     @FXML
     private TextField ssnAddTemporaryEmployee;
-    Controller controller;
+    private Controller controller;
 
+    /**
+     * Metodo che viene chiamato quando l'utente conferma l'inserimento dei dati forniti. Effettua i controlli sulla
+     * validita' dell'input.
+     */
     @FXML
     void hireTemporaryEmployee() {
         if (!ssnAddTemporaryEmployee.getText().isBlank() &&
@@ -57,6 +61,7 @@ public class addTemporaryEmployeeController implements Initializable {
                 !phoneNumberAddTemporaryEmployee.getText().isBlank() &&
                 !projectAddTemporaryEmployee.getValue().isBlank()) {
             boolean check = true;
+            //Controllo sul dominio del SSN
             if (ssnAddTemporaryEmployee.getText().length() != 15) {
                 check = false;
             } else {
@@ -67,38 +72,20 @@ public class addTemporaryEmployeeController implements Initializable {
                     }
                 }
             }
+            //Controllo sulla lunghezza del nome
             if(firstNameAddTemporaryEmployee.getText().length()>30){
                 check=false;
-            }else {
-                for (char c : firstNameAddTemporaryEmployee.getText().toCharArray()) {
-                    if (Character.isDigit(c)) {
-                        check = false;
-                        break;
-                    }
-                }
             }
+            //Controllo sulla lunghezza del cognome
             if(lastNameAddTemporaryEmployee.getText().length()>30){
                 check=false;
-            }else {
-                for (char c : lastNameAddTemporaryEmployee.getText().toCharArray()) {
-                    if (Character.isDigit(c)) {
-                        check = false;
-                        break;
-                    }
-                }
             }
+            //Controllo sulla lunghezza del numero telefonico
             if (phoneNumberAddTemporaryEmployee.getText().length() != 10) {
                 check = false;
-            } else {
-                for (char c : phoneNumberAddTemporaryEmployee.getText().toCharArray()) {
-                    if (!Character.isDigit(c)) {
-                        check = false;
-                        break;
-                    }
-                }
             }
             if (check) {
-                TemporaryEmployee temporaryEmployee = controller.getTemporaryEmployeeController().addTemporaryEmployeeList(ssnAddTemporaryEmployee.getText(),
+                controller.getTemporaryEmployeeController().addTemporaryEmployeeList(ssnAddTemporaryEmployee.getText(),
                         firstNameAddTemporaryEmployee.getText(),
                         lastNameAddTemporaryEmployee.getText(),
                         phoneNumberAddTemporaryEmployee.getText(),
@@ -108,15 +95,18 @@ public class addTemporaryEmployeeController implements Initializable {
                         salaryAddTemporaryEmployee.getText(),
                         labAddTemporaryEmployee.getValue(),
                         projectAddTemporaryEmployee.getValue());
-                if (temporaryEmployee != null) {
-                    TemporaryEmployeeListController.list.add(temporaryEmployee);
-                }
+
                 Stage stage = (Stage) hireTemporaryEmployeeButton.getScene().getWindow();
                 stage.close();
             }
         }
     }
 
+    /**
+     * Metodo che inizializza la finestra.
+     * @param url
+     * @param resourceBundle
+     */
     @Override public void initialize(URL url, ResourceBundle resourceBundle) {
         controller=Controller.getInstance();
         ArrayList<Laboratory> labs= controller.getLaboratoryController().getLaboratoryArrayList();
@@ -129,5 +119,5 @@ public class addTemporaryEmployeeController implements Initializable {
             projectAddTemporaryEmployee.getItems().add(prj.getCup());
         }
     }
-    }
+}
 
