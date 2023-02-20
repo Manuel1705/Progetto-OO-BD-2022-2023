@@ -89,10 +89,10 @@ public class Employee {
      */
     public void CheckRole(){
         if (getEmploymentTime().getYears()>=3 && getEmploymentTime().getYears()<7 &&
-                !role.equals("Executive")){
+                !role.equals("Executive") &&!role.equals("Middle")){
             ChangeRole("Middle",salary+500);
         }
-        if (getEmploymentTime().getYears()>=7 && !role.equals("Executive")){
+        if (getEmploymentTime().getYears()>=7 && !role.equals("Executive") &&!role.equals("Senior")){
             ChangeRole("Senior",salary+500);
         }
     }

@@ -52,7 +52,6 @@ public class TemporaryEmployeeListController implements Initializable {
     Controller controller;
     static public ObservableList<TemporaryEmployee>list= FXCollections.observableArrayList();
     public void reloadList(){
-        controller=Controller.getInstance();
         list.clear();
         list.addAll(controller.getTemporaryEmployeeController().getTemporaryEmployeeArrayList());
     }
