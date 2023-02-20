@@ -1,6 +1,7 @@
 package Controller;
 
 import GUI.EquipmentListController;
+import Model.Employee;
 import Model.Equipment;
 import Model.Laboratory;
 import Model.Project;
@@ -11,12 +12,12 @@ public class EquipmentController {
     ArrayList<Equipment>equipmentArrayList= new ArrayList<>();
     public ArrayList<Equipment> getEquipmentArrayList(){ return equipmentArrayList; }
     public void addEquipmentList(Equipment equipment){equipmentArrayList.add(equipment);}
-    public void addEquipmentList(String id_equipment, String name, String description,
-                                 String price,String dealer,
+    public void addEquipmentList(int id_equipment, String name, String description,
+                                 float price, String dealer,
                                  String lab,String project){
         boolean exists=false;
         for (Equipment equipment : equipmentArrayList) {
-            if(equipment.getId().equals(id_equipment)){
+            if(equipment.getId() == id_equipment){
                 exists=true;
                 break;
             }
@@ -29,9 +30,9 @@ public class EquipmentController {
                 ArrayList<Project> projectArrayList = controller.getProjectController().getProjectArrayList();
                 for (Project prj : projectArrayList) {
                     if (prj.getCup().equals(project)) {
-                        if (prj.getRemainingFunds() / 2 - Float.parseFloat(price) >= 0) {
+                        if (prj.getRemainingFunds() / 2 - price >= 0) {
                             equipment = new Equipment(id_equipment, name,
-                                    Float.parseFloat(price), dealer);
+                                    price, dealer);
                             equipment.setProject(prj);
                             verifyPrice = true;
                         }
@@ -53,14 +54,19 @@ public class EquipmentController {
                 } else equipment.setDescription("No description");
 
                 equipmentArrayList.add(equipment);
-                EquipmentListController.list.add(equipment);
             }
         }
     }
-    public void modifyEquipment(int index,String name,
+    private Equipment findEquipment(int id){
+        for(Equipment equipment: equipmentArrayList) {
+            if (equipment.getId() == id) return equipment;
+        }
+        return null;
+    }
+    public void modifyEquipment(int id,String name,
                                 String description,String lab,String project){
         controller=Controller.getInstance();
-        Equipment equipment = controller.getEquipmentController().getEquipmentArrayList().get(index);
+        Equipment equipment = findEquipment(id);
         equipment.setName(name);
         equipment.setDescription(description);
         if(!lab.equals("Null")){
@@ -82,9 +88,9 @@ public class EquipmentController {
                 }
             }
         }else equipment.setProject(null);
-        }
-        public void deleteEquipment(int index){
-            equipmentArrayList.remove(index);
-        }
     }
+    public void deleteEquipment(int id){
+        equipmentArrayList.remove(findEquipment(id));
+    }
+}
 
