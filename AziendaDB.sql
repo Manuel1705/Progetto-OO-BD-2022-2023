@@ -10,6 +10,8 @@ create domain azienda.role_type as varchar(9) constraint role_domain check (
 );
 --dominio per SSN
 create domain azienda.ssn_type as char(15) constraint ssn_domain check(value similar to '\d+');
+--dominio per phone_num
+create domain azienda.phone_num_type as char(10) constraint phone_num_domain check(value similar to '\d+');
 --END DOMINI
 ----------------
 --SCHEMA FISICO
@@ -18,7 +20,7 @@ create table azienda.employee(
     ssn azienda.ssn_type,
     first_name varchar(30) not null,
     last_name varchar(30) not null,
-    phone_num varchar(10) not null,
+    phone_num phone_num_type(10) not null,
     email varchar(50),
     address varchar(50),
     employment_date date not null,
