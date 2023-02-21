@@ -20,6 +20,7 @@ import javafx.stage.Stage;
 import java.io.IOException;
 import java.net.URL;
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.ResourceBundle;
 public class EmployeeListController implements Initializable {
 
@@ -88,9 +89,34 @@ public class EmployeeListController implements Initializable {
     /**
      * Metodo che elimina l'impiegato selezionato dall'utente usando il controller.
      */
-    @FXML public void fireEmployee(){
-        controller.getEmployeeController().fireEmployee(ssnEmployeeTable.getCellObservableValue(getSelectedEmployeeIndex()).getValue());
+    @FXML public void fireEmployee() throws IOException{
+        String selectedSsn = ssnEmployeeTable.getCellObservableValue(getSelectedEmployeeIndex()).getValue();
+        ArrayList<String> errors = controller.getEmployeeController().checkEmployeeDelete(selectedSsn);
+        if(errors.isEmpty())
+            controller.getEmployeeController().fireEmployee(selectedSsn);
+        else{
+            showErrorWindow(errors);
+        }
         loadList();
+    }
+
+    /**
+     * Metodo che apre una finestra elencando gli errori passati in input.
+     * @param errors
+     * @throws IOException
+     */
+    private void showErrorWindow (ArrayList<String> errors) throws IOException {
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("../GUI/ErrorWindow.fxml"));
+        root=loader.load();
+        stage= new Stage();
+        scene = new Scene(root);
+        stage.setScene(scene);
+        stage.initModality(Modality.APPLICATION_MODAL);
+        stage.setScene(scene);
+        stage.getIcons().add(new Image("app-icon.png"));
+        ErrorWindowController errorWindow = loader.getController();
+        errorWindow.setErrors(errors);
+        stage.showAndWait();
     }
     private Stage stage;
     private Scene scene;

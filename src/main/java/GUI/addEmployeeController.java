@@ -2,11 +2,18 @@ package GUI;
 import Controller.Controller;
 import Model.Laboratory;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.TextField;
+import javafx.scene.image.Image;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
+
+import java.io.IOException;
 import java.net.URL;
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -24,66 +31,82 @@ public class addEmployeeController implements Initializable {
     @FXML private ChoiceBox<String> roleAddEmployee;
     @FXML private TextField salaryAddEmployee;
     @FXML private TextField ssnAddEmployee;
+
+    private Stage stage;
+    private Scene scene;
+    private Parent root;
     private Controller controller;
 
     /**
      * Metodo che viene chiamato quando l'utente conferma l'inserimento.
      * Esegue i controlli sulla validita' dell'input e passa i dati inseriti dall'utente al controller che crea l'oggetto impiegato.
      */
-    @FXML void hireEmployee(){
+    @FXML void hireEmployee() throws IOException{
+        ArrayList<String> errors = new ArrayList<String>();
 
-        //Controllo sulla validita' dei campi obbligatori.
-        if(!roleAddEmployee.getValue().isBlank() &&
-                !ssnAddEmployee.getText().isBlank() &&
-                !firstNameAddEmployee.getText().isBlank() &&
-                !lastNameAddEmployee.getText().isBlank()&&
-                !salaryAddEmployee.getText().isBlank() &&
-                !phoneNumberAddEmployee.getText().isBlank())
-        {
-            boolean check = true;
-            //Controllo sul dominio dell'SSN
-            if (ssnAddEmployee.getText().length() != 15) {
-                check = false;
-            } else {
-                for (char c : ssnAddEmployee.getText().toCharArray()) {
-                    if (!Character.isDigit(c)) {
-                        check = false;
-                        break;
-                    }
-                }
-            }
-            //Controllo sulla lunghezza del nome
-            if(firstNameAddEmployee.getText().length()>30){
-                check=false;
-            }
-            //Controllo sulla lunghezza del cognome
-            if (lastNameAddEmployee.getText().length()>30){
-                check=false;
-            }
-            //Controllo sul dominio del numero di telefono
-            if (phoneNumberAddEmployee.getText().length() != 10) {
-                check = false;
-            }
-           //Se tutti i controlli sono risultati validi il metodo passa i dati al controller.
-            if (check) {
-                controller.getEmployeeController().addEmployeeList(
-                        ssnAddEmployee.getText(),
-                        firstNameAddEmployee.getText(),
-                        lastNameAddEmployee.getText(),
-                        phoneNumberAddEmployee.getText(),
-                        addressAddEmployee.getText(),
-                        roleAddEmployee.getValue(),
-                        emailAddEmployee.getText(),
-                        LocalDate.now(),
-                        salaryAddEmployee.getText(),
-                        labAddEmployee.getValue());
-                //chiusura finestra pop up
-                Stage stage = (Stage) hireEmployeeButton.getScene().getWindow();
-                stage.close();
-            }
-
-
+        try{
+            Float.parseFloat(salaryAddEmployee.getText());
         }
+        catch (Exception ex){
+            errors.add("Salary must be a valid number.");
+            salaryAddEmployee.setText("0");
+        }
+
+        errors.addAll(controller.getEmployeeController().checkEmployeeInsert(ssnAddEmployee.getText(),
+                firstNameAddEmployee.getText(),
+                lastNameAddEmployee.getText(),
+                phoneNumberAddEmployee.getText(),
+                addressAddEmployee.getText(),
+                roleAddEmployee.getValue(),
+                emailAddEmployee.getText(),
+                LocalDate.now(),
+                Float.parseFloat(salaryAddEmployee.getText()),
+                labAddEmployee.getValue()));
+
+
+        //Se tutti i controlli sono risultati validi il metodo passa i dati al controller.
+        if (errors.isEmpty()) {
+            controller.getEmployeeController().addEmployeeList(
+                    ssnAddEmployee.getText(),
+                    firstNameAddEmployee.getText(),
+                    lastNameAddEmployee.getText(),
+                    phoneNumberAddEmployee.getText(),
+                    addressAddEmployee.getText(),
+                    roleAddEmployee.getValue(),
+                    emailAddEmployee.getText(),
+                    LocalDate.now(),
+                    Float.parseFloat(salaryAddEmployee.getText()),
+                    labAddEmployee.getValue());
+            //chiusura finestra pop up
+            Stage stage = (Stage) hireEmployeeButton.getScene().getWindow();
+            stage.close();
+            }
+        //Altrimenti viene mostrata una finestra di errore
+        else{
+            showErrorWindow(errors);
+        }
+
+
+
+    }
+
+    /**
+     * Metodo che apre una finestra elencando gli errori passati in input.
+     * @param errors
+     * @throws IOException
+     */
+    private void showErrorWindow (ArrayList<String> errors) throws IOException {
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("../GUI/ErrorWindow.fxml"));
+        root=loader.load();
+        stage= new Stage();
+        scene = new Scene(root);
+        stage.setScene(scene);
+        stage.initModality(Modality.APPLICATION_MODAL);
+        stage.setScene(scene);
+        stage.getIcons().add(new Image("app-icon.png"));
+        ErrorWindowController errorWindow = loader.getController();
+        errorWindow.setErrors(errors);
+        stage.showAndWait();
     }
 
     /**
@@ -95,7 +118,7 @@ public class addEmployeeController implements Initializable {
         roleAddEmployee.getItems().addAll(roles);
         controller=Controller.getInstance();
         ArrayList<Laboratory> labs= controller.getLaboratoryController().getLaboratoryArrayList();
-        labAddEmployee.getItems().add("Null");
+        labAddEmployee.getItems().add(null);
         for (Laboratory lab: labs) {
             labAddEmployee.getItems().add(lab.getName());
         }

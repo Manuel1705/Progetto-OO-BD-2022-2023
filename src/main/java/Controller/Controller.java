@@ -22,14 +22,14 @@ public class Controller
     private CareerDevelopmentController careerDevelopmentController;
 
     private Controller(){ //costruttore
-        employeeController = new EmployeeController();
+        employeeController = new EmployeeController(this);
         projectController = new ProjectController();
         laboratoryController = new LaboratoryController();
         equipmentController = new EquipmentController();
         temporaryEmployeeController= new TemporaryEmployeeController();
         careerDevelopmentController= new CareerDevelopmentController();
     }
-    private static Controller instance=null;
+    private static Controller instance = null;
     public static Controller getInstance(){//singleton controller
         if(instance==null)
             instance=new Controller();
@@ -42,6 +42,7 @@ public class Controller
     public EquipmentController getEquipmentController(){return equipmentController;}
     public TemporaryEmployeeController getTemporaryEmployeeController(){return temporaryEmployeeController;}
     public CareerDevelopmentController getCareerDevelopmentController(){ return careerDevelopmentController;}
+    public Boolean isDBConnected(){return DBSet;}
 
     /**
      * Metodo che collega il programma al database che corrisponde ai parametri di ingresso e carica i dati in memoria
@@ -70,7 +71,7 @@ public class Controller
     private void loadDB(){
         try {
             DAOEmployee daoEmployee = new DAOEmployeePostgres();
-            employeeController.employeeArrayList.clear();
+            employeeController.getEmployeeArrayList().clear();
 
             ArrayList<String> ssnList = new ArrayList<String>();
             ArrayList<String> firstNameList = new ArrayList<String>();

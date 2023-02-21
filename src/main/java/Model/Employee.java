@@ -31,9 +31,9 @@ public class Employee {
         this.employmentDate = LocalDate.now(); //setta la data di assunzione dell'impiegato con la data attuale
         this.role = role;
         this.salary = salary;
-        email="Null";
-        address="Null";
-        lab=null;
+        email = null;
+        address = null;
+        lab = null;
     }
     //costruttore con employmentDate esplicito
     public Employee(String ssn, String firstName, String lastName, String phoneNum, String role, float salary, LocalDate employmentDate) {
@@ -44,8 +44,8 @@ public class Employee {
         this.employmentDate = employmentDate;
         this.role = role;
         this.salary = salary;
-        email="Null";
-        address="Null";
+        email= null;
+        address = null;
         lab=null;
     }
     /**
