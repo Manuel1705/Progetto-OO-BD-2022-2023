@@ -95,7 +95,7 @@ public class EmployeeController {
         //Controllo dominio data di assunzione
         if(employmentDate.isAfter(LocalDate.now())) errors.add("Employment date must be a past or current date.");
         //Controllo dominio salario
-        //if(salary == null) errors.add("Salary must be inserted.");
+        if(salary < 0) errors.add("Salary must be positive.");
         //Controllo dominio ruolo
         if(role == null || (!role.equals("Junior") && !role.equals("Middle") && !role.equals("Senior") && !role.equals("Executive")))
             errors.add("Role invalid.");
@@ -155,7 +155,7 @@ public class EmployeeController {
         if(address != null && address.length() > 50) errors.add("Address is too long. (Max. 50 characters)");
 
         //Controllo dominio salario
-        //if(salary == null) errors.add("Salary must be inserted.");
+        if(salary < 0) errors.add("Salary must be positive.");
         //Controllo dominio ruolo
 
         if(role == null || (!role.equals("Junior") && !role.equals("Middle") && !role.equals("Senior") && !role.equals("Executive")))

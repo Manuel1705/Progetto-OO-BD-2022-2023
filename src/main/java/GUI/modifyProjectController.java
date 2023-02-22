@@ -87,7 +87,7 @@ public class modifyProjectController {
         if (check) {
             controller.getProjectController().modifyProjectList(cup,
                     nameModifyProject.getText(),
-                    budgetModifyProject.getText(),
+                    Float.parseFloat(budgetModifyProject.getText()),
                     endDateModifyProject.getValue(),
                     SrefModifyProject.getValue(),
                     SrespModifyProject.getValue());

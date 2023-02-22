@@ -18,39 +18,23 @@ public class Project{
      * @param cup       Codice che identifica il progetto
      * @param name      Nome del progetto
      * @param budget    Soldi stanziati per il progetto
+     * @param startDate Data di inizio del progetto
      * @param endDate   Data di termine del progetto
      * @param Sresp     È l'impiegato che viene scelto come responsabile scientifico del progetto
      * @param Sref      È l'impiegato che viene scelto come referente scientifico del progetto
      */
-    public Project(String cup, String name, float budget, LocalDate endDate, Employee Sresp,Employee Sref){
+    public Project(String cup, String name, float budget, LocalDate startDate, LocalDate endDate, Employee Sresp,Employee Sref){
         this.cup=cup;
         this.name=name;
         this.budget=budget;
         remainingFunds=budget;
-        startDate=LocalDate.now(); //quando viene creato un nuovo progetto, la sua data iniziale corrisponde alla data attuale
+        this.startDate= startDate;
         this.endDate=endDate;
         this.Sresp=Sresp;
         this.Sref=Sref;
     }
     
-    /**
-     * Costruttore della classe Project con inizializzazione degli attributi Sref e Sresp a null.
-     * @param cup       Codice che identifica il progetto
-     * @param name      Nome del progetto
-     * @param budget    Soldi stanziati per il progetto
-     * @param endDate   Data di termine del progetto
-    */
-    public Project(String cup, String name, float budget, LocalDate endDate){
-        this.cup=cup;
-        this.name=name;
-        this.budget=budget;
-        remainingFunds=budget;
-        startDate=LocalDate.now(); //la data iniziale del progetto corrisponde alla data attuale
-        this.endDate=endDate;
-        Sref=null;
-        Sresp=null;
-    }
-    
+
     //public void PurchaseEquipment(String name, String description, int id, Laboratory lab, float price, String dealer){
       //      purchases.add(new Purchase(price,LocalDate.now(),dealer,new Equipment(,name, description, id, lab)));
     //}
