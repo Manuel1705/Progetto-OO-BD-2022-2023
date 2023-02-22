@@ -78,7 +78,7 @@ public class Laboratory {
         if(project !=null){
             return project.getName();
         }
-        else return "Null";
+        else return null;
      }
      
      /**
@@ -89,7 +89,7 @@ public class Laboratory {
         if(project !=null){
             return project.getCup();
         }
-        else return "Null";
+        else return null;
      }
      
      /**
@@ -99,7 +99,7 @@ public class Laboratory {
      public String getSrespSSN(){
         if (Sresp!=null){
             return Sresp.getSSN();
-        }else return "Null";
+        }else return null;
      }
     
     /**

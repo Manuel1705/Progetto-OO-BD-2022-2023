@@ -23,8 +23,8 @@ public class Controller
 
     private Controller(){ //costruttore
         employeeController = new EmployeeController(this);
-        projectController = new ProjectController();
-        laboratoryController = new LaboratoryController();
+        projectController = new ProjectController(this);
+        laboratoryController = new LaboratoryController(this);
         equipmentController = new EquipmentController();
         temporaryEmployeeController= new TemporaryEmployeeController();
         careerDevelopmentController= new CareerDevelopmentController();

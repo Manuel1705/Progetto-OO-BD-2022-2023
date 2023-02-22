@@ -5,8 +5,8 @@ import Model.*;
 import java.time.LocalDate;
 import java.util.ArrayList;
 public class ProjectController {
-    Controller controller;
-    ArrayList<Project> projectArrayList= new ArrayList<>();
+    private Controller controller;
+    private ArrayList<Project> projectArrayList= new ArrayList<>();
     public ArrayList<Project> getProjectArrayList(){
         return projectArrayList;
     }
@@ -14,11 +14,28 @@ public class ProjectController {
         projectArrayList.add(project);
     }
 
-    private Project findProject(String cup){
+
+    /**
+     * Costruttore che riceve in input il controller che lo ha chiamato e inizializza l'attributo controller.
+     * @param controller
+     */
+    public ProjectController(Controller controller){
+        this.controller = controller;
+    }
+    public Project findProject(String cup){
         for(Project project: projectArrayList){
             if (project.getCup().equals(cup)) return project;
         }
         return null;
+    }
+
+    public int labCount(String cup){
+        Project project = findProject(cup);
+        int count = 0;
+        for(Laboratory lab: controller.getLaboratoryController().getLaboratoryArrayList()){
+            if (lab.getProjectCup().equals(cup)) count ++;
+        }
+        return count;
     }
     public void addProjectList(String cup, String name, String budget,
                                LocalDate endDate, String SrespSSN,

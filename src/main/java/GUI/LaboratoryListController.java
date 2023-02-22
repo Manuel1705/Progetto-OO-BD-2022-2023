@@ -19,6 +19,7 @@ import javafx.stage.Modality;
 import javafx.stage.Stage;
 import java.io.IOException;
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.ResourceBundle;
 import Controller.Controller;
 public class LaboratoryListController implements Initializable {
@@ -92,8 +93,13 @@ public class LaboratoryListController implements Initializable {
      * Metodo che rimuove il laboratorio selezionato dall'utente.
      */
     @FXML
-    void dismissLaboratory() {
-        controller.getLaboratoryController().dismissLaboratory(LabNameTable.getCellObservableValue(getSelectedLabIndex()).getValue());
+    void dismissLaboratory() throws IOException{
+        String selectedName = LabNameTable.getCellObservableValue(getSelectedLabIndex()).getValue();
+        ArrayList<String> errors = controller.getLaboratoryController().checkLaboratoryDelete(selectedName);
+        if(errors.isEmpty())
+            controller.getLaboratoryController().dismissLaboratory(selectedName);
+        else
+            showErrorWindow(errors);
         loadList();
     }
 
@@ -141,4 +147,22 @@ public class LaboratoryListController implements Initializable {
             stage.show();
         }
 
+    /**
+     * Metodo che apre una finestra elencando gli errori passati in input.
+     * @param errors
+     * @throws IOException
+     */
+    private void showErrorWindow (ArrayList<String> errors) throws IOException {
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("../GUI/ErrorWindow.fxml"));
+        root=loader.load();
+        stage= new Stage();
+        scene = new Scene(root);
+        stage.setScene(scene);
+        stage.initModality(Modality.APPLICATION_MODAL);
+        stage.setScene(scene);
+        stage.getIcons().add(new Image("app-icon.png"));
+        ErrorWindowController errorWindow = loader.getController();
+        errorWindow.setErrors(errors);
+        stage.showAndWait();
+    }
 }

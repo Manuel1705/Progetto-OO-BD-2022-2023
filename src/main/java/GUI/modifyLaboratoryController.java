@@ -4,12 +4,18 @@ import Model.Employee;
 import Model.Laboratory;
 import Model.Project;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
+import javafx.scene.image.Image;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
 
+import java.io.IOException;
 import java.util.ArrayList;
 
 public class modifyLaboratoryController {
@@ -18,6 +24,10 @@ public class modifyLaboratoryController {
     @FXML private TextField nameModifyLaboratory;
     @FXML private ChoiceBox<String> projectModifyLaboratory;
     @FXML private TextArea topicModifyLaboratory;
+
+    private Stage stage;
+    private Scene scene;
+    private Parent root;
     private Controller controller;
     private String name;
 
@@ -40,7 +50,7 @@ public class modifyLaboratoryController {
         }
         //Inizializza il campo del progetto
         ArrayList<Project>projectArrayList=controller.getProjectController().getProjectArrayList();
-        projectModifyLaboratory.getItems().add("Null");
+        projectModifyLaboratory.getItems().add("");
         for (Project project:projectArrayList) {
             projectModifyLaboratory.getItems().add(project.getCup());
         }
@@ -54,25 +64,40 @@ public class modifyLaboratoryController {
     /**
      * Questo metodo viene chiamato quando l'utente conferma la modifica del laboratorio e passa i dati inseriti al controller.
      */
-    @FXML void modifyLaboratory() {
-        boolean check = true;
-        if (!nameModifyLaboratory.getText().isBlank() && !SrespModifyLaboratory.getValue().isBlank()) {
-            //Controllo sulla lunghezza del nome
-            if (nameModifyLaboratory.getText().length() > 30) {
-                check = false;
-            }
-            //Controllo sulla lunghezza del topic.
-            if (topicModifyLaboratory.getText().length() > 50) {
-                check = false;
-            }
-            if (check) {
-                controller.getLaboratoryController().modifyLaboratory(name,
-                        topicModifyLaboratory.getText(),
-                        SrespModifyLaboratory.getValue(),
-                        projectModifyLaboratory.getValue());
-                Stage stage = (Stage) modifyLaboratoryButton.getScene().getWindow();
-                stage.close();
-            }
+    @FXML void modifyLaboratory() throws IOException{
+        ArrayList<String> errors = controller.getLaboratoryController().checkLaboratoryModify(name,
+                topicModifyLaboratory.getText(),
+                SrespModifyLaboratory.getValue(),
+                projectModifyLaboratory.getValue());
+        if (errors.isEmpty()) {
+            controller.getLaboratoryController().modifyLaboratory(name,
+                    topicModifyLaboratory.getText(),
+                    SrespModifyLaboratory.getValue(),
+                    projectModifyLaboratory.getValue());
+            Stage stage = (Stage) modifyLaboratoryButton.getScene().getWindow();
+            stage.close();
         }
+        else{
+            showErrorWindow(errors);
+        }
+    }
+
+    /**
+     * Metodo che apre una finestra elencando gli errori passati in input.
+     * @param errors
+     * @throws IOException
+     */
+    private void showErrorWindow (ArrayList<String> errors) throws IOException {
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("../GUI/ErrorWindow.fxml"));
+        root=loader.load();
+        stage= new Stage();
+        scene = new Scene(root);
+        stage.setScene(scene);
+        stage.initModality(Modality.APPLICATION_MODAL);
+        stage.setScene(scene);
+        stage.getIcons().add(new Image("app-icon.png"));
+        ErrorWindowController errorWindow = loader.getController();
+        errorWindow.setErrors(errors);
+        stage.showAndWait();
     }
 }
