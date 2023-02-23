@@ -28,9 +28,9 @@ public class TemporaryEmployee {
         this.phoneNum = phoneNum;
         this.employmentDate = LocalDate.now(); //setta la data di assunzione dell'impiegato con la data attuale
         this.salary = salary;
-        email="Null";
-        address="Null";
-        lab=null;
+        email = null;
+        address= null;
+        lab= null;
         this.project=project;
 
     }
@@ -42,8 +42,8 @@ public class TemporaryEmployee {
         this.phoneNum = phoneNum;
         this.employmentDate = employmentDate;
         this.salary = salary;
-        email="Null";
-        address="Null";
+        email= null;
+        address= null;
         lab=null;
         this.project=project;
     }
@@ -77,8 +77,7 @@ public class TemporaryEmployee {
      * @return Il nome del laboratorio oppure Null.
      */
     public String getLabName(){
-        if(lab != null) return lab.getName();
-        else return "Null";
+        return lab.getName();
     }
 
     /**

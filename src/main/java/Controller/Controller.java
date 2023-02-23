@@ -26,7 +26,7 @@ public class Controller
         projectController = new ProjectController(this);
         laboratoryController = new LaboratoryController(this);
         equipmentController = new EquipmentController();
-        temporaryEmployeeController= new TemporaryEmployeeController();
+        temporaryEmployeeController= new TemporaryEmployeeController(this);
         careerDevelopmentController= new CareerDevelopmentController();
     }
     private static Controller instance = null;

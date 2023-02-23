@@ -162,9 +162,9 @@ public class ProjectController {
         //Controlli sul budget del progetto
         if(endDate.isAfter(project.getEndDate()) || budget < project.getBudget()){
             if(controller.getTemporaryEmployeeController().getTotalProjectSalaries(project, project.getStartDate(), endDate) > budget/2)
-                errors.add("Il salario totale degli impiegati non puo' superare il 50% del budget.");
+                errors.add("Total employee salary must be under 50% of the project's budget.");
             if(controller.getEquipmentController().getTotalProjectPrice(project) > budget/2)
-                errors.add("Il prezzo totale dell'equipaggiamento non puo' superare il 50% del budget.");
+                errors.add("Total equipment price must be under 50% of the project's budget.");
         }
 
 

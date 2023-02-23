@@ -22,6 +22,7 @@ import javafx.stage.Stage;
 import java.io.IOException;
 import java.net.URL;
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.ResourceBundle;
 
 public class TemporaryEmployeeListController implements Initializable {
@@ -96,9 +97,14 @@ public class TemporaryEmployeeListController implements Initializable {
     /**
      * Metodo che rimuove l'impiegato selezionato dall'utente.
      */
-    @FXML public void fireTemporaryEmployee(){
-        int i = getSelectedTemporaryEmployeeIndex();
-        controller.getTemporaryEmployeeController().fireTemporaryEmployee(ssnTemporaryEmployeeTable.getCellObservableValue(i).getValue());
+    @FXML public void fireTemporaryEmployee() throws IOException{
+        String selectedSsn = ssnTemporaryEmployeeTable.getCellObservableValue(getSelectedTemporaryEmployeeIndex()).getValue();
+        ArrayList<String> errors = controller.getTemporaryEmployeeController().checkTemporaryEmployeeDelete(selectedSsn);
+        if(errors.isEmpty())
+            controller.getTemporaryEmployeeController().fireTemporaryEmployee(selectedSsn);
+        else{
+            showErrorWindow(errors);
+        }
         loadList();
     }
     private Stage stage;
@@ -159,5 +165,24 @@ public class TemporaryEmployeeListController implements Initializable {
         stage.getIcons().add(new Image("app-icon.png"));
         stage.showAndWait();
         loadList();
+    }
+
+    /**
+     * Metodo che apre una finestra elencando gli errori passati in input.
+     * @param errors
+     * @throws IOException
+     */
+    private void showErrorWindow (ArrayList<String> errors) throws IOException {
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("../GUI/ErrorWindow.fxml"));
+        root=loader.load();
+        stage= new Stage();
+        scene = new Scene(root);
+        stage.setScene(scene);
+        stage.initModality(Modality.APPLICATION_MODAL);
+        stage.setScene(scene);
+        stage.getIcons().add(new Image("app-icon.png"));
+        ErrorWindowController errorWindow = loader.getController();
+        errorWindow.setErrors(errors);
+        stage.showAndWait();
     }
 }

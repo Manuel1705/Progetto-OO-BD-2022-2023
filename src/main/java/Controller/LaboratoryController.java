@@ -183,7 +183,7 @@ public class LaboratoryController {
                 employee.setLab(null);
             }
         }
-        ArrayList<TemporaryEmployee> temporaryEmployeeArrayList = controller.getTemporaryEmployeeController().temporaryEmployeeArrayList;
+        ArrayList<TemporaryEmployee> temporaryEmployeeArrayList = controller.getTemporaryEmployeeController().getTemporaryEmployeeArrayList();
         for (TemporaryEmployee temporaryEmployee : temporaryEmployeeArrayList) {
             if (temporaryEmployee.getLabName().equals(laboratory.getName())) {
                 temporaryEmployee.setLab(null);

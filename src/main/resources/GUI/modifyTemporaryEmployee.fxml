@@ -18,7 +18,6 @@
                 <TextField fx:id="emailModifyTemporaryEmployee" layoutX="260.0" layoutY="118.0" prefHeight="25.0" prefWidth="180.0" promptText="Email" />
                 <TextField fx:id="addressModifyTemporaryEmployee" layoutX="480.0" layoutY="118.0" prefHeight="25.0" prefWidth="180.0" promptText="Address" />
                 <TextField fx:id="salaryModifyTemporaryEmployee" accessibleRole="INCREMENT_BUTTON" layoutX="480.0" layoutY="175.0" prefHeight="25.0" prefWidth="180.0" promptText="Salary" />
-                <ChoiceBox fx:id="projectModifyTemporaryEmployee" accessibleRole="CHECK_MENU_ITEM" layoutX="260.0" layoutY="175.0" prefHeight="25.0" prefWidth="180.0" />
                 <Label layoutX="95.0" layoutY="45.0" text="First Name" textFill="WHITE" />
                 <Label layoutX="95.0" layoutY="159.0" text="Laboratory" textFill="WHITE" />
                 <Label layoutX="82.0" layoutY="101.0" text="Phone Number" textFill="WHITE" />
@@ -29,6 +28,7 @@
                 <Label layoutX="544.0" layoutY="101.0" text="Address" textFill="WHITE" />
                 <Label layoutX="328.0" layoutY="159.0" text="Project" textFill="WHITE" />
                 <ChoiceBox fx:id="labModifyTemporaryEmployee" accessibleRole="CHECK_MENU_ITEM" layoutX="40.0" layoutY="175.0" prefHeight="25.0" prefWidth="180.0" />
+            <TextField fx:id="projectModifyTemporaryEmployee" editable="false" layoutX="260.0" layoutY="175.0" prefHeight="25.0" prefWidth="180.0" promptText="Project" />
             </children>
         </AnchorPane>
         <Button fx:id="modifyTemporaryEmployeeButton" layoutX="625.0" layoutY="261.0" mnemonicParsing="false" onAction="#modifyTemporaryEmployee" style="-fx-background-color: #21252f;" text="Modify" textFill="WHITE" />

@@ -4,11 +4,18 @@ import Model.Laboratory;
 import Model.Project;
 import Model.TemporaryEmployee;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.TextField;
+import javafx.scene.image.Image;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
+
+import java.io.IOException;
 import java.net.URL;
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -46,6 +53,10 @@ public class addTemporaryEmployeeController implements Initializable {
 
     @FXML
     private TextField ssnAddTemporaryEmployee;
+
+    private Stage stage;
+    private Scene scene;
+    private Parent root;
     private Controller controller;
 
     /**
@@ -53,54 +64,48 @@ public class addTemporaryEmployeeController implements Initializable {
      * validita' dell'input.
      */
     @FXML
-    void hireTemporaryEmployee() {
-        if (!ssnAddTemporaryEmployee.getText().isBlank() &&
-                !firstNameAddTemporaryEmployee.getText().isBlank() &&
-                !lastNameAddTemporaryEmployee.getText().isBlank() &&
-                !salaryAddTemporaryEmployee.getText().isBlank() &&
-                !phoneNumberAddTemporaryEmployee.getText().isBlank() &&
-                !projectAddTemporaryEmployee.getValue().isBlank()) {
-            boolean check = true;
-            //Controllo sul dominio del SSN
-            if (ssnAddTemporaryEmployee.getText().length() != 15) {
-                check = false;
-            } else {
-                for (char c : ssnAddTemporaryEmployee.getText().toCharArray()) {
-                    if (!Character.isDigit(c)) {
-                        check = false;
-                        break;
-                    }
-                }
-            }
-            //Controllo sulla lunghezza del nome
-            if(firstNameAddTemporaryEmployee.getText().length()>30){
-                check=false;
-            }
-            //Controllo sulla lunghezza del cognome
-            if(lastNameAddTemporaryEmployee.getText().length()>30){
-                check=false;
-            }
-            //Controllo sulla lunghezza del numero telefonico
-            if (phoneNumberAddTemporaryEmployee.getText().length() != 10) {
-                check = false;
-            }
-            if (check) {
-                controller.getTemporaryEmployeeController().addTemporaryEmployeeList(ssnAddTemporaryEmployee.getText(),
-                        firstNameAddTemporaryEmployee.getText(),
-                        lastNameAddTemporaryEmployee.getText(),
-                        phoneNumberAddTemporaryEmployee.getText(),
-                        addressAddTemporaryEmployee.getText(),
-                        emailAddTemporaryEmployee.getText(),
-                        LocalDate.now(),
-                        salaryAddTemporaryEmployee.getText(),
-                        labAddTemporaryEmployee.getValue(),
-                        projectAddTemporaryEmployee.getValue());
+    void hireTemporaryEmployee() throws IOException {
+        ArrayList<String> errors = new ArrayList<String>();
 
-                Stage stage = (Stage) hireTemporaryEmployeeButton.getScene().getWindow();
-                stage.close();
-            }
+        try{
+            Float.parseFloat(salaryAddTemporaryEmployee.getText());
+        }
+        catch (Exception ex){
+            errors.add("Salary must be a valid number.");
+            salaryAddTemporaryEmployee.setText("0");
+        }
+
+        errors.addAll(controller.getTemporaryEmployeeController().checkTemporaryEmployeeInsert(ssnAddTemporaryEmployee.getText(),
+                firstNameAddTemporaryEmployee.getText(),
+                lastNameAddTemporaryEmployee.getText(),
+                phoneNumberAddTemporaryEmployee.getText(),
+                addressAddTemporaryEmployee.getText(),
+                emailAddTemporaryEmployee.getText(),
+                LocalDate.now(),
+                Float.parseFloat(salaryAddTemporaryEmployee.getText()),
+                labAddTemporaryEmployee.getValue(),
+                projectAddTemporaryEmployee.getValue()));
+
+        if (errors.isEmpty()) {
+            controller.getTemporaryEmployeeController().addTemporaryEmployeeList(ssnAddTemporaryEmployee.getText(),
+                    firstNameAddTemporaryEmployee.getText(),
+                    lastNameAddTemporaryEmployee.getText(),
+                    phoneNumberAddTemporaryEmployee.getText(),
+                    addressAddTemporaryEmployee.getText(),
+                    emailAddTemporaryEmployee.getText(),
+                    LocalDate.now(),
+                    Float.parseFloat(salaryAddTemporaryEmployee.getText()),
+                    labAddTemporaryEmployee.getValue(),
+                    projectAddTemporaryEmployee.getValue());
+
+            Stage stage = (Stage) hireTemporaryEmployeeButton.getScene().getWindow();
+            stage.close();
+        }
+        else{
+            showErrorWindow(errors);
         }
     }
+
 
     /**
      * Metodo che inizializza la finestra.
@@ -110,7 +115,7 @@ public class addTemporaryEmployeeController implements Initializable {
     @Override public void initialize(URL url, ResourceBundle resourceBundle) {
         controller=Controller.getInstance();
         ArrayList<Laboratory> labs= controller.getLaboratoryController().getLaboratoryArrayList();
-        labAddTemporaryEmployee.getItems().add("Null");
+        labAddTemporaryEmployee.getItems().add("");
         for (Laboratory lab: labs) {
             labAddTemporaryEmployee.getItems().add(lab.getName());
         }
@@ -118,6 +123,25 @@ public class addTemporaryEmployeeController implements Initializable {
         for (Project prj:projectArrayList) {
             projectAddTemporaryEmployee.getItems().add(prj.getCup());
         }
+    }
+
+    /**
+     * Metodo che apre una finestra elencando gli errori passati in input.
+     * @param errors
+     * @throws IOException
+     */
+    private void showErrorWindow (ArrayList<String> errors) throws IOException {
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("../GUI/ErrorWindow.fxml"));
+        root=loader.load();
+        stage= new Stage();
+        scene = new Scene(root);
+        stage.setScene(scene);
+        stage.initModality(Modality.APPLICATION_MODAL);
+        stage.setScene(scene);
+        stage.getIcons().add(new Image("app-icon.png"));
+        ErrorWindowController errorWindow = loader.getController();
+        errorWindow.setErrors(errors);
+        stage.showAndWait();
     }
 }
 

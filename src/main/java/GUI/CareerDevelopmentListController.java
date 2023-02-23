@@ -49,7 +49,7 @@ public class  CareerDevelopmentListController implements Initializable {
 
     @FXML
     private TableColumn<CareerDevelopment, String> ssnCarrerDevelpmentTable;
-    Controller controller;
+    private Controller controller;
     public ObservableList<CareerDevelopment> list= FXCollections.observableArrayList();
 
     /**

@@ -13,6 +13,10 @@ public class EmployeeController {
     private Controller controller;
     private ArrayList<Employee> employeeArrayList= new ArrayList<Employee>();
 
+    /**
+     * Costruttore della classe che inizializza l'attributo controller.
+     * @param controller
+     */
     public EmployeeController(Controller controller){
         this.controller = controller;
     }
@@ -275,7 +279,6 @@ public class EmployeeController {
 
 
         Employee employee = new Employee(ssn, firstName, lastName, phoneNum, role, salary, employmentDate);
-        controller = Controller.getInstance();
         if (lab != null && !lab.isBlank()) {
             ArrayList<Laboratory> labs = controller.getLaboratoryController().getLaboratoryArrayList();
             for (Laboratory laboratory : labs) {
@@ -325,25 +328,19 @@ public class EmployeeController {
                                                 String phoneNumber, String newRole, float newSalary,
                                                 String lab, String address, String email)
     {
-        CareerDevelopment careerDevelopment = null;
+
         Employee employee = findEmployee(ssn);
         employee.setFirstName(firstName);
         employee.setLastName(lastName);
         employee.setPhoneNum(phoneNumber);
         if(!employee.getRole().equals(newRole)){
-            careerDevelopment=controller.getCareerDevelopmentController().addCareerDevelopment(employee,newRole,newSalary);
+            controller.getCareerDevelopmentController().addCareerDevelopment(employee,newRole,newSalary);
             employee.setRole(newRole);
         }
         employee.setSalary(newSalary);
 
         if(lab != null && !lab.isBlank()) {
-            ArrayList<Laboratory>laboratoryArrayList=controller.getLaboratoryController().getLaboratoryArrayList();
-            for (Laboratory laboratory : laboratoryArrayList) {
-                if(laboratory.getName().equals(lab)){
-                    employee.setLab(laboratory);
-                    break;
-                }
-            }
+            employee.setLab(controller.getLaboratoryController().findLaboratory(lab));
         }else employee.setLab(null);
 
         if(address != null && !address.isBlank()){
@@ -354,6 +351,11 @@ public class EmployeeController {
             employee.setEmail(email);
         }else employee.setEmail(null);
     }
+
+    /**
+     * Metodo che licenzia l'impiegato con che possiede l'ssn passato in input.
+     * @param ssn
+     */
     public void fireEmployee(String ssn){
 
         Employee employee = findEmployee(ssn);
