@@ -21,6 +21,7 @@ import Controller.Controller;
 import java.io.IOException;
 import java.net.URL;
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.ResourceBundle;
 public class ProjectListController implements Initializable {
     @FXML private TableView<Project> ProjectTable;
@@ -65,8 +66,13 @@ public class ProjectListController implements Initializable {
     /**
      * Metodo che rimuove il progetto selezionato dall'utente.
      */
-    @FXML public void dismissProject() {
-        controller.getProjectController().dismissProject(ProjectCupTable.getCellObservableValue(getSelectedProjectIndex()).getValue());
+    @FXML public void dismissProject() throws IOException{
+        String selectedCUP = ProjectCupTable.getCellObservableValue(getSelectedProjectIndex()).getValue();
+        ArrayList<String> errors = controller.getProjectController().checkProjectDelete(selectedCUP);
+        if(errors.isEmpty())
+            controller.getProjectController().dismissProject(selectedCUP);
+        else
+            showErrorWindow(errors);
         loadList();
 
     }
@@ -148,6 +154,25 @@ public class ProjectListController implements Initializable {
         scientificResponsibleTable.setCellValueFactory(new PropertyValueFactory<Project,String>("SrespSSN"));
         scientificReferentTable.setCellValueFactory(new PropertyValueFactory<Project,String>("SrefSSN"));
         ProjectTable.setItems(getProjectsList());
+    }
+
+    /**
+     * Metodo che apre una finestra elencando gli errori passati in input.
+     * @param errors
+     * @throws IOException
+     */
+    private void showErrorWindow (ArrayList<String> errors) throws IOException {
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("../GUI/ErrorWindow.fxml"));
+        root=loader.load();
+        stage= new Stage();
+        scene = new Scene(root);
+        stage.setScene(scene);
+        stage.initModality(Modality.APPLICATION_MODAL);
+        stage.setScene(scene);
+        stage.getIcons().add(new Image("app-icon.png"));
+        ErrorWindowController errorWindow = loader.getController();
+        errorWindow.setErrors(errors);
+        stage.showAndWait();
     }
 }
 

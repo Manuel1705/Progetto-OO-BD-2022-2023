@@ -21,11 +21,28 @@ public class TemporaryEmployeeController {
      * @param ssn
      * @return
      */
-    private TemporaryEmployee findTemporaryEmployee(String ssn){
+    public TemporaryEmployee findTemporaryEmployee(String ssn){
         for(TemporaryEmployee temporaryEmployee: temporaryEmployeeArrayList){
             if(temporaryEmployee.getSSN().equals(ssn)) return temporaryEmployee;
         }
         return null;
+    }
+
+    /**
+     * Metodo che restituisce il totale dei salari da pagare ai dipendenti temporanei assunti dal progetto passato in input
+     * tra le due date fornite in input.
+     * @param project Progetto che ha assunto gli impiegati
+     * @param startDate Data iniziale
+     * @param endDate Data finale
+     * @return Salario totale
+     */
+    public float getTotalProjectSalaries(Project project, LocalDate startDate, LocalDate endDate){
+        float totalSalary = 0;
+        for(TemporaryEmployee temp: temporaryEmployeeArrayList){
+            if (temp.getProjectCup().equals(project.getCup()))
+                totalSalary += temp.getSalary()*(startDate.until(endDate).getMonths());
+        }
+        return totalSalary;
     }
     public void addTemporaryEmployeeList(TemporaryEmployee employee){temporaryEmployeeArrayList.add(employee);}
     public TemporaryEmployee addTemporaryEmployeeList(String ssn, String firstName, String lastName,

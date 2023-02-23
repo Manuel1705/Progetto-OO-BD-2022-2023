@@ -39,7 +39,7 @@ public class LaboratoryController {
         //Controllo dominio topic
         if(topic != null && topic.length() > 50) errors.add("Topic is too long. (Max. 50 characters)");
         //Controllo unicita' nome
-        if(findLaboratory(name) != null) errors.add("Name is already in use by another laboratory.");
+
         //Controllo inserimento sresp
         if(Sresp == null || Sresp.isBlank()) errors.add("Must insert scientific responsible.");
         //Controllo chiavi esterne

@@ -3,12 +3,12 @@ package Model;
 import java.time.LocalDate;
 
 public class Equipment {
-    int id;
-    String name, description, dealer;
-    Laboratory lab;
-    Project project;
-    float price;
-    LocalDate purchaseDate;
+    private int id;
+    private String name, description, dealer;
+    private Laboratory lab;
+    private Project project;
+    private float price;
+    private LocalDate purchaseDate;
     
     /**
      * Costruttore della classe Equipment. Riceve in input i dati necessari per la creazione dell'oggetto Equipment e inizializza i suoi attributi.

@@ -103,7 +103,8 @@ public class EmployeeController {
         if (lab != null && !lab.isBlank() && controller.getLaboratoryController().findLaboratory(lab) == null)
             errors.add("Laboratory does not exist.");
         //Controllo unicita' ssn
-        if(!(findEmployee(ssn) == null)) errors.add("SSN already belongs to an employee.");
+        if(findEmployee(ssn) != null
+                || controller.getTemporaryEmployeeController().findTemporaryEmployee(ssn) != null) errors.add("SSN already belongs to an employee.");
 
 
         return errors;

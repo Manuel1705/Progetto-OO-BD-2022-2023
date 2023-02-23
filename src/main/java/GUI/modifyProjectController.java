@@ -4,12 +4,18 @@ import Model.Employee;
 import Model.Project;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.TextField;
+import javafx.scene.image.Image;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
 
+import java.io.IOException;
 import java.time.LocalDate;
 import java.util.ArrayList;
 
@@ -35,6 +41,10 @@ public class modifyProjectController {
 
     @FXML
     private TextField nameModifyProject;
+
+    private Stage stage;
+    private Scene scene;
+    private Parent root;
     private Controller controller;
 
     private String cup;
@@ -76,15 +86,23 @@ public class modifyProjectController {
      * Verifica la validita' dell'input e passa i dati al controller.
      */
     @FXML
-    void modifyProject() {
-        boolean check = true;
-        if (cupModifyProject.getText().length() != 15) {
-            check = false;
+    public void modifyProject() throws IOException{
+       ArrayList<String> errors = new ArrayList<String>();
+        try{
+            Float.parseFloat(budgetModifyProject.getText());
         }
-        if(nameModifyProject.getText().length()>30){
-            check=false;
+        catch (Exception ex){
+            errors.add("Budget must be a valid number.");
+            budgetModifyProject.setText("0");
         }
-        if (check) {
+        errors.addAll(controller.getProjectController().checkProjectModify(cup,
+                nameModifyProject.getText(),
+                Float.parseFloat(budgetModifyProject.getText()),
+                endDateModifyProject.getValue(),
+                SrefModifyProject.getValue(),
+                SrespModifyProject.getValue()));
+
+        if (errors.isEmpty()) {
             controller.getProjectController().modifyProjectList(cup,
                     nameModifyProject.getText(),
                     Float.parseFloat(budgetModifyProject.getText()),
@@ -94,5 +112,27 @@ public class modifyProjectController {
             Stage stage = (Stage) modifyProjectButton.getScene().getWindow();
             stage.close();
         }
+        else{
+            showErrorWindow(errors);
+        }
+    }
+
+    /**
+     * Metodo che apre una finestra elencando gli errori passati in input.
+     * @param errors
+     * @throws IOException
+     */
+    private void showErrorWindow (ArrayList<String> errors) throws IOException {
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("../GUI/ErrorWindow.fxml"));
+        root=loader.load();
+        stage= new Stage();
+        scene = new Scene(root);
+        stage.setScene(scene);
+        stage.initModality(Modality.APPLICATION_MODAL);
+        stage.setScene(scene);
+        stage.getIcons().add(new Image("app-icon.png"));
+        ErrorWindowController errorWindow = loader.getController();
+        errorWindow.setErrors(errors);
+        stage.showAndWait();
     }
 }

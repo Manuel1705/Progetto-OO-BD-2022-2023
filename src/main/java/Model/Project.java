@@ -5,7 +5,8 @@ import java.util.ArrayList;
 
 public class Project{
     private String cup, name;
-    private float budget, remainingFunds;
+    private float budget;
+    private float remainingFunds;
     private LocalDate startDate, endDate;
     private ArrayList<Laboratory> labs = new ArrayList<>(); //lista dei laboratori che lavorano a un determinato progetto
     private ArrayList<Employee> temporary = new ArrayList<>(); //lista degli impiegati temporanei che lavorano a un progetto

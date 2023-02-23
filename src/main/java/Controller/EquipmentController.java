@@ -8,8 +8,8 @@ import Model.Project;
 import java.util.ArrayList;
 
 public class EquipmentController {
-    Controller controller;
-    ArrayList<Equipment>equipmentArrayList= new ArrayList<>();
+    private Controller controller;
+    private ArrayList<Equipment>equipmentArrayList= new ArrayList<>();
     public ArrayList<Equipment> getEquipmentArrayList(){ return equipmentArrayList; }
     public void addEquipmentList(Equipment equipment){equipmentArrayList.add(equipment);}
     public void addEquipmentList(int id_equipment, String name, String description,
@@ -91,6 +91,20 @@ public class EquipmentController {
     }
     public void deleteEquipment(int id){
         equipmentArrayList.remove(findEquipment(id));
+    }
+
+    /**
+     * Metodo che restituisce il costo totale di tutto l'equipaggiamento acquistato da un determinato progetto.
+     * @param project Progetto che ha acquistato l'equipaggiamento.
+     * @return Costo totale.
+     */
+    public float getTotalProjectPrice(Project project){
+        float totalPrice = 0;
+        for(Equipment equipment: equipmentArrayList){
+            if(equipment.getProjectCup().equals(project.getCup()))
+                totalPrice += equipment.getPrice();
+        }
+        return totalPrice;
     }
 }
 
