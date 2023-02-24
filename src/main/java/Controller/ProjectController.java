@@ -196,7 +196,7 @@ public class ProjectController {
         project.setName(name);
         project.setRemainingFunds(budget
                 - (controller.getTemporaryEmployeeController().getTotalProjectSalaries(project, project.getStartDate(), endDate)
-                + controller.getEquipmentController().getTotalProjectPrice(project)));
+                - controller.getEquipmentController().getTotalProjectPrice(project)));
         project.setBudget(budget);
         project.setEndDate(endDate);
     }

@@ -4,11 +4,18 @@ import Model.Equipment;
 import Model.Laboratory;
 import Model.Project;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
+import javafx.scene.image.Image;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
+
+import java.io.IOException;
 import java.util.ArrayList;
 public class modifyEquipmentController {
     @FXML private TextField dealerModifyEquipment;
@@ -19,6 +26,10 @@ public class modifyEquipmentController {
     @FXML private TextField nameModifyEquipment;
     @FXML private TextField priceModifyEquipment;
     @FXML private ChoiceBox<String> projectModifyEquipment;
+
+    private Stage stage;
+    private Scene scene;
+    private Parent root;
     private Controller controller;
     int id;
 
@@ -37,12 +48,11 @@ public class modifyEquipmentController {
         controller=Controller.getInstance();
         this.id = id;
         ArrayList<Laboratory> labs = controller.getLaboratoryController().getLaboratoryArrayList();
-        labModifyEquipment.getItems().add("Null");
+        labModifyEquipment.getItems().add("");
         for (Laboratory lab: labs) {
             labModifyEquipment.getItems().add(lab.getName());
         }
         ArrayList<Project>projectArrayList=controller.getProjectController().getProjectArrayList();
-        projectModifyEquipment.getItems().add("Null");
         for (Project project:projectArrayList) {
             projectModifyEquipment.getItems().add(project.getCup());
         }
@@ -59,37 +69,39 @@ public class modifyEquipmentController {
     /**
      * Metodo che viene chiamato quando l'utente conferma la modifica.
      */
-    @FXML void modifyEquipment() {
-        if(!idEquipmentModifyEquipment.getText().isBlank() &&
-                !nameModifyEquipment.getText().isBlank() &&
-                !priceModifyEquipment.getText().isBlank() &&
-                !dealerModifyEquipment.getText().isBlank()) {
-            boolean check = true;
-            //Controllo sulla lunghezza dell'input
-            if (nameModifyEquipment.getText().length() > 30) {
-                check = false;
-            }
-            //Controllo sulla lunghezza del nome del fornitore
-            if (dealerModifyEquipment.getText().length() > 30) {
-                check = false;
-            }
-            //Controllo sulla lunghezza del nome
-            if (nameModifyEquipment.getText().length() > 30) {
-                check = false;
-            }
-            //Controllo sulla lunghezza della descrizione
-            if (descriptionModifyEquipment.getText().length() > 200) {
-                check = false;
-            }
-            if (check) {
-                controller.getEquipmentController().modifyEquipment(id,
-                        nameModifyEquipment.getText(),
-                        descriptionModifyEquipment.getText(),
-                        labModifyEquipment.getValue(),
-                        projectModifyEquipment.getValue());
-                Stage stage = (Stage) modifyEquipmentButton.getScene().getWindow();
-                stage.close();
-            }
-        }
+    @FXML void modifyEquipment() throws IOException{
+        ArrayList<String> errors = controller.getEquipmentController().checkEquipmentModify(id,
+                nameModifyEquipment.getText(),
+                descriptionModifyEquipment.getText(),
+                labModifyEquipment.getValue());
+
+
+        if (errors.isEmpty()) {
+            controller.getEquipmentController().modifyEquipment(id,
+                    nameModifyEquipment.getText(),
+                    descriptionModifyEquipment.getText(),
+                    labModifyEquipment.getValue());
+            Stage stage = (Stage) modifyEquipmentButton.getScene().getWindow();
+            stage.close();
+        } else showErrorWindow(errors);
     }
+
+        /**
+         * Metodo che apre una finestra elencando gli errori passati in input.
+         * @param errors
+         * @throws IOException
+         */
+        private void showErrorWindow (ArrayList<String> errors) throws IOException {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("../GUI/ErrorWindow.fxml"));
+            root=loader.load();
+            stage= new Stage();
+            scene = new Scene(root);
+            stage.setScene(scene);
+            stage.initModality(Modality.APPLICATION_MODAL);
+            stage.setScene(scene);
+            stage.getIcons().add(new Image("app-icon.png"));
+            ErrorWindowController errorWindow = loader.getController();
+            errorWindow.setErrors(errors);
+            stage.showAndWait();
+        }
 }

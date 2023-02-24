@@ -3,12 +3,19 @@ import Controller.Controller;
 import Model.Laboratory;
 import Model.Project;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
+import javafx.scene.image.Image;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
+
+import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
@@ -21,46 +28,52 @@ public class addEquipmentController implements Initializable {
     @FXML private TextField nameAddEquipment;
     @FXML private TextField priceAddEquipment;
     @FXML private ChoiceBox<String> projectAddEquipment;
+
+    private Stage stage;
+    private Scene scene;
+    private Parent root;
     private Controller controller;
 
     /**
      * Metodo che viene chiamato quando l'utente conferma l'inserimento dei dati. Effettua i controlli sulla validita' dell'input.
      */
-    @FXML void buyEquipment() {
-            if(!idEquipmentAddEquipment.getText().isBlank() &&
-            !nameAddEquipment.getText().isBlank() &&
-            !priceAddEquipment.getText().isBlank() &&
-            !dealerAddEquipment.getText().isBlank()) {
-                boolean check = true;
-                //Controllo sulla lunghezza dell'input
-                if (nameAddEquipment.getText().length() > 30) {
-                    check = false;
-                }
-                //Controllo sulla lunghezza del nome del fornitore
-                if (dealerAddEquipment.getText().length() > 30) {
-                    check = false;
-                }
-                //Controllo sulla lunghezza del nome
-                if (nameAddEquipment.getText().length() > 30) {
-                    check = false;
-                }
-                //Controllo sulla lunghezza della descrizione
-                if (descriptionAddEquipment.getText().length() > 200) {
-                    check = false;
-                }
-                if (check) {
-                    controller.getEquipmentController().addEquipmentList(Integer.parseInt(idEquipmentAddEquipment.getText()),
-                            nameAddEquipment.getText(),
-                            descriptionAddEquipment.getText(),
-                            Float.parseFloat(priceAddEquipment.getText()),
-                            dealerAddEquipment.getText(),
-                            labAddEquipment.getValue(),
-                            projectAddEquipment.getValue());
-                    Stage stage = (Stage) buyEquipmentButton.getScene().getWindow();
-                    stage.close();
-                }
-            }
+    @FXML void buyEquipment() throws IOException{
+        ArrayList<String> errors = new ArrayList<String>();
+
+        try{
+            Float.parseFloat(priceAddEquipment.getText());
+        }
+        catch (Exception ex){
+            errors.add("Price must be a valid number.");
+            priceAddEquipment.setText("0");
+        }
+
+        try{
+            errors.addAll(controller.getEquipmentController().checkEquipmentInsert(Integer.parseInt(idEquipmentAddEquipment.getText()),
+                    nameAddEquipment.getText(),
+                    descriptionAddEquipment.getText(),
+                    Float.parseFloat(priceAddEquipment.getText()),
+                    dealerAddEquipment.getText(),
+                    labAddEquipment.getValue(),
+                    projectAddEquipment.getValue()));
+        }
+        catch (NumberFormatException ex){
+            errors.add("ID must be a valid number.");
+        }
+        if (errors.isEmpty()) {
+            controller.getEquipmentController().addEquipmentList(Integer.parseInt(idEquipmentAddEquipment.getText()),
+                    nameAddEquipment.getText(),
+                    descriptionAddEquipment.getText(),
+                    Float.parseFloat(priceAddEquipment.getText()),
+                    dealerAddEquipment.getText(),
+                    labAddEquipment.getValue(),
+                    projectAddEquipment.getValue());
+            Stage stage = (Stage) buyEquipmentButton.getScene().getWindow();
+            stage.close();
+        }
+        else showErrorWindow(errors);
     }
+
 
     /**
      * Metodo che inizializza la finestra.
@@ -71,7 +84,7 @@ public class addEquipmentController implements Initializable {
         controller=Controller.getInstance();
         //Il metodo inizializza il menu' a tendina dei laboratori.
         ArrayList<Laboratory> labs = controller.getLaboratoryController().getLaboratoryArrayList();
-        labAddEquipment.getItems().add("Null");
+        labAddEquipment.getItems().add("");
         for (Laboratory lab: labs) {
             labAddEquipment.getItems().add(lab.getName());
         }
@@ -81,6 +94,25 @@ public class addEquipmentController implements Initializable {
             projectAddEquipment.getItems().add(project.getCup());
         }
 
+    }
+
+    /**
+     * Metodo che apre una finestra elencando gli errori passati in input.
+     * @param errors
+     * @throws IOException
+     */
+    private void showErrorWindow (ArrayList<String> errors) throws IOException {
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("../GUI/ErrorWindow.fxml"));
+        root=loader.load();
+        stage= new Stage();
+        scene = new Scene(root);
+        stage.setScene(scene);
+        stage.initModality(Modality.APPLICATION_MODAL);
+        stage.setScene(scene);
+        stage.getIcons().add(new Image("app-icon.png"));
+        ErrorWindowController errorWindow = loader.getController();
+        errorWindow.setErrors(errors);
+        stage.showAndWait();
     }
 
 }

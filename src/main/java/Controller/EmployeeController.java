@@ -22,13 +22,10 @@ public class EmployeeController {
     }
 
     /**
-     * Metodo che restituisce la lista degli impiegati e la aggiorna in base alla data attuale.
+     * Metodo che restituisce la lista degli impiegati.
      * @return
      */
     public ArrayList<Employee> getEmployeeArrayList(){
-        for (Employee employee:employeeArrayList){
-            employee.CheckRole();
-        }
         return employeeArrayList;
 
     }

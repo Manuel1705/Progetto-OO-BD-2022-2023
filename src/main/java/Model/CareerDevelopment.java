@@ -3,11 +3,11 @@ package Model;
 import java.time.LocalDate;
 
 public class CareerDevelopment {
-    String oldRole, newRole;
-    LocalDate date;
-    float salaryChange;
-    Employee employee;
-    float oldSalary,newSalary;
+    private String oldRole, newRole;
+    private LocalDate date;
+    private float salaryChange;
+    private Employee employee;
+    private float oldSalary, newSalary;
     
     /**
      * Costruttore della classe CareerDevelopment. Riceve in input i dati necessari per la creazione dell'oggetto CareerDevelopment e inizializza i suoi attributi.

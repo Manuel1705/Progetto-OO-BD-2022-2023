@@ -39,7 +39,7 @@ public class EmployeeListController implements Initializable {
     @FXML private Button hireButton;
     @FXML private Button modifyButton;
     @FXML private Button CareerChanges;
-    Controller controller;
+    private Controller controller;
     public ObservableList<Employee> list= FXCollections.observableArrayList();
 
     /**

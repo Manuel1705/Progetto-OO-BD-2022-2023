@@ -4,6 +4,7 @@ import DAO.DAOEmployee;
 import DAOPostgresImplementation.DAOEmployeePostgres;
 import Database.PostgresDBConnection;
 import Model.Employee;
+import Model.Project;
 import javafx.geometry.Pos;
 
 import java.sql.Date;
@@ -25,7 +26,7 @@ public class Controller
         employeeController = new EmployeeController(this);
         projectController = new ProjectController(this);
         laboratoryController = new LaboratoryController(this);
-        equipmentController = new EquipmentController();
+        equipmentController = new EquipmentController(this);
         temporaryEmployeeController= new TemporaryEmployeeController(this);
         careerDevelopmentController= new CareerDevelopmentController();
     }
@@ -43,6 +44,24 @@ public class Controller
     public TemporaryEmployeeController getTemporaryEmployeeController(){return temporaryEmployeeController;}
     public CareerDevelopmentController getCareerDevelopmentController(){ return careerDevelopmentController;}
     public Boolean isDBConnected(){return DBSet;}
+
+
+    /**
+     * Metodo che aggiorna i dati del controller in base alla data attuale.
+     */
+    public void updateData(){
+        //Aggiornamento impiegati
+        for(Employee employee: getEmployeeController().getEmployeeArrayList()) {
+            employee.CheckRole();
+        }
+        //Aggiornamento progetti
+        ArrayList<Project> endedProjects = new ArrayList<Project>();
+        for(Project project: getProjectController().getProjectArrayList()){
+            if(project.isExpired()) endedProjects.add(project);
+        }
+        for(Project project: endedProjects)
+            getProjectController().dismissProject(project.getCup());
+    }
 
     /**
      * Metodo che collega il programma al database che corrisponde ai parametri di ingresso e carica i dati in memoria

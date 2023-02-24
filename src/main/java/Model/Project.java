@@ -8,11 +8,8 @@ public class Project{
     private float budget;
     private float remainingFunds;
     private LocalDate startDate, endDate;
-    private ArrayList<Laboratory> labs = new ArrayList<>(); //lista dei laboratori che lavorano a un determinato progetto
-    private ArrayList<Employee> temporary = new ArrayList<>(); //lista degli impiegati temporanei che lavorano a un progetto
     private Employee Sresp;
     private Employee Sref;
-    private ArrayList<Purchase> purchases = new ArrayList<>(); //lista degli acquisti compiuti per un determinato progetto
     
     /**
      * Costruttore della classe Project. Riceve in input i dati necessari per la creazione dell'oggetto Project e inizializza i suoi attributi.
@@ -34,23 +31,8 @@ public class Project{
         this.Sresp=Sresp;
         this.Sref=Sref;
     }
-    
 
-    //public void PurchaseEquipment(String name, String description, int id, Laboratory lab, float price, String dealer){
-      //      purchases.add(new Purchase(price,LocalDate.now(),dealer,new Equipment(,name, description, id, lab)));
-    //}
-    
-    /**
-     * Metodo che permette l'assunzione di un nuovo impiegato temporaneo al progetto.
-     * @param ssn           SSN del nuovo impiegato temporaneo
-     * @param firstName     Nome del nuovo impiegato temporaneo
-     * @param lastName      Cognome del nuovo impiegato temporaneo
-     * @param phoneNum      Recapito telefonico del nuovo impiegato temporaneo
-     * @param salary        Salario del nuovo impiegato temporaneo
-    */
-    public void HireTemporaryEmployee(String ssn, String firstName, String lastName, String phoneNum, float salary){
-            temporary.add(new Employee(ssn, firstName, lastName, phoneNum, "Temporary", salary));
-    }
+
     
     /**
      * Metodo che permette di assegnare un responsabile scientifico a un progetto.
@@ -77,22 +59,15 @@ public class Project{
     public void addReferent(String ssn, String firstName, String lastName, String phoneNum, float salary){
             Sref = new Employee(ssn, firstName, lastName, phoneNum, "Senior", salary);
     }
-    
+
+
     /**
-     * Metodo che restituisce il numero di laboratori che lavorano a un determinato progetto
-     * @return Il numero di laboratori che lavorano a un progetto
-    */
-    public int getLabsNum(){
-        return labs.size();
-    }
-    
-    /**
-     * Metodo che aggiunge un nuovo laboratorio a un progetto se quest'ultimo non ha già tre laboratori che lavorano su di esso.
-     * @param lab Nome del laboratorio
-    */
-    public void addLaboratory(Laboratory lab){
-        if(labs.size()<3)
-            labs.add(lab);
+     * Metodo che restituisce true se il progetto e' terimanto, false altrimenti.
+     * @return
+     */
+    public Boolean isExpired(){
+        if(endDate.isBefore(LocalDate.now())) return true;
+        else return false;
     }
     
     /**

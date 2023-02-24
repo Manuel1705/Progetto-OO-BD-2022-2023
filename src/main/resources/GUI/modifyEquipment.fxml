@@ -16,7 +16,7 @@
                 <TextField fx:id="nameModifyEquipment" layoutX="260.0" layoutY="61.0" prefHeight="25.0" prefWidth="180.0" promptText="Name" />
                 <TextField fx:id="priceModifyEquipment" editable="false" layoutX="40.0" layoutY="118.0" prefHeight="25.0" prefWidth="180.0" promptText="Price" />
                 <TextField fx:id="dealerModifyEquipment" editable="false" layoutX="260.0" layoutY="118.0" prefHeight="25.0" prefWidth="180.0" promptText="Dealer" />
-                <ChoiceBox fx:id="projectModifyEquipment" accessibleRole="CHECK_MENU_ITEM" layoutX="260.0" layoutY="188.0" prefHeight="25.0" prefWidth="180.0" />
+                <ChoiceBox fx:id="projectModifyEquipment" accessibleRole="CHECK_MENU_ITEM" disable="true" layoutX="260.0" layoutY="188.0" prefHeight="25.0" prefWidth="180.0" />
                 <Label layoutX="86.0" layoutY="37.0" text="id_equipment" textFill="WHITE" />
                 <Label layoutX="95.0" layoutY="167.0" text="Laboratory" textFill="WHITE" />
                 <Label layoutX="115.0" layoutY="101.0" text="Price" textFill="WHITE" />

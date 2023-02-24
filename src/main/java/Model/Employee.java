@@ -7,10 +7,9 @@ import java.util.ArrayList;
 
 public class Employee {
     private String ssn, firstName, lastName, phoneNum, role, email, address;
-    LocalDate employmentDate;
-    float salary;
+    private LocalDate employmentDate;
+    private float salary;
     private Laboratory lab; //laboratorio dove lavora l'impiegato
-    ArrayList<CareerDevelopment> careerChanges = new ArrayList<CareerDevelopment>(); //lista degli scatti di carriera che interessano un determinato impiegato
 
     /**
      * Costruttore della classe Employee. Riceve in input i dati necessari per la creazione dell'oggetto Employee e inizializza i suoi attributi.
@@ -73,7 +72,6 @@ public class Employee {
             role.equals("Senior") && getEmploymentTime().getYears() >= 7 ||
             role.equals("Executive"))
         {
-            careerChanges.add(new CareerDevelopment(this, this.role,role,salary-this.salary));
             this.role = role;
             this.salary = salary;
         }
@@ -90,10 +88,10 @@ public class Employee {
     public void CheckRole(){
         if (getEmploymentTime().getYears()>=3 && getEmploymentTime().getYears()<7 &&
                 !role.equals("Executive") &&!role.equals("Middle")){
-            ChangeRole("Middle",salary+500);
+            ChangeRole("Middle",salary + 500);
         }
         if (getEmploymentTime().getYears()>=7 && !role.equals("Executive") &&!role.equals("Senior")){
-            ChangeRole("Senior",salary+500);
+            ChangeRole("Senior",salary + 500);
         }
     }
 

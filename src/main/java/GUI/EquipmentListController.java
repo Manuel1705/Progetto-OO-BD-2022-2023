@@ -132,7 +132,7 @@ public class EquipmentListController implements Initializable {
         idEquipmentTable.setCellValueFactory(new PropertyValueFactory<Equipment, Integer>("id"));
         equipmentDealerTable.setCellValueFactory(new PropertyValueFactory<Equipment,String>("dealer"));
         equipmentDescriptionTable.setCellValueFactory(new PropertyValueFactory<Equipment,String>("description"));
-        equipmentLaboratoryTable.setCellValueFactory(new PropertyValueFactory<Equipment,String>("labName"));
+        equipmentLaboratoryTable.setCellValueFactory(new PropertyValueFactory<Equipment,String>("Name"));
         equipmentNameTable.setCellValueFactory(new PropertyValueFactory<Equipment,String>("name"));
         equipmentPriceTable.setCellValueFactory(new PropertyValueFactory<Equipment, Float>("price"));
         equipmentPurchaseDateTable.setCellValueFactory(new PropertyValueFactory<Equipment, LocalDate>("purchaseDate"));

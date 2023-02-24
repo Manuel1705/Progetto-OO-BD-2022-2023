@@ -1,6 +1,5 @@
 package Controller;
 
-import GUI.EquipmentListController;
 import Model.Employee;
 import Model.Equipment;
 import Model.Laboratory;
@@ -9,67 +8,156 @@ import java.util.ArrayList;
 
 public class EquipmentController {
     private Controller controller;
-    private ArrayList<Equipment>equipmentArrayList= new ArrayList<>();
+    private ArrayList<Equipment> equipmentArrayList= new ArrayList<>();
     public ArrayList<Equipment> getEquipmentArrayList(){ return equipmentArrayList; }
+
+    /**
+     * Costruttore della classe che inizializza l'attributo controller.
+     * @param controller
+     */
+    public EquipmentController(Controller controller){
+        this.controller = controller;
+    }
+
+    /**
+     * Metodo che aggiunge un oggetto Equipment alla lista.
+     * @param equipment
+     */
     public void addEquipmentList(Equipment equipment){equipmentArrayList.add(equipment);}
+
+    /**
+     * Metodo che controlla le potenziali violazioni dei vincoli del Model dopo l'inserimento dei dati in input e restituisce
+     * un elenco di violazioni individuate.
+     * @param id_equipment
+     * @param name
+     * @param description
+     * @param price
+     * @param dealer
+     * @param lab
+     * @param project
+     * @return
+     */
+    public ArrayList<String> checkEquipmentInsert(int id_equipment, String name, String description,
+                                                  float price, String dealer,
+                                                  String lab, String project){
+        ArrayList<String> errors = new ArrayList<String>();
+
+        //Controllo dominio nome
+        if(name == null || name.isBlank()) errors.add("Name must not be blank.");
+        else if(name.length() > 30) errors.add("Name is too long. (MAX. 30 characters.)");
+
+        //Controllo dominio fornitore
+        if(dealer == null || dealer.isBlank()) errors.add("Dealer must not be blank.");
+        else if(dealer.length() > 30) errors.add("Dealer name is too long. (MAX. 30 characters.)");
+
+        //Controllo dominio prezzo
+        if(price < 0) errors.add("Price must not be negative.");
+
+        //Controllo dominio descrizione
+        if(description != null && !description.isBlank() && description.length() > 200) errors.add("Description is too long. (MAX. 200 characters.)");
+
+        //Unicita' id
+        if(findEquipment(id_equipment) != null) errors.add("ID is already taken.");
+
+        //Controllo budget progetto
+        if(project == null || project.isBlank()) errors.add("Project must not be blank.");
+        else {
+            Project newProject = controller.getProjectController().findProject(project);
+            if (getTotalProjectPrice(newProject) + price > newProject.getBudget() / 2)
+                errors.add("Project budget is too low to purchase equipment.");
+        }
+        return errors;
+    }
+
+    /**
+     * Metodo che crea un oggetto Equipment usando i dati passati in input e lo aggiunge alla lista.
+     * @param id_equipment
+     * @param name
+     * @param description
+     * @param price
+     * @param dealer
+     * @param lab
+     * @param project
+     */
     public void addEquipmentList(int id_equipment, String name, String description,
                                  float price, String dealer,
                                  String lab,String project){
-        boolean exists=false;
-        for (Equipment equipment : equipmentArrayList) {
-            if(equipment.getId() == id_equipment){
-                exists=true;
-                break;
-            }
-        }
-        if (!exists) {
-            controller = Controller.getInstance();
-            Equipment equipment = null;
-            boolean verifyPrice = false;
-            if (!project.equals("Null")) {
-                ArrayList<Project> projectArrayList = controller.getProjectController().getProjectArrayList();
-                for (Project prj : projectArrayList) {
-                    if (prj.getCup().equals(project)) {
-                        if (prj.getRemainingFunds() / 2 - price >= 0) {
-                            equipment = new Equipment(id_equipment, name,
-                                    price, dealer);
-                            equipment.setProject(prj);
-                            verifyPrice = true;
-                        }
-                    }
+
+
+        Equipment equipment = new Equipment(id_equipment, name, price, dealer);
+        Project newProject = controller.getProjectController().findProject(project);
+        equipment.setProject(newProject);
+
+        newProject.setRemainingFunds(newProject.getRemainingFunds() - price);
+
+        if (lab != null && !lab.isBlank()) {
+            ArrayList<Laboratory> laboratoryArrayList = controller.getLaboratoryController().getLaboratoryArrayList();
+            for (Laboratory laboratory : laboratoryArrayList) {
+                if (laboratory.getName().equals(lab)) {
+                    equipment.setLab(laboratory);
                 }
-            } else equipment.setProject(null);
-            if (verifyPrice) {
-                if (!lab.equals("Null")) {
-                    ArrayList<Laboratory> laboratoryArrayList = controller.getLaboratoryController().getLaboratoryArrayList();
-                    for (Laboratory laboratory : laboratoryArrayList) {
-                        if (laboratory.getName().equals(lab)) {
-                            equipment.setLab(laboratory);
-                        }
-                    }
-                } else equipment.setLab(null);
-
-                if (!description.isBlank()) {
-                    equipment.setDescription(description);
-                } else equipment.setDescription("No description");
-
-                equipmentArrayList.add(equipment);
             }
-        }
+        } else equipment.setLab(null);
+
+        if (description != null && !description.isBlank()) {
+            equipment.setDescription(description);
+        } else equipment.setDescription("No description");
+
+        equipmentArrayList.add(equipment);
+
+
     }
+
+    /**
+     * Metodo che controlla le potenziali violazioni dei vincoli del Model dopo la modifica dei dati in input e restituisce
+     * un elenco di violazioni individuate.
+     * @param id_equipment
+     * @param name
+     * @param description
+     * @param lab
+     * @return
+     */
+    public ArrayList<String> checkEquipmentModify(int id_equipment, String name, String description, String lab){
+        ArrayList<String> errors = new ArrayList<String>();
+
+        //Controllo dominio nome
+        if(name == null || name.isBlank()) errors.add("Name must not be blank.");
+        else if(name.length() > 30) errors.add("Name is too long. (MAX. 30 characters.)");
+
+        //Controllo dominio descrizione
+        if(description != null && !description.isBlank() && description.length() > 200) errors.add("Description is too long. (MAX. 200 characters.)");
+
+
+        return errors;
+    }
+
+    /**
+     * Metodo che restituisce l'oggetto Equipment che corrisponde al parametro id se esso e' salvato nella lista, altrimenti
+     * il metodo restituisce null.
+     * @param id
+     * @return
+     */
     private Equipment findEquipment(int id){
         for(Equipment equipment: equipmentArrayList) {
             if (equipment.getId() == id) return equipment;
         }
         return null;
     }
+
+    /**
+     * Metodo che modifica l'oggetto Equipment che corrisponde all'id fornito usando i dati passati in input.
+     * @param id
+     * @param name
+     * @param description
+     * @param lab
+     */
     public void modifyEquipment(int id,String name,
-                                String description,String lab,String project){
-        controller=Controller.getInstance();
+                                String description,String lab){
+
         Equipment equipment = findEquipment(id);
         equipment.setName(name);
         equipment.setDescription(description);
-        if(!lab.equals("Null")){
+        if(lab != null && !lab.isBlank()){
             ArrayList<Laboratory>laboratoryArrayList = controller.getLaboratoryController().getLaboratoryArrayList();
             for (Laboratory laboratory : laboratoryArrayList) {
                 if(laboratory.getName().equals(lab)){
@@ -79,18 +167,20 @@ public class EquipmentController {
             }
         }else equipment.setLab(null);
 
-        if(!project.equals("Null")){
-            ArrayList<Project>projectArrayList=controller.getProjectController().getProjectArrayList();
-            for (Project prj: projectArrayList) {
-                if(prj.getCup().equals(project)){
-                    equipment.setProject(prj);
-                    break;
-                }
-            }
-        }else equipment.setProject(null);
     }
+
+    /**
+     * Metodo che rimuove l'oggetto Equipment che corrisponde all'id fornito dalla lista e aggiorna i fondi del progetto che l'ha
+     * acquistato.
+     * @param id
+     */
     public void deleteEquipment(int id){
-        equipmentArrayList.remove(findEquipment(id));
+        Equipment equipment = findEquipment(id);
+        if(equipment.getProjectCup() != null && !equipment.getProjectCup().isBlank()) {
+            Project newProject = controller.getProjectController().findProject(equipment.getProjectCup());
+            newProject.setRemainingFunds(newProject.getRemainingFunds() + equipment.getPrice());
+        }
+        equipmentArrayList.remove(equipment);
     }
 
     /**

@@ -65,9 +65,7 @@ public class Equipment {
      * @return La cup del progetto oppure Null
     */
     public String getProjectCup(){
-        if(project!=null) {
-            return project.getCup();
-        }else return "Null";
+        return project.getCup();
     }
     
     /**
@@ -75,22 +73,21 @@ public class Equipment {
      * @return Il nome del laboratorio oppure Null
     */
     public String getLabName(){
-        if(lab!=null) {
-            return lab.getName();
-        }else return "Null";
+        return lab.getName();
+
     }
     
     /**
      * Metodo che restituisce la descrizione dell'equipaggiamento
      * @return La descrizione dell'equipaggiamento
     */
-    public String getDescription() {return description;  }
+    public String getDescription() {return description; }
     
     /**
      * Metodo che restituisce il venditore dell'equipaggiamento
      * @return Il dealer dell'equipaggiamento
     */
-    public String getDealer(){return dealer;  }
+    public String getDealer(){ return dealer; }
     
     /**
      * Metodo che restituisce l'identificativo dell'equipaggiamento

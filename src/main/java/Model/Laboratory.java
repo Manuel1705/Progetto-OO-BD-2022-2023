@@ -42,16 +42,11 @@ public class Laboratory {
     }
     
     /**
-     * Metodo che associa un progetto a un laboratorio ma solo se tale progetto non ha già tre laboratori che si occupano di esso.
+     * Metodo che associa un progetto a un laboratorio.
      * @param project Riferimento all'oggetto progetto che vogliamo aggiungere
      */
     public void addProject(Project project){
-        if(project.getLabsNum()<3) {
-            this.project = project;
-            project.addLaboratory(this);
-        }else {
-            System.out.println("Questo progetto ha già tre laboratori");
-        }
+        this.project = project;
      }
     
      /**
