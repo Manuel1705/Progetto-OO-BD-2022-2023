@@ -44,7 +44,7 @@ public class EmployeeController {
 
     /**
      * Metodo che controlla le potenziali violazioni dei vincoli del Model dopo l'inserimento dei dati in input e restituisce
-     * un elenco di violazioni individuate.
+     * un elenco di violazioni individuate, con ruolo esplicito.
      * @param ssn
      * @param firstName
      * @param lastName
@@ -100,6 +100,71 @@ public class EmployeeController {
         //Controllo dominio ruolo
         if(role == null || (!role.equals("Junior") && !role.equals("Middle") && !role.equals("Senior") && !role.equals("Executive")))
             errors.add("Role invalid.");
+        //Controllo esistenza chiave esterna
+        if (lab != null && !lab.isBlank() && controller.getLaboratoryController().findLaboratory(lab) == null)
+            errors.add("Laboratory does not exist.");
+        //Controllo unicita' ssn
+        if(findEmployee(ssn) != null
+                || controller.getTemporaryEmployeeController().findTemporaryEmployee(ssn) != null) errors.add("SSN already belongs to an employee.");
+
+
+        return errors;
+    }
+
+    /**
+     * Metodo che controlla le potenziali violazioni dei vincoli del Model dopo l'inserimento dei dati in input e restituisce
+     * un elenco di violazioni individuate, con ruolo implicito.
+     * @param ssn
+     * @param firstName
+     * @param lastName
+     * @param phoneNum
+     * @param address
+     * @param email
+     * @param employmentDate
+     * @param salary
+     * @param lab
+     * @return
+     */
+    public ArrayList<String> checkEmployeeInsert(String ssn, String firstName, String lastName,
+                                                 String phoneNum, String address,
+                                                 String email, LocalDate employmentDate,
+                                                 float salary, String lab){
+        ArrayList<String> errors = new ArrayList<String>();
+
+        //Controllo dominio ssn
+        if(ssn == null || ssn.isBlank()) errors.add("SSN must not be blank.");
+        else if(ssn.length() != 9) errors.add("SSN must be 9 digits long.");
+        else{
+            for (char c : ssn.toCharArray()) {
+                if (!Character.isDigit(c)) {
+                    errors.add("SSN must be 9 digits long.");
+                    break;
+                }
+            }
+        }
+        //Controllo dominio nome e cognome
+        if(firstName == null || firstName.isBlank()) errors.add("First name must not be blank.");
+        else if(firstName.length() > 30) errors.add("First name is too long. (Max. 20 characters)");
+        if(lastName == null || lastName.isBlank()) errors.add("Last name must not be blank.");
+        else if(lastName.length() > 30) errors.add("Last name is too long. (Max. 20 characters)");
+        //Contollo dominio numero di telefono
+        if(phoneNum == null || phoneNum.isBlank()) errors.add("Phone number must not be blank.");
+        else if(phoneNum.length() != 10) errors.add("Phone number must be 10 digits long.");
+        else{
+            for (char c : phoneNum.toCharArray()) {
+                if (!Character.isDigit(c)) {
+                    errors.add("Phone number must be 10 digits long.");
+                    break;
+                }
+            }
+        }
+        //Controllo dominio email e indirizzo
+        if(email != null && email.length() > 50) errors.add("E-mail is too long. (Max. 50 characters)");
+        if(address != null && address.length() > 50) errors.add("Address is too long. (Max. 50 characters)");
+        //Controllo dominio data di assunzione
+        if(employmentDate.isAfter(LocalDate.now())) errors.add("Employment date must be a past or current date.");
+        //Controllo dominio salario
+        if(salary < 0) errors.add("Salary must be positive.");
         //Controllo esistenza chiave esterna
         if (lab != null && !lab.isBlank() && controller.getLaboratoryController().findLaboratory(lab) == null)
             errors.add("Laboratory does not exist.");
@@ -256,7 +321,7 @@ public class EmployeeController {
     public void addEmployeeList(Employee employee){employeeArrayList.add(employee);}
 
     /**
-     * Metodo che usa i dati passati in input per creare un oggetto Employee e aggiungerlo alla lista.
+     * Metodo che usa i dati passati in input per creare un oggetto Employee e aggiungerlo alla lista, con ruolo esplicito.
      * @param ssn
      * @param firstName
      * @param lastName
@@ -308,6 +373,65 @@ public class EmployeeController {
             System.out.println("Database error");
         }
     }
+
+    /**
+     * Metodo che usa i dati passati in input per creare un oggetto Employee e aggiungerlo alla lista, con ruolo implicito.
+     * @param ssn
+     * @param firstName
+     * @param lastName
+     * @param phoneNum
+     * @param address
+     * @param email
+     * @param employmentDate
+     * @param salary
+     * @param lab
+     */
+    public void addEmployeeList(String ssn, String firstName, String lastName,
+                                String phoneNum, String address,
+                                String email, LocalDate employmentDate,
+                                float salary, String lab)
+    {
+
+        String role = null;
+
+        if(employmentDate.until(LocalDate.now()).getYears() < 3) role = "Junior";
+        else if (employmentDate.until(LocalDate.now()).getYears() < 7) role = "Middle";
+        else role = "Senior";
+
+        Employee employee = new Employee(ssn, firstName, lastName, phoneNum, role, salary, employmentDate);
+        if (lab != null && !lab.isBlank()) {
+            ArrayList<Laboratory> labs = controller.getLaboratoryController().getLaboratoryArrayList();
+            for (Laboratory laboratory : labs) {
+                if(laboratory.getName().equals(lab)){
+                    employee.setLab(laboratory);
+                }
+            }
+        }
+        else
+            employee.setLab(null);
+
+        if (address != null && !address.isBlank())
+            employee.setAddress(address);
+        else
+            employee.setAddress(null);
+
+        if (email != null && !email.isBlank())
+            employee.setEmail(email);
+        else
+            employee.setEmail(null);
+
+        employeeArrayList.add(employee);
+        try{
+            if(controller.isDBConnected()){
+                DAOEmployeePostgres daoEmployee = new DAOEmployeePostgres();
+                daoEmployee.addEmployeeDB(ssn, firstName, lastName, phoneNum, role, salary, Date.valueOf(employmentDate), email,
+                        address, lab);
+            }
+        }catch(Exception e){
+            System.out.println("Database error");
+        }
+    }
+
 
     /**
      * Metodo che modifica i dati dell'impiegato che corrisponde all'SSN passato in input.

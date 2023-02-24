@@ -8,6 +8,7 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.ChoiceBox;
+import javafx.scene.control.DatePicker;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.stage.Modality;
@@ -28,7 +29,7 @@ public class addEmployeeController implements Initializable {
     @FXML private Button hireEmployeeButton;
     @FXML private ChoiceBox<String> labAddEmployee;
     @FXML private TextField phoneNumberAddEmployee;
-    @FXML private ChoiceBox<String> roleAddEmployee;
+    @FXML private DatePicker dateAddEmployee;
     @FXML private TextField salaryAddEmployee;
     @FXML private TextField ssnAddEmployee;
 
@@ -57,9 +58,8 @@ public class addEmployeeController implements Initializable {
                 lastNameAddEmployee.getText(),
                 phoneNumberAddEmployee.getText(),
                 addressAddEmployee.getText(),
-                roleAddEmployee.getValue(),
                 emailAddEmployee.getText(),
-                LocalDate.now(),
+                dateAddEmployee.getValue(),
                 Float.parseFloat(salaryAddEmployee.getText()),
                 labAddEmployee.getValue()));
 
@@ -72,9 +72,8 @@ public class addEmployeeController implements Initializable {
                     lastNameAddEmployee.getText(),
                     phoneNumberAddEmployee.getText(),
                     addressAddEmployee.getText(),
-                    roleAddEmployee.getValue(),
                     emailAddEmployee.getText(),
-                    LocalDate.now(),
+                    dateAddEmployee.getValue(),
                     Float.parseFloat(salaryAddEmployee.getText()),
                     labAddEmployee.getValue());
             //chiusura finestra pop up
@@ -115,7 +114,6 @@ public class addEmployeeController implements Initializable {
 
     @Override public void initialize(URL url, ResourceBundle resourceBundle) {
         String[] roles={"Junior","Executive"};
-        roleAddEmployee.getItems().addAll(roles);
         controller=Controller.getInstance();
         ArrayList<Laboratory> labs= controller.getLaboratoryController().getLaboratoryArrayList();
         labAddEmployee.getItems().add(null);
