@@ -9,7 +9,7 @@ create domain azienda.role_type as varchar(9) constraint role_domain check (
    value like 'temporary'
 );
 --dominio per SSN
-create domain azienda.ssn_type as char(15) constraint ssn_domain check(value similar to '\d+');
+create domain azienda.ssn_type as char(9) constraint ssn_domain check(value similar to '\d+');
 --dominio per phone_num
 create domain azienda.phone_num_type as char(10) constraint phone_num_domain check(value similar to '\d+');
 --END DOMINI
