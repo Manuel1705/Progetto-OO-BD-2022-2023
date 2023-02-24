@@ -1,17 +1,19 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.scene.control.Label?>
-<?import javafx.scene.control.TextArea?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.Pane?>
-
+<?import javafx.scene.text.Font?>
 
 <Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" style="-fx-background-color: #2b313c;" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="GUI.ErrorWindowController">
    <children>
       <AnchorPane prefHeight="354.0" prefWidth="600.0" style="-fx-background-color: #21252f;">
          <children>
-            <TextArea fx:id="ErrorText" editable="false" layoutX="69.0" layoutY="51.0" prefHeight="272.0" prefWidth="462.0" wrapText="true" />
-            <Label layoutX="282.0" layoutY="23.0" text="ERROR" textFill="#f56216" />
+            <Label fx:id="errorLabel" alignment="TOP_LEFT" contentDisplay="CENTER" layoutX="23.0" layoutY="23.0" prefHeight="310.0" prefWidth="557.0" text="Error : " textFill="WHITE">
+               <font>
+                  <Font name="System Italic" size="16.0" />
+               </font>
+            </Label>
          </children>
       </AnchorPane>
    </children>
