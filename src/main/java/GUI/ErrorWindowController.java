@@ -14,10 +14,16 @@ public class ErrorWindowController{
     @FXML
     private TextArea ErrorText;
 
+    /**
+     * Metodo che inizializza la finestra con i messaggi di errore passati in inpyt.
+     * @param errorList Lista dei messagi di errore.
+     */
     public void setErrors(ArrayList<String> errorList){
         for(String error: errorList){
             ErrorText.appendText(error + "\n");
         }
     }
+
+
 
 }

@@ -3,6 +3,7 @@ import Controller.Controller;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
@@ -12,8 +13,10 @@ import javafx.scene.layout.Pane;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import java.io.IOException;
+import java.net.URL;
+import java.util.ResourceBundle;
 
-public class HomeController {
+public class HomeController implements Initializable {
         @FXML
         private Label EmpNumLabel;
         @FXML
@@ -28,6 +31,8 @@ public class HomeController {
         @FXML
         private Label LabNumLabel;
 
+        @FXML
+        private Label databseConnectionStateLabel;
         @FXML
         private Pane ProjectButton;
 
@@ -138,5 +143,25 @@ public class HomeController {
                 stage.setScene(scene);
                 stage.getIcons().add(new Image("app-icon.png"));
                 stage.showAndWait();
+                if(controller.isDBConnected())
+                        databseConnectionStateLabel.setText("Database is connected.");
+                else
+                        databseConnectionStateLabel.setText("Database is not connected.");
+
         }
-    }
+
+        /**
+         * Metodo che inizializza la finestra.
+         * @param url
+         * @param resourceBundle
+         */
+        @Override
+        public void initialize(URL url, ResourceBundle resourceBundle) {
+                controller = Controller.getInstance();
+                if(controller.isDBConnected())
+                        databseConnectionStateLabel.setText("Database is connected.");
+                else
+                        databseConnectionStateLabel.setText("Database is not connected.");
+
+        }
+}

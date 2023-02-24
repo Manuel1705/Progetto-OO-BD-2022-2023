@@ -70,20 +70,21 @@ public class Controller
      * @param database Nome del database
      * @param dbms DBMS utilizzato
      */
-    public void setDB(String username, String password, String database, String dbms){
-        try{
-            if(dbms.equals("PostgreSQL")){
-                PostgresDBConnection dbConnection = PostgresDBConnection.getInstance(username, password, database);
-
+    public ArrayList<String> setDB(String username, String password, String database, String dbms){
+        ArrayList<String> errors = new ArrayList<String>();
+        if(dbms.equals("PostgreSQL")){
+            PostgresDBConnection dbConnection = PostgresDBConnection.getInstance(username, password, database);
+            errors = dbConnection.getErrors();
+            if(errors.isEmpty()) {
                 DBSet = true;
                 loadDB();
             }
+            else{
+                DBSet = false;
+            }
         }
-        catch (SQLException ex){
-            System.out.println("Connection failed: " + ex.getMessage());
-            ex.printStackTrace();
-            DBSet = false;
-        }
+        return errors;
+
     }
 
     //WIP

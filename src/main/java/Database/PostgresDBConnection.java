@@ -3,6 +3,7 @@ package Database;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
+import java.util.ArrayList;
 
 /**
  * Classe che effettua la connessione del programma a un database Postgres
@@ -17,6 +18,8 @@ public class PostgresDBConnection {
     private String url;
     private String driver = "org.postgresql.Driver";
 
+    private ArrayList<String> errors = new ArrayList<String>();
+
 
     /**
      * Costruttore privato della classe. Inizializza il driver di Postgres se viene trovato dal metodo Class.forName
@@ -28,12 +31,12 @@ public class PostgresDBConnection {
             connection = DriverManager.getConnection(url, user, password);
 
         } catch (ClassNotFoundException ex) {
-            System.out.println("Database Driver not found: " + ex.getMessage());
-            ex.printStackTrace();
+            errors.add("Database Driver not found: " + ex.getMessage());
+
         }
          catch (SQLException ex) {
-             System.out.println("Database connection failed: " + ex.getMessage());
-             ex.printStackTrace();
+             errors.add("Database connection failed: " + ex.getMessage());
+
          }
     }
 
@@ -49,12 +52,12 @@ public class PostgresDBConnection {
             connection = DriverManager.getConnection(url, user, password);
 
         } catch (ClassNotFoundException ex) {
-            System.out.println("Database Driver not found: " + ex.getMessage());
-            ex.printStackTrace();
+            errors.add("Database Driver not found: " + ex.getMessage());
+
         }
         catch (SQLException ex) {
-            System.out.println("Database connection failed: " + ex.getMessage());
-            ex.printStackTrace();
+            errors.add("Database connection failed: " + ex.getMessage());
+
         }
     }
 
@@ -66,12 +69,20 @@ public class PostgresDBConnection {
      * @return instance Istanza della classe PostgresDBConnection
      * @throws SQLException
      */
-    public static PostgresDBConnection getInstance() throws SQLException {
+    public static PostgresDBConnection getInstance(){
 
         if (instance == null) {
             instance = new PostgresDBConnection();
-        } else if (instance.connection.isClosed()) {
-            instance = new PostgresDBConnection();
+        }
+        else {
+            try {
+
+                if (instance.connection.isClosed()) {
+                    instance = new PostgresDBConnection();
+                }
+            } catch (SQLException ex) {
+                instance.errors.add("Database connection lost.");
+            }
         }
         return instance;
     }
@@ -82,7 +93,7 @@ public class PostgresDBConnection {
      * @return instance Istanza della classe PostgresDBConnection
      * @throws SQLException
      */
-    public static PostgresDBConnection getInstance(String username, String newPassword, String database) throws SQLException {
+    public static PostgresDBConnection getInstance(String username, String newPassword, String database){
 
         instance = new PostgresDBConnection(username, newPassword, database);
         return instance;
@@ -96,6 +107,13 @@ public class PostgresDBConnection {
         return connection;
     }
 
+    /**
+     * Metodo che setta le credenziali del database.
+     * @param username
+     * @param newPassword
+     * @param database
+     */
+
     private void setCredentials(String username, String newPassword, String database){
 
         user = username;
@@ -103,5 +121,7 @@ public class PostgresDBConnection {
         url= "jdbc:postgresql://localhost:5432/" + database;
 
     }
+
+    public ArrayList<String> getErrors(){return errors;}
 }
 
