@@ -14,7 +14,7 @@ public class DAOLaboratoryPostgres implements DAOLaboratory{
      * Costruttore della classe. Ottiene il collegamento al database.
      * @throws SQLException
      */
-    public DAOLaboratoryPostgres() throws SQLException {
+    public DAOLaboratoryPostgres() throws SQLException{
         connection = PostgresDBConnection.getInstance().getConnection();
     }
 
@@ -27,7 +27,7 @@ public class DAOLaboratoryPostgres implements DAOLaboratory{
      */
     public void addLaboratoryDB(String name, String topic, String sresp, String project){
 
-        String query = "INSERT INTO azienda.laboratory" +
+        String query = "INSERT INTO azienda.laboratory " +
                 "VALUES (?,?,?,?);";
         try{
             PreparedStatement prst = connection.prepareStatement(query);
@@ -70,8 +70,8 @@ public class DAOLaboratoryPostgres implements DAOLaboratory{
      * @param project CUP del progetto su cui lavora il laboratorio.
      */
     public void updateLaboratoryDB(String oldName, String newName, String topic, String sresp, String project){
-        String query = "UPDATE azienda.laboratory" +
-                "SET name = ?, topic = ?, sresp = ?, laboratory = ?" +
+        String query = "UPDATE azienda.laboratory " +
+                "SET name = ?, topic = ?, sresp = ?, project = ? " +
                 "WHERE name LIKE ?";
         try{
             PreparedStatement prst = connection.prepareStatement(query);

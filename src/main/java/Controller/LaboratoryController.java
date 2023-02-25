@@ -1,9 +1,13 @@
 package Controller;
+import DAOPostgresImplementation.DAOEquipmentPostgres;
+import DAOPostgresImplementation.DAOLaboratoryPostgres;
 import GUI.EmployeeListController;
 import GUI.LaboratoryListController;
 import GUI.ProjectListController;
 import Model.*;
 
+import java.sql.Date;
+import java.sql.SQLException;
 import java.util.ArrayList;
 public class LaboratoryController {
     private Controller controller;
@@ -64,20 +68,34 @@ public class LaboratoryController {
      */
     public void addLaboratoryList(String name, String topic, String Sresp, String project) {
 
-        controller = Controller.getInstance();
         ArrayList<Employee> employeeArrayList = controller.getEmployeeController().getEmployeeArrayList();
         ArrayList<Project> projectArrayList = controller.getProjectController().getProjectArrayList();
         if (topic == null || topic.isBlank()) {
             topic = "No description";
         }
-        Laboratory laboratory = new Laboratory(name, topic);
+        Employee sRespEmp = null;
+        Project newProject = null;
+
         if (Sresp != null && !Sresp.isBlank()) {
-            laboratory.setSresp(controller.getEmployeeController().findEmployee(Sresp));
+            sRespEmp = controller.getEmployeeController().findEmployee(Sresp);
         }
         if (project != null && !project.isBlank()) {
-            laboratory.setProject(controller.getProjectController().findProject(project));
+            newProject = controller.getProjectController().findProject(project);
         }
+        Laboratory laboratory = new Laboratory(name, topic, sRespEmp, newProject);
         laboratoryArrayList.add(laboratory);
+
+        //Il laboratorio viene inserito nel database.
+        try{
+            if(controller.isDBConnected() && controller.getDBMS().equals("PostgreSQL")){
+                DAOLaboratoryPostgres daoLaboratoryPostgres = new DAOLaboratoryPostgres();
+                daoLaboratoryPostgres.addLaboratoryDB(name, topic, Sresp, project);
+
+            }
+        }
+        catch(SQLException ex) {
+            controller.setDBConnectionState(false);
+        }
     }
 
     /**
@@ -98,8 +116,6 @@ public class LaboratoryController {
         }
         //Controllo dominio topic
         if(topic != null && topic.length() > 50) errors.add("Topic is too long. (Max. 50 characters)");
-        //Controllo unicita' nome
-        if(findLaboratory(name) != null) errors.add("Name is already in use by another laboratory.");
         //Controllo inserimento sresp
         if(Sresp == null || Sresp.isBlank()) errors.add("Must insert scientific responsible.");
         //Controllo chiavi esterne
@@ -139,6 +155,18 @@ public class LaboratoryController {
             laboratory.setProject(controller.getProjectController().findProject(project));
         }
         else laboratory.setProject(null);
+
+        //Il laboratorio modificato nel database.
+        try{
+            if(controller.isDBConnected() && controller.getDBMS().equals("PostgreSQL")){
+                DAOLaboratoryPostgres daoLaboratoryPostgres = new DAOLaboratoryPostgres();
+                daoLaboratoryPostgres.updateLaboratoryDB(name, name, topic, Sresp, project);
+
+            }
+        }
+        catch(SQLException ex) {
+            controller.setDBConnectionState(false);
+        }
     }
 
     /**
@@ -179,22 +207,34 @@ public class LaboratoryController {
         Laboratory laboratory = findLaboratory(name);
         ArrayList<Employee> employeeArrayList = controller.getEmployeeController().getEmployeeArrayList();
         for (Employee employee : employeeArrayList) {
-            if (employee.getLabName().equals(laboratory.getName())) {
+            if (employee.getLabName() != null && employee.getLabName().equals(laboratory.getName())) {
                 employee.setLab(null);
             }
         }
         ArrayList<TemporaryEmployee> temporaryEmployeeArrayList = controller.getTemporaryEmployeeController().getTemporaryEmployeeArrayList();
         for (TemporaryEmployee temporaryEmployee : temporaryEmployeeArrayList) {
-            if (temporaryEmployee.getLabName().equals(laboratory.getName())) {
+            if (temporaryEmployee.getLabName() != null && temporaryEmployee.getLabName().equals(laboratory.getName())) {
                 temporaryEmployee.setLab(null);
             }
         }
         ArrayList<Equipment> equipmentArrayList = controller.getEquipmentController().getEquipmentArrayList();
         for (Equipment equipment : equipmentArrayList) {
-            if (equipment.getLabName().equals(laboratory.getName())) {
+            if (equipment.getLabName() != null && equipment.getLabName().equals(laboratory.getName())) {
                 equipment.setLab(null);
             }
         }
         laboratoryArrayList.remove(laboratory);
+
+        //Il laboratorio viene eliminato nel database.
+        try{
+            if(controller.isDBConnected() && controller.getDBMS().equals("PostgreSQL")){
+                DAOLaboratoryPostgres daoLaboratoryPostgres = new DAOLaboratoryPostgres();
+                daoLaboratoryPostgres.removeLaboratoryDB(name);
+
+            }
+        }
+        catch(SQLException ex) {
+            controller.setDBConnectionState(false);
+        }
     }
 }

@@ -1,4 +1,7 @@
 package Controller;
+import DAOPostgresImplementation.DAOEmployeePostgres;
+import DAOPostgresImplementation.DAOProjectPostgres;
+import DAOPostgresImplementation.DAOTemporaryContractPostgres;
 import GUI.EmployeeListController;
 import GUI.LaboratoryListController;
 import GUI.TemporaryEmployeeListController;
@@ -8,6 +11,8 @@ import Model.Project;
 import Model.TemporaryEmployee;
 
 import java.lang.reflect.Array;
+import java.sql.Date;
+import java.sql.SQLException;
 import java.time.LocalDate;
 import java.time.Period;
 import java.util.ArrayList;
@@ -49,7 +54,7 @@ public class TemporaryEmployeeController {
         float totalSalary = 0;
         for(TemporaryEmployee temp: temporaryEmployeeArrayList){
             if (temp.getProjectCup().equals(project.getCup()))
-                totalSalary += temp.getSalary()*(temp.getEmploymentDate().until(endDate).getMonths());
+                totalSalary += temp.getSalary()*(temp.getEmploymentDate().until(endDate).toTotalMonths());
         }
         return totalSalary;
     }
@@ -121,7 +126,7 @@ public class TemporaryEmployeeController {
             else if (newProject.getEndDate().isBefore(LocalDate.now())) errors.add("Project has already ended.");
             //Controllo fondi progetto
             else if ((getTotalProjectSalaries(newProject, newProject.getStartDate(), newProject.getEndDate())
-                    + salary * (employmentDate.until(newProject.getEndDate())).getMonths()) > newProject.getBudget() / 2)
+                    + salary * (employmentDate.until(newProject.getEndDate())).toTotalMonths()) > newProject.getBudget() / 2)
                 errors.add("Project budget too low to hire employee.");
         }
 
@@ -157,8 +162,9 @@ public class TemporaryEmployeeController {
 
         Project newProject = controller.getProjectController().findProject(project);
 
+        System.out.println(salary * (employmentDate.until(newProject.getEndDate())).toTotalMonths());
         //Aggiornamento fondi rimanenti progetto
-       newProject.setRemainingFunds(newProject.getRemainingFunds() - salary * (employmentDate.until(newProject.getEndDate())).getMonths());
+        newProject.setRemainingFunds(newProject.getRemainingFunds() - salary * (employmentDate.until(newProject.getEndDate())).toTotalMonths());
 
 
         TemporaryEmployee employee = new TemporaryEmployee(ssn, firstName, lastName, phoneNum, salary, employmentDate, newProject);
@@ -181,6 +187,24 @@ public class TemporaryEmployeeController {
 
         temporaryEmployeeArrayList.add(employee);
 
+        //L'impiegato viene inserito nel database.
+        try{
+            if(controller.isDBConnected() && controller.getDBMS().equals("PostgreSQL")){
+                DAOEmployeePostgres daoEmployee = new DAOEmployeePostgres();
+                daoEmployee.addEmployeeDB(ssn, firstName, lastName, phoneNum, "temporary", salary, Date.valueOf(employmentDate), email,
+                        address, lab);
+
+                DAOTemporaryContractPostgres daoTemporaryContractPostgres = new DAOTemporaryContractPostgres();
+                daoTemporaryContractPostgres.addTemporaryContractDB(ssn, project);
+
+                DAOProjectPostgres daoProjectPostgres = new DAOProjectPostgres();
+                daoProjectPostgres.updateProjectDBRemainingFunds(project, newProject.getRemainingFunds());
+
+            }
+        }
+        catch(SQLException ex) {
+            controller.setDBConnectionState(false);
+        }
     }
 
     /**
@@ -236,8 +260,8 @@ public class TemporaryEmployeeController {
         //Controllo fondi progetto
         Project newProject = controller.getProjectController().findProject(project);
         if ((getTotalProjectSalaries(newProject, newProject.getStartDate(), newProject.getEndDate())
-                + salary * (LocalDate.now().until(newProject.getEndDate())).getMonths()
-                - employee.getSalary() * (LocalDate.now().until(newProject.getEndDate())).getMonths())
+                + salary * (LocalDate.now().until(newProject.getEndDate())).toTotalMonths()
+                - employee.getSalary() * (LocalDate.now().until(newProject.getEndDate())).toTotalMonths())
                 > newProject.getBudget() / 2)
             errors.add("Project budget too low for new salary.");
 
@@ -280,8 +304,8 @@ public class TemporaryEmployeeController {
         LocalDate employmentDate = employee.getEmploymentDate();
         //Aggiornamento fondi rimanenti progetto
         employeeProject.setRemainingFunds(employeeProject.getRemainingFunds()
-                - salary * (LocalDate.now().until(employeeProject.getEndDate())).getMonths()
-                + employee.getSalary() * (LocalDate.now().until(employeeProject.getEndDate())).getMonths());
+                - salary * (LocalDate.now().until(employeeProject.getEndDate())).toTotalMonths()
+                + employee.getSalary() * (LocalDate.now().until(employeeProject.getEndDate())).toTotalMonths());
 
         employee.setSalary(salary);
 
@@ -293,6 +317,22 @@ public class TemporaryEmployeeController {
         if(email != null && !email.isBlank()){
             employee.setEmail(email);
         }else employee.setEmail(null);
+
+        //Viene modificato l'impiegato nel database
+        try{
+            if(controller.isDBConnected() && controller.getDBMS().equals("PostgreSQL")){
+                DAOEmployeePostgres daoEmployee = new DAOEmployeePostgres();
+                daoEmployee.updateEmployeeDB(ssn, ssn, firstName, lastName, phoneNumber, "temporary", salary, Date.valueOf(employmentDate), email,
+                        address, lab);
+
+
+                DAOProjectPostgres daoProjectPostgres = new DAOProjectPostgres();
+                daoProjectPostgres.updateProjectDBRemainingFunds(project, employeeProject.getRemainingFunds());
+            }
+        }
+        catch(SQLException ex) {
+            controller.setDBConnectionState(false);
+        }
     }
 
     /**
@@ -316,21 +356,39 @@ public class TemporaryEmployeeController {
     /**
      * Metodo che licenzia l'impiegato temporaneo che possiede l'SSN passato in input.
      * @param ssn
+     * @param projectCup
      */
-    public void fireTemporaryEmployee(String ssn){
+    public void fireTemporaryEmployee(String ssn, String projectCup){
         TemporaryEmployee temporaryEmployee = findTemporaryEmployee(ssn);
-        Project project = controller.getProjectController().findProject(temporaryEmployee.getProjectCup());
+        Project project = controller.getProjectController().findProject(projectCup);
 
+        if(project != null) {
+            int remainingMonths = (int)(LocalDate.now().until(project.getEndDate())).toTotalMonths();
 
+            float recoveredBudget = temporaryEmployee.getSalary() * remainingMonths;
 
-
-        int remainingMonths = (LocalDate.now().until(project.getEndDate())).getMonths();
-
-        float recoveredBudget = temporaryEmployee.getSalary()*remainingMonths;
-
-        project.setRemainingFunds(project.getRemainingFunds()+recoveredBudget);
-
+            project.setRemainingFunds(project.getRemainingFunds() + recoveredBudget);
+        }
 
         temporaryEmployeeArrayList.remove(temporaryEmployee);
+
+        //L'impiegato viene rimosso dal database
+        try{
+            if(controller.isDBConnected() && controller.getDBMS().equals("PostgreSQL")){
+                DAOEmployeePostgres daoEmployee = new DAOEmployeePostgres();
+                daoEmployee.removeEmployeeDB(ssn);
+
+                DAOTemporaryContractPostgres daoTemporaryContractPostgres = new DAOTemporaryContractPostgres();
+                daoTemporaryContractPostgres.removeTemporaryContractDB(ssn);
+
+                if(project != null) {
+                    DAOProjectPostgres daoProjectPostgres = new DAOProjectPostgres();
+                    daoProjectPostgres.updateProjectDBRemainingFunds(project.getCup(), project.getRemainingFunds());
+                }
+            }
+        }
+        catch(SQLException ex) {
+            controller.setDBConnectionState(false);
+        }
     }
 }

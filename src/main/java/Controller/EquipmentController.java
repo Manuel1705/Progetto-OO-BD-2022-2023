@@ -1,9 +1,15 @@
 package Controller;
 
+import DAOPostgresImplementation.DAOEmployeePostgres;
+import DAOPostgresImplementation.DAOEquipmentPostgres;
+import DAOPostgresImplementation.DAOProjectPostgres;
 import Model.Employee;
 import Model.Equipment;
 import Model.Laboratory;
 import Model.Project;
+
+import java.sql.Date;
+import java.sql.SQLException;
 import java.util.ArrayList;
 
 public class EquipmentController {
@@ -105,6 +111,22 @@ public class EquipmentController {
 
         equipmentArrayList.add(equipment);
 
+        //L'equipaggiamento viene inserito nel database e vengono aggiornati i fondi rimanenti del progetto.
+        try{
+            if(controller.isDBConnected() && controller.getDBMS().equals("PostgreSQL")){
+                DAOEquipmentPostgres daoEquipmentPostgres = new DAOEquipmentPostgres();
+                daoEquipmentPostgres.addEquipmentDB(id_equipment, name, description, price,
+                        Date.valueOf(equipment.getPurchaseDate()), dealer, lab, project);
+
+                DAOProjectPostgres daoProjectPostgres = new DAOProjectPostgres();
+                daoProjectPostgres.updateProjectDBRemainingFunds(project, newProject.getRemainingFunds());
+
+            }
+        }
+        catch(SQLException ex) {
+            controller.setDBConnectionState(false);
+        }
+
 
     }
 
@@ -167,6 +189,19 @@ public class EquipmentController {
             }
         }else equipment.setLab(null);
 
+        //L'equipaggiamento viene modificato nel database.
+        try{
+            if(controller.isDBConnected() && controller.getDBMS().equals("PostgreSQL")){
+                DAOEquipmentPostgres daoEquipmentPostgres = new DAOEquipmentPostgres();
+                daoEquipmentPostgres.addEquipmentDB(id, name, description, equipment.getPrice(),
+                        Date.valueOf(equipment.getPurchaseDate()), equipment.getDealer(), lab, equipment.getProjectCup());
+
+            }
+        }
+        catch(SQLException ex) {
+            controller.setDBConnectionState(false);
+        }
+
     }
 
     /**
@@ -181,6 +216,25 @@ public class EquipmentController {
             newProject.setRemainingFunds(newProject.getRemainingFunds() + equipment.getPrice());
         }
         equipmentArrayList.remove(equipment);
+
+        //L'equipaggiamento viene eliminato dal database e aggiorna i fondi rimanenti del progetto nel database.
+        try{
+            if(controller.isDBConnected() && controller.getDBMS().equals("PostgreSQL")){
+                DAOEquipmentPostgres daoEquipmentPostgres = new DAOEquipmentPostgres();
+                daoEquipmentPostgres.removeEquipmentDB(id);
+
+                if(equipment.getProjectCup() != null && !equipment.getProjectCup().isBlank()) {
+
+                    DAOProjectPostgres daoProjectPostgres = new DAOProjectPostgres();
+                    daoProjectPostgres.updateProjectDBRemainingFunds(equipment.getProjectCup(),
+                            controller.getProjectController().findProject(equipment.getProjectCup()).getRemainingFunds());
+                }
+
+            }
+        }
+        catch(SQLException ex) {
+            controller.setDBConnectionState(false);
+        }
     }
 
     /**
@@ -191,7 +245,7 @@ public class EquipmentController {
     public float getTotalProjectPrice(Project project){
         float totalPrice = 0;
         for(Equipment equipment: equipmentArrayList){
-            if(equipment.getProjectCup().equals(project.getCup()))
+            if(equipment.getProjectCup()!= null && equipment.getProjectCup().equals(project.getCup()))
                 totalPrice += equipment.getPrice();
         }
         return totalPrice;

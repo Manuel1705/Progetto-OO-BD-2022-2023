@@ -1,10 +1,9 @@
 package Controller;
 
 import DAO.DAOEmployee;
-import DAOPostgresImplementation.DAOEmployeePostgres;
+import DAOPostgresImplementation.*;
 import Database.PostgresDBConnection;
-import Model.Employee;
-import Model.Project;
+import Model.*;
 import javafx.geometry.Pos;
 
 import java.sql.Date;
@@ -15,6 +14,7 @@ import java.util.ArrayList;
 public class Controller
 {
     private boolean DBSet = false;
+    private String dbms;
     private EmployeeController employeeController;
     private ProjectController projectController;
     private LaboratoryController laboratoryController;
@@ -44,6 +44,9 @@ public class Controller
     public TemporaryEmployeeController getTemporaryEmployeeController(){return temporaryEmployeeController;}
     public CareerDevelopmentController getCareerDevelopmentController(){ return careerDevelopmentController;}
     public Boolean isDBConnected(){return DBSet;}
+    public void setDBConnectionState(Boolean value){DBSet = value;}
+
+    public String getDBMS(){return dbms;}
 
 
     /**
@@ -51,16 +54,22 @@ public class Controller
      */
     public void updateData(){
         //Aggiornamento impiegati
-        for(Employee employee: getEmployeeController().getEmployeeArrayList()) {
-            employee.CheckRole();
+        for(Employee employee: employeeController.getEmployeeArrayList()) {
+            String newRole = employee.CheckRole();
+            if(newRole != null){
+                employeeController.modifyEmployeeList(employee.getSSN(), employee.getFirstName(), employee.getLastName(),
+                        employee.getPhoneNum(), newRole, employee.getSalary() + 500, employee.getLabName(),
+                        employee.getAddress(), employee.getEmail());
+            }
+
         }
         //Aggiornamento progetti
         ArrayList<Project> endedProjects = new ArrayList<Project>();
-        for(Project project: getProjectController().getProjectArrayList()){
+        for(Project project: projectController.getProjectArrayList()){
             if(project.isExpired()) endedProjects.add(project);
         }
         for(Project project: endedProjects)
-            getProjectController().dismissProject(project.getCup());
+            projectController.dismissProject(project.getCup());
     }
 
     /**
@@ -71,13 +80,23 @@ public class Controller
      * @param dbms DBMS utilizzato
      */
     public ArrayList<String> setDB(String username, String password, String database, String dbms){
+        this.dbms = "";
         ArrayList<String> errors = new ArrayList<String>();
         if(dbms.equals("PostgreSQL")){
             PostgresDBConnection dbConnection = PostgresDBConnection.getInstance(username, password, database);
             errors = dbConnection.getErrors();
             if(errors.isEmpty()) {
+                this.dbms = "PostgreSQL";
                 DBSet = true;
-                loadDB();
+                try{
+                    loadDB();
+                }
+                catch(SQLException ex){
+                    DBSet = false;
+                    clearData();
+                    errors.add("Database load error.");
+                }
+
             }
             else{
                 DBSet = false;
@@ -87,40 +106,173 @@ public class Controller
 
     }
 
+    /**
+     * Metodo che elimina tutti i dati contenuti salvati dal programma.
+     */
+    private void clearData(){
+        employeeController.getEmployeeArrayList().clear();
+        projectController.getProjectArrayList().clear();
+        laboratoryController.getLaboratoryArrayList().clear();
+        equipmentController.getEquipmentArrayList().clear();
+        temporaryEmployeeController.getTemporaryEmployeeArrayList().clear();
+        careerDevelopmentController.getCareerDevelopmentArrayList().clear();
+    }
+
     //WIP
-    private void loadDB(){
-        try {
+    private void loadDB() throws SQLException{
+        clearData();
+        if (dbms.equals("PostgreSQL")) {
+
             DAOEmployee daoEmployee = new DAOEmployeePostgres();
-            employeeController.getEmployeeArrayList().clear();
+            DAOTemporaryContractPostgres daoTemporaryContract = new DAOTemporaryContractPostgres();
+            DAOProjectPostgres daoProject = new DAOProjectPostgres();
+            DAOLaboratoryPostgres daoLaboratory = new DAOLaboratoryPostgres();
+            DAOEquipmentPostgres daoEquipment = new DAOEquipmentPostgres();
+            DAOCareerDevelopmentPostgres daoCareerDevelopment = new DAOCareerDevelopmentPostgres();
 
-            ArrayList<String> ssnList = new ArrayList<String>();
-            ArrayList<String> firstNameList = new ArrayList<String>();
-            ArrayList<String> lastNameList = new ArrayList<String>();
-            ArrayList<String> phoneNumList = new ArrayList<String>();
-            ArrayList<String> roleList = new ArrayList<String>();
-            ArrayList<Float> salaryList = new ArrayList<Float>();
-            ArrayList<Date> employmentDateList = new ArrayList<Date>();
-            ArrayList<String> emailList = new ArrayList<String>();
-            ArrayList<String> addressList = new ArrayList<String>();
-            ArrayList<String> laboratoryList = new ArrayList<String>();
 
-            daoEmployee.loadEmployeeDB(ssnList, firstNameList, lastNameList, phoneNumList,
-                    roleList, salaryList, employmentDateList, emailList,
-                    addressList, laboratoryList);
+            //Caricamento tabella Employee.
+            ArrayList<String> ssnListEmp = new ArrayList<String>();
+            ArrayList<String> firstNameListEmp = new ArrayList<String>();
+            ArrayList<String> lastNameListEmp = new ArrayList<String>();
+            ArrayList<String> phoneNumListEmp = new ArrayList<String>();
+            ArrayList<String> roleListEmp = new ArrayList<String>();
+            ArrayList<Float> salaryListEmp = new ArrayList<Float>();
+            ArrayList<Date> employmentDateListEmp = new ArrayList<Date>();
+            ArrayList<String> emailListEmp = new ArrayList<String>();
+            ArrayList<String> addressListEmp = new ArrayList<String>();
+            ArrayList<String> laboratoryListEmp = new ArrayList<String>();
 
-            for(int i = 0; i < ssnList.size(); i++){
-                System.out.println(ssnList.get(i));
-                Employee employee = new Employee(ssnList.get(i), firstNameList.get(i),
-                        lastNameList.get(i), phoneNumList.get(i), employeeController.convertRole(roleList.get(i)), salaryList.get(i), employmentDateList.get(i).toLocalDate());
-                employee.setEmail(emailList.get(i));
-                employee.setAddress(addressList.get(i));
-                employeeController.addEmployeeList(employee);
+            daoEmployee.loadEmployeeDB(ssnListEmp, firstNameListEmp, lastNameListEmp, phoneNumListEmp,
+                    roleListEmp, salaryListEmp, employmentDateListEmp, emailListEmp,
+                    addressListEmp, laboratoryListEmp);
+
+            //Caricamento tabella Laboratory
+            ArrayList<String> nameListLab = new ArrayList<String>();
+            ArrayList<String> topicListLab = new ArrayList<String>();
+            ArrayList<String> sRespListLab = new ArrayList<String>();
+            ArrayList<String> projectListLab = new ArrayList<String>();
+
+            daoLaboratory.loadLaboratoryDB(nameListLab, topicListLab, sRespListLab, projectListLab);
+
+            //Caricamento tabella Project
+            ArrayList<String> cupListProject = new ArrayList<String>();
+            ArrayList<String> nameListProject = new ArrayList<String>();
+            ArrayList<Float> budgetListProject = new ArrayList<Float>();
+            ArrayList<Float> remainingFundsListProject = new ArrayList<Float>();
+            ArrayList<Date> startDateListProject = new ArrayList<Date>();
+            ArrayList<Date> endDateListProject = new ArrayList<Date>();
+            ArrayList<String> sRespListProject = new ArrayList<String>();
+            ArrayList<String> sRefListProject = new ArrayList<String>();
+
+            daoProject.loadProjectDB(cupListProject, nameListProject, budgetListProject, remainingFundsListProject,
+                    startDateListProject, endDateListProject, sRespListProject, sRefListProject);
+
+            //Caricamento tabella Equipment
+            ArrayList<Integer> idListEquipment = new ArrayList<Integer>();
+            ArrayList<String> nameListEquipment = new ArrayList<String>();
+            ArrayList<String> descriptionListEquipment = new ArrayList<String>();
+            ArrayList<Float> priceListEquipment = new ArrayList<Float>();
+            ArrayList<Date> purchaseDateListEquipment = new ArrayList<Date>();
+            ArrayList<String> dealerListEquipment = new ArrayList<String>();
+            ArrayList<String> laboratoryNameListEquipment = new ArrayList<String>();
+            ArrayList<String> projectCupListEquipment = new ArrayList<String>();
+
+            daoEquipment.loadEquipmentDB(idListEquipment, nameListEquipment, descriptionListEquipment, priceListEquipment,
+                    purchaseDateListEquipment, dealerListEquipment, laboratoryNameListEquipment, projectCupListEquipment);
+
+            //Caricamento tabella Career Development
+            ArrayList<String> oldRoleListCD = new ArrayList<String>();
+            ArrayList<String> newRoleListCD = new ArrayList<String>();
+            ArrayList<Date> roleChangeDateListCD = new ArrayList<Date>();
+            ArrayList<Float> salaryChangeListCD = new ArrayList<Float>();
+            ArrayList<String> ssnListCD = new ArrayList<String>();
+
+            daoCareerDevelopment.loadCareerDevelopment(oldRoleListCD, newRoleListCD, roleChangeDateListCD, salaryChangeListCD,
+                    ssnListCD);
+
+            //Caricamento tabella TemporaryContract
+            ArrayList<String> ssnListTC = new ArrayList<String>();
+            ArrayList<String> cupListTC = new ArrayList<String>();
+
+            daoTemporaryContract.loadTemporaryContractDB(ssnListTC, cupListTC);
+
+            //Creazione oggetti employee e inizializzazione attributi (tranne lab)
+            for (int i = 0; i < ssnListEmp.size(); i++) {
+                if (!roleListEmp.get(i).equals("temporary")) {
+                    Employee employee = new Employee(ssnListEmp.get(i), firstNameListEmp.get(i),
+                            lastNameListEmp.get(i), phoneNumListEmp.get(i),
+                            employeeController.convertRole(roleListEmp.get(i)), salaryListEmp.get(i),
+                            employmentDateListEmp.get(i).toLocalDate());
+
+                    employee.setEmail(emailListEmp.get(i));
+                    employee.setAddress(addressListEmp.get(i));
+                    employeeController.getEmployeeArrayList().add(employee);
+                }
             }
-        }
-        catch (SQLException ex){
-            System.out.println("Connection failed: " + ex.getMessage());
-            ex.printStackTrace();
-            DBSet = false;
+            //Creazione oggetti project e inizializzazione attributi
+            for (int i = 0; i < cupListProject.size(); i++) {
+                Employee sResp = employeeController.findEmployee(sRespListProject.get(i));
+                Employee sRef = employeeController.findEmployee(sRefListProject.get(i));
+                Project project = new Project(cupListProject.get(i), nameListProject.get(i), budgetListProject.get(i),
+                        remainingFundsListProject.get(i), startDateListProject.get(i).toLocalDate(),
+                        endDateListProject.get(i).toLocalDate(), sResp, sRef);
+                projectController.getProjectArrayList().add(project);
+            }
+
+            //Creazione oggetti laboratory e inizializzazione attributi
+            for (int i = 0; i < nameListLab.size(); i++) {
+                Employee sResp = employeeController.findEmployee(sRespListLab.get(i));
+                Project project = projectController.findProject(projectListLab.get(i));
+                Laboratory laboratory = new Laboratory(nameListLab.get(i), topicListLab.get(i), sResp, project);
+                laboratoryController.getLaboratoryArrayList().add(laboratory);
+            }
+
+            //Creazione oggetti equipment e inizializzazione attributi
+            for (int i = 0; i < idListEquipment.size(); i++) {
+                Laboratory lab = laboratoryController.findLaboratory(laboratoryNameListEquipment.get(i));
+                Project project = projectController.findProject(projectCupListEquipment.get(i));
+                Equipment equipment = new Equipment(idListEquipment.get(i), nameListEquipment.get(i), priceListEquipment.get(i),
+                        project, lab, dealerListEquipment.get(i));
+                equipment.setDescription(descriptionListEquipment.get(i));
+                equipmentController.getEquipmentArrayList().add(equipment);
+            }
+
+            //Creazione oggetti temporary employee e inizializzazione attributi
+            for (int i = 0; i < ssnListEmp.size(); i++) {
+                if (roleListEmp.get(i).equals("temporary")) {
+                    Laboratory lab = laboratoryController.findLaboratory(laboratoryListEmp.get(i));
+                    int j = ssnListTC.indexOf(ssnListEmp.get(i));
+                    Project project = projectController.findProject(cupListTC.get(j));
+                    TemporaryEmployee employee = new TemporaryEmployee(ssnListEmp.get(i), firstNameListEmp.get(i),
+                            lastNameListEmp.get(i), phoneNumListEmp.get(i), salaryListEmp.get(i),
+                            employmentDateListEmp.get(i).toLocalDate(), project);
+
+                    employee.setLab(lab);
+                    employee.setAddress(addressListEmp.get(i));
+                    employee.setEmail(emailListEmp.get(i));
+
+                    temporaryEmployeeController.getTemporaryEmployeeArrayList().add(employee);
+                }
+            }
+
+            //Creazione oggetti career development e inizializzazione attributi
+            for(int i = 0; i < ssnListCD.size(); i++){
+                Employee employee = employeeController.findEmployee(ssnListCD.get(i));
+                CareerDevelopment careerDevelopment = new CareerDevelopment(employee, employeeController.convertRole(oldRoleListCD.get(i)),
+                        employeeController.convertRole(newRoleListCD.get(i)), salaryChangeListCD.get(i));
+
+                careerDevelopmentController.getCareerDevelopmentArrayList().add(careerDevelopment);
+            }
+
+            //Inizializzazione attributo lab di employee
+            for (int i = 0; i < ssnListEmp.size(); i++) {
+                if (!roleListEmp.get(i).equals("temporary")) {
+                    Laboratory lab = laboratoryController.findLaboratory(laboratoryListEmp.get(i));
+                    employeeController.findEmployee(ssnListEmp.get(i)).setLab(lab);
+                }
+            }
+
         }
 
     }

@@ -7,6 +7,7 @@ import Model.Laboratory;
 import Model.Project;
 
 import java.sql.Date;
+import java.sql.SQLException;
 import java.time.LocalDate;
 import java.util.ArrayList;
 public class EmployeeController {
@@ -232,8 +233,7 @@ public class EmployeeController {
         if (lab != null && !lab.isBlank() && controller.getLaboratoryController().findLaboratory(lab) == null)
             errors.add("Laboratory does not exist.");
 
-        //Controllo unicita' ssn
-        if(!(findEmployee(ssn) == null) && findEmployee(ssn) != employee) errors.add("SSN already belongs to an employee.");
+
 
         //Controllo posizioni legate al ruolo
         if(employee.getRole().equals("Senior") && !role.equals("Senior")){
@@ -363,14 +363,16 @@ public class EmployeeController {
             employee.setEmail(null);
 
         employeeArrayList.add(employee);
+        //L'impiegato viene inserito nel database.
         try{
-            if(controller.isDBConnected()){
+            if(controller.isDBConnected() && controller.getDBMS().equals("PostgreSQL")){
                 DAOEmployeePostgres daoEmployee = new DAOEmployeePostgres();
                 daoEmployee.addEmployeeDB(ssn, firstName, lastName, phoneNum, role, salary, Date.valueOf(employmentDate), email,
                         address, lab);
             }
-        }catch(Exception e){
-            System.out.println("Database error");
+        }
+        catch(SQLException ex) {
+            controller.setDBConnectionState(false);
         }
     }
 
@@ -421,14 +423,16 @@ public class EmployeeController {
             employee.setEmail(null);
 
         employeeArrayList.add(employee);
+        //L'impiegato viene inserito nel database.
         try{
-            if(controller.isDBConnected()){
+            if(controller.isDBConnected() && controller.getDBMS().equals("PostgreSQL")){
                 DAOEmployeePostgres daoEmployee = new DAOEmployeePostgres();
-                daoEmployee.addEmployeeDB(ssn, firstName, lastName, phoneNum, role, salary, Date.valueOf(employmentDate), email,
+                daoEmployee.addEmployeeDB(ssn, firstName, lastName, phoneNum, convertRole(role), salary, Date.valueOf(employmentDate), email,
                         address, lab);
             }
-        }catch(Exception e){
-            System.out.println("Database error");
+        }
+        catch(SQLException ex) {
+            controller.setDBConnectionState(false);
         }
     }
 
@@ -471,6 +475,19 @@ public class EmployeeController {
         if(email != null && !email.isBlank()){
             employee.setEmail(email);
         }else employee.setEmail(null);
+
+        //L'impiegato viene modificato nel database.
+        try{
+            if(controller.isDBConnected() && controller.getDBMS().equals("PostgreSQL")){
+                DAOEmployeePostgres daoEmployee = new DAOEmployeePostgres();
+                daoEmployee.updateEmployeeDB(ssn, ssn, firstName, lastName, phoneNumber, convertRole(newRole), newSalary,
+                        Date.valueOf(employee.getEmploymentDate()), email, address, lab);
+            }
+        }
+        catch(SQLException ex) {
+            controller.setDBConnectionState(false);
+        }
+
     }
 
     /**
@@ -482,19 +499,22 @@ public class EmployeeController {
         Employee employee = findEmployee(ssn);
 
         employeeArrayList.remove(employee);
+
+        //L'impiegato viene eliminato dal database.
         try{
-            if(controller.isDBConnected()){
+            if(controller.isDBConnected() && controller.getDBMS().equals("PostgreSQL")){
                 DAOEmployeePostgres daoEmployee = new DAOEmployeePostgres();
                 daoEmployee.removeEmployeeDB(ssn);
             }
-        }catch(Exception e){
-            System.out.println("error");
+        }
+        catch(SQLException ex) {
+            controller.setDBConnectionState(false);
         }
     }
 
     /**
      * Metodo che converte una stringa che rappresenta il ruolo di un impiegato dal formatto adottato dall'applicativo
-     * e il formato utilizzato dal database.
+     * e il formato utilizzato dal database e viceversa.
      * @param role Ruolo da convertire
      * @return
      */
@@ -508,6 +528,14 @@ public class EmployeeController {
                 return "Middle";
             case "junior":
                 return "Junior";
+            case "Executive":
+                return "executive";
+            case "Senior":
+                return "senior";
+            case "Middle":
+                return "middle";
+            case "Junior":
+                return "junior";
         }
         return null;
     }

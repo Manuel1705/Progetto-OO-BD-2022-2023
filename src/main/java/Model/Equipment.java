@@ -25,8 +25,8 @@ public class Equipment {
         this.lab=lab;
         this.dealer=dealer;
         this.price=price;
-        purchaseDate=LocalDate.now(); //la purchaseDate quando viene creato un nuovo oggetto Equipment, è quella attuale
-        this.project=project;
+        purchaseDate = LocalDate.now(); //la purchaseDate quando viene creato un nuovo oggetto Equipment, è quella attuale
+        this.project = project;
     }
     
     /**
@@ -65,7 +65,9 @@ public class Equipment {
      * @return La cup del progetto oppure Null
     */
     public String getProjectCup(){
-        return project.getCup();
+        if(project != null)
+            return project.getCup();
+        else return null;
     }
     
     /**
@@ -73,7 +75,9 @@ public class Equipment {
      * @return Il nome del laboratorio oppure Null
     */
     public String getLabName(){
-        return lab.getName();
+        if(lab != null)
+            return lab.getName();
+        else return null;
 
     }
     

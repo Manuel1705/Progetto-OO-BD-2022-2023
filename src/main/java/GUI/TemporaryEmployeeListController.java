@@ -99,9 +99,10 @@ public class TemporaryEmployeeListController implements Initializable {
      */
     @FXML public void fireTemporaryEmployee() throws IOException{
         String selectedSsn = ssnTemporaryEmployeeTable.getCellObservableValue(getSelectedTemporaryEmployeeIndex()).getValue();
+        String selectedProject = projectTemporaryEmployeeTable.getCellObservableValue(getSelectedTemporaryEmployeeIndex()).getValue();
         ArrayList<String> errors = controller.getTemporaryEmployeeController().checkTemporaryEmployeeDelete(selectedSsn);
         if(errors.isEmpty())
-            controller.getTemporaryEmployeeController().fireTemporaryEmployee(selectedSsn);
+            controller.getTemporaryEmployeeController().fireTemporaryEmployee(selectedSsn, selectedProject);
         else{
             showErrorWindow(errors);
         }

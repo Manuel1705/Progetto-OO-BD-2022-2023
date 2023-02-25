@@ -14,7 +14,7 @@ public class DAOCareerDevelopmentPostgres implements DAOCareerDevelopment {
      * Costruttore della classe. Ottiene il collegamento al database.
      * @throws SQLException
      */
-    public DAOCareerDevelopmentPostgres() throws SQLException {
+    public DAOCareerDevelopmentPostgres() throws SQLException{
         connection = PostgresDBConnection.getInstance().getConnection();
     }
 

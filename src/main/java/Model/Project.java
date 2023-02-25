@@ -32,6 +32,28 @@ public class Project{
         this.Sref=Sref;
     }
 
+    /**
+     * Costruttore della classe Project. Riceve in input i dati necessari per la creazione dell'oggetto Project e inizializza i suoi attributi.
+     * @param cup       Codice che identifica il progetto
+     * @param name      Nome del progetto
+     * @param budget    Soldi stanziati per il progetto
+     * @param remainingFunds Fondi rimanenti
+     * @param startDate Data di inizio del progetto
+     * @param endDate   Data di termine del progetto
+     * @param Sresp     È l'impiegato che viene scelto come responsabile scientifico del progetto
+     * @param Sref      È l'impiegato che viene scelto come referente scientifico del progetto
+     */
+    public Project(String cup, String name, float budget, float remainingFunds, LocalDate startDate, LocalDate endDate, Employee Sresp,Employee Sref){
+        this.cup=cup;
+        this.name=name;
+        this.budget=budget;
+        this.remainingFunds=remainingFunds;
+        this.startDate= startDate;
+        this.endDate=endDate;
+        this.Sresp=Sresp;
+        this.Sref=Sref;
+    }
+
 
     
     /**

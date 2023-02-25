@@ -69,20 +69,13 @@ public class PostgresDBConnection {
      * @return instance Istanza della classe PostgresDBConnection
      * @throws SQLException
      */
-    public static PostgresDBConnection getInstance(){
+    public static PostgresDBConnection getInstance() throws SQLException{
 
         if (instance == null) {
             instance = new PostgresDBConnection();
         }
-        else {
-            try {
-
-                if (instance.connection.isClosed()) {
-                    instance = new PostgresDBConnection();
-                }
-            } catch (SQLException ex) {
-                instance.errors.add("Database connection lost.");
-            }
+        else if (instance.connection.isClosed()) {
+            instance = new PostgresDBConnection();
         }
         return instance;
     }

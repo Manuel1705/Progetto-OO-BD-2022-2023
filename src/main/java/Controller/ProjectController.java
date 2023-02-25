@@ -1,7 +1,11 @@
 package Controller;
+import DAOPostgresImplementation.DAOLaboratoryPostgres;
+import DAOPostgresImplementation.DAOProjectPostgres;
 import GUI.ProjectListController;
 import Model.*;
 
+import java.sql.Date;
+import java.sql.SQLException;
 import java.time.LocalDate;
 import java.util.ArrayList;
 public class ProjectController {
@@ -41,10 +45,9 @@ public class ProjectController {
      * @return
      */
     public int labCount(String cup){
-        Project project = findProject(cup);
         int count = 0;
         for(Laboratory lab: controller.getLaboratoryController().getLaboratoryArrayList()){
-            if (lab.getProjectCup().equals(cup)) count++;
+            if (lab.getProjectCup() != null && lab.getProjectCup().equals(cup)) count++;
         }
         return count;
     }
@@ -117,6 +120,18 @@ public class ProjectController {
 
         Project project = new Project(cup, name, budget, LocalDate.now(), endDate, Sresp, Sref);
         projectArrayList.add(project);
+
+        //Il progetto viene inserito nel database.
+        try{
+            if(controller.isDBConnected() && controller.getDBMS().equals("PostgreSQL")){
+                DAOProjectPostgres daoProjectPostgres = new DAOProjectPostgres();
+                daoProjectPostgres.addProjectDB(cup, name, budget, project.getRemainingFunds(), Date.valueOf(project.getStartDate()),
+                        Date.valueOf(endDate), SrespSSN, SrefSSN);
+            }
+        }
+        catch(SQLException ex) {
+            controller.setDBConnectionState(false);
+        }
 
     }
 
@@ -199,6 +214,18 @@ public class ProjectController {
                 - controller.getEquipmentController().getTotalProjectPrice(project)));
         project.setBudget(budget);
         project.setEndDate(endDate);
+
+        //Il progetto viene modificato nel database.
+        try{
+            if(controller.isDBConnected() && controller.getDBMS().equals("PostgreSQL")){
+                DAOProjectPostgres daoProjectPostgres = new DAOProjectPostgres();
+                daoProjectPostgres.updateProjectDB(cup, cup, name, budget, project.getRemainingFunds(), Date.valueOf(project.getStartDate()),
+                        Date.valueOf(endDate), Sresp, Sref);
+            }
+        }
+        catch(SQLException ex) {
+            controller.setDBConnectionState(false);
+        }
     }
 
     /**
@@ -227,7 +254,7 @@ public class ProjectController {
         //Il metodo setta a null l'attributo project dell'equipaggiamento acquistato dal progetto
         ArrayList<Equipment>equipmentArrayList=controller.getEquipmentController().getEquipmentArrayList();
         for(Equipment equipment: equipmentArrayList){
-            if(equipment.getProjectCup().equals(project.getCup())){
+            if(equipment.getProjectCup() != null && equipment.getProjectCup().equals(project.getCup())){
                 equipment.setProject(null);
             }
         }
@@ -240,17 +267,28 @@ public class ProjectController {
             }
         }
         for(TemporaryEmployee temp: projectEmployeeList){
-            temporaryEmployeeArrayList.remove(temp);
+            controller.getTemporaryEmployeeController().fireTemporaryEmployee(temp.getSSN(), null);
 
         }
 
         //Il metodo setta a null l'attributo project dei laboratori che contribuivano al progetto.
         ArrayList<Laboratory> laboratoryArrayList = controller.getLaboratoryController().getLaboratoryArrayList();
         for(Laboratory lab: laboratoryArrayList){
-            if(lab.getProjectCup().equals(project.getCup())){
+            if(lab.getProjectCup() != null && lab.getProjectCup().equals(project.getCup())){
                lab.setProject(null);
             }
         }
         projectArrayList.remove(project);
+
+        //Il progetto viene rimosso dal database.
+        try{
+            if(controller.isDBConnected() && controller.getDBMS().equals("PostgreSQL")){
+                DAOProjectPostgres daoProjectPostgres = new DAOProjectPostgres();
+                daoProjectPostgres.removeProjectDB(cup);
+            }
+        }
+        catch(SQLException ex) {
+            controller.setDBConnectionState(false);
+        }
     }
 }

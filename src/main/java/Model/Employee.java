@@ -81,18 +81,20 @@ public class Employee {
     }
     
     /**
-     * Metodo che controlla la coerenza del ruolo di un impiegato con i suoi anni di servizio.
+     * Metodo che controlla la coerenza del ruolo di un impiegato con i suoi anni di servizio e se il ruolo non e' piu' valido,
+     * restituisce il ruolo che l'impiegato dovrebbe assumere.
      * Un impiegato che lavora per l'azienda da più di tre anni, ma da meno di sette, assume ruolo "Middle".
      * Un impiegato che lavora per l'azienda da più di sette anni assume ruolo "Senior".
      */
-    public void CheckRole(){
+    public String CheckRole(){
         if (getEmploymentTime().getYears()>=3 && getEmploymentTime().getYears()<7 &&
                 !role.equals("Executive") &&!role.equals("Middle")){
-            ChangeRole("Middle",salary + 500);
+            return "Middle";
         }
         if (getEmploymentTime().getYears()>=7 && !role.equals("Executive") &&!role.equals("Senior")){
-            ChangeRole("Senior",salary + 500);
+            return "Senior";
         }
+        return null;
     }
 
     /**

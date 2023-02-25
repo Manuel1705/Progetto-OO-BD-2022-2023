@@ -14,7 +14,7 @@ public class DAOProjectPostgres implements DAOProject {
      * Costruttore della classe. Ottiene il collegamento al database.
      * @throws SQLException
      */
-    public DAOProjectPostgres() throws SQLException {
+    public DAOProjectPostgres() throws SQLException{
         connection = PostgresDBConnection.getInstance().getConnection();
     }
 
@@ -32,7 +32,7 @@ public class DAOProjectPostgres implements DAOProject {
      */
     public void addProjectDB(String cup, String name, float budget, float remainingFunds, Date startDate, Date endDate,
                              String sResp, String sRef){
-        String query = "INSERT INTO azienda.project" +
+        String query = "INSERT INTO azienda.project " +
                 "VALUES (?,?,?,?,?,?,?,?);";
         try{
             PreparedStatement prst = connection.prepareStatement(query);
@@ -85,9 +85,9 @@ public class DAOProjectPostgres implements DAOProject {
      */
     public void updateProjectDB(String oldCup, String newCup, String name, float budget, float remainingFunds, Date startDate, Date endDate,
                                 String sResp, String sRef){
-        String query = "UPDATE azienda.project" +
-                "SET cup = ?, name = ?, budget = ?, remaining_funds = ?, start_date = ?, end_date = ?, sresp = ?, sref = ?" +
-                "WHERE cup LIKE ?";
+        String query = "UPDATE azienda.project " +
+                "SET cup = ?, name = ?, budget = ?, remaining_funds = ?, start_date = ?, end_date = ?, sresp = ?, sref = ? " +
+                "WHERE cup LIKE ?;";
         try{
             PreparedStatement prst = connection.prepareStatement(query);
             prst.setString(1, newCup);
@@ -99,6 +99,29 @@ public class DAOProjectPostgres implements DAOProject {
             prst.setString(7, sResp);
             prst.setString(8, sRef);
             prst.setString(9, oldCup);
+            prst.executeUpdate();
+            prst.close();
+        }
+        catch (SQLException ex) {
+            System.out.println("Update failed: " + ex.getMessage());
+            ex.printStackTrace();
+        }
+    }
+
+    /**
+     * Aggiorna i fondi rimanenti del progetto.
+     * @param cup
+     * @param remainingFunds
+     */
+    public void updateProjectDBRemainingFunds(String cup, float remainingFunds){
+        String query = "UPDATE azienda.project " +
+                "SET remaining_funds = ? " +
+                "WHERE cup LIKE ?;";
+        try{
+            PreparedStatement prst = connection.prepareStatement(query);
+            prst.setFloat(1, remainingFunds);
+            prst.setString(2, cup);
+
             prst.executeUpdate();
             prst.close();
         }

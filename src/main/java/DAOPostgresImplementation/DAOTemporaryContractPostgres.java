@@ -2,6 +2,7 @@ package DAOPostgresImplementation;
 
 import DAO.DAOTemporaryContract;
 import Database.PostgresDBConnection;
+import com.sun.scenario.effect.impl.sw.java.JSWLinearConvolvePeer;
 
 import java.sql.*;
 import java.util.ArrayList;
@@ -24,7 +25,7 @@ public class DAOTemporaryContractPostgres implements DAOTemporaryContract {
      * @param cup CUP del progetto che ha assunto l'impiegato.
      */
     public void addTemporaryContractDB(String ssn, String cup){
-        String query = "INSERT INTO azienda.temporary_contract" +
+        String query = "INSERT INTO azienda.temporary_contract " +
                 "VALUES (?,?);";
 
         try{
@@ -59,6 +60,23 @@ public class DAOTemporaryContractPostgres implements DAOTemporaryContract {
         }
         catch (SQLException ex) {
             System.out.println("Load failed: " + ex.getMessage());
+            ex.printStackTrace();
+        }
+    }
+
+    /**
+     * Metodo che cerca una tupla con l'ssn passato e la elimina.
+     * @param ssn
+     */
+    public void removeTemporaryContractDB(String ssn){
+        try {
+            PreparedStatement prst = connection.prepareStatement("DELETE FROM azienda.temporary_contract WHERE ssn LIKE ?;");
+            prst.setString(1, ssn);
+            prst.executeUpdate();
+            prst.close();
+        }
+        catch (SQLException ex){
+            System.out.println("Delete failed: " + ex.getMessage());
             ex.printStackTrace();
         }
     }

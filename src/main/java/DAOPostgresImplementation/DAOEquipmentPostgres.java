@@ -14,7 +14,7 @@ public class DAOEquipmentPostgres implements DAOEquipment {
      * Costruttore della classe. Ottiene il collegamento al database.
      * @throws SQLException
      */
-    public DAOEquipmentPostgres() throws SQLException {
+    public DAOEquipmentPostgres() throws SQLException{
         connection = PostgresDBConnection.getInstance().getConnection();
     }
 
@@ -31,7 +31,7 @@ public class DAOEquipmentPostgres implements DAOEquipment {
      */
     public void addEquipmentDB(int id, String name, String description, float price, Date purchaseDate, String dealer, String laboratoryName,
                                String projectCup){
-        String query = "INSERT INTO azienda.equipment" +
+        String query = "INSERT INTO azienda.equipment " +
                 "VALUES (?,?,?,?,?,?,?,?);";
 
         try{
@@ -66,9 +66,9 @@ public class DAOEquipmentPostgres implements DAOEquipment {
      */
     public void updateEquipmentDB(int id, String name, String description, float price, Date purchaseDate, String dealer, String laboratoryName,
                                   String projectCup){
-        String query = "UPDATE azienda.equipment" +
-                "SET name = ?, description = ?, price = ?, purchase_date = ?, dealer = ?, laboratory_name = ?, project_cup = ?" +
-                "WHERE id LIKE ?;";
+        String query = "UPDATE azienda.equipment " +
+                "SET name = ?, description = ?, price = ?, purchase_date = ?, dealer = ?, laboratory_name = ?, project_cup = ? " +
+                "WHERE id_equipment LIKE ?;";
         try{
             PreparedStatement prst = connection.prepareStatement(query);
             prst.setString(1, name);
@@ -94,7 +94,7 @@ public class DAOEquipmentPostgres implements DAOEquipment {
      */
     public void removeEquipmentDB(int id){
         try {
-            PreparedStatement prst = connection.prepareStatement("DELETE FROM azienda.equipment WHERE id LIKE ?;");
+            PreparedStatement prst = connection.prepareStatement("DELETE FROM azienda.equipment WHERE id_equipment LIKE ?;");
             prst.setInt(1, id);
             prst.executeUpdate();
             prst.close();
@@ -124,7 +124,7 @@ public class DAOEquipmentPostgres implements DAOEquipment {
             ResultSet rs = st.executeQuery("SELECT * FROM azienda.equipment;");
 
             while (rs.next()) {
-               idList.add(rs.getInt("id"));
+               idList.add(rs.getInt("id_equipment"));
                nameList.add(rs.getString("name"));
                descriptionList.add(rs.getString("description"));
                priceList.add(rs.getFloat("price"));

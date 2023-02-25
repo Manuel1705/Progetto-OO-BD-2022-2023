@@ -43,7 +43,14 @@ public interface DAOProject {
                                 String sResp, String sRef);
 
     /**
-     *
+     * Aggiorna i fondi rimanenti del progetto.
+     * @param cup
+     * @param remainingFunds
+     */
+    public void updateProjectDBRemainingFunds(String cup, float remainingFunds);
+
+    /**
+     * Metodo che carica tutte le tuple project dal databasse.
      * @param cupList Lista dei CUP delle tuple.
      * @param nameList Lista dei nomi delle tuple.
      * @param budgetList Lista dei budget delle tuple.
