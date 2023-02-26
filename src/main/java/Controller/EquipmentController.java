@@ -1,9 +1,8 @@
 package Controller;
 
-import DAOPostgresImplementation.DAOEmployeePostgres;
+
 import DAOPostgresImplementation.DAOEquipmentPostgres;
 import DAOPostgresImplementation.DAOProjectPostgres;
-import Model.Employee;
 import Model.Equipment;
 import Model.Laboratory;
 import Model.Project;
@@ -15,21 +14,21 @@ import java.util.ArrayList;
 public class EquipmentController {
     private Controller controller;
     private ArrayList<Equipment> equipmentArrayList= new ArrayList<>();
+
+    /**
+     * Metodo che restituisce equipmentArrayList.
+     * @return L'ArrayList.
+     */
     public ArrayList<Equipment> getEquipmentArrayList(){ return equipmentArrayList; }
 
     /**
      * Costruttore della classe che inizializza l'attributo controller.
-     * @param controller
+     * @param controller Il valore iniziale di controller.
      */
     public EquipmentController(Controller controller){
         this.controller = controller;
     }
 
-    /**
-     * Metodo che aggiunge un oggetto Equipment alla lista.
-     * @param equipment
-     */
-    public void addEquipmentList(Equipment equipment){equipmentArrayList.add(equipment);}
 
     /**
      * Metodo che controlla le potenziali violazioni dei vincoli del Model dopo l'inserimento dei dati in input e restituisce
@@ -156,8 +155,8 @@ public class EquipmentController {
     /**
      * Metodo che restituisce l'oggetto Equipment che corrisponde al parametro id se esso e' salvato nella lista, altrimenti
      * il metodo restituisce null.
-     * @param id
-     * @return
+     * @param id L'id dell'equipaggiamento da cercare.
+     * @return L'oggetto Equipment oppure null.
      */
     private Equipment findEquipment(int id){
         for(Equipment equipment: equipmentArrayList) {

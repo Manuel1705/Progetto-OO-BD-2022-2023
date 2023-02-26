@@ -2,23 +2,20 @@ package Controller;
 import DAOPostgresImplementation.DAOEmployeePostgres;
 import DAOPostgresImplementation.DAOProjectPostgres;
 import DAOPostgresImplementation.DAOTemporaryContractPostgres;
-import GUI.EmployeeListController;
-import GUI.LaboratoryListController;
-import GUI.TemporaryEmployeeListController;
-import Model.Employee;
-import Model.Laboratory;
 import Model.Project;
 import Model.TemporaryEmployee;
-
-import java.lang.reflect.Array;
 import java.sql.Date;
 import java.sql.SQLException;
 import java.time.LocalDate;
-import java.time.Period;
 import java.util.ArrayList;
 public class TemporaryEmployeeController {
     private Controller controller;
     private ArrayList<TemporaryEmployee> temporaryEmployeeArrayList= new ArrayList<TemporaryEmployee>();
+
+    /**
+     * Metodo che restituisce temporaryEmployeeArrayList
+     * @return L'ArrayList.
+     */
     public ArrayList<TemporaryEmployee> getTemporaryEmployeeArrayList(){ return temporaryEmployeeArrayList; }
 
     /**
@@ -58,7 +55,6 @@ public class TemporaryEmployeeController {
         }
         return totalSalary;
     }
-    public void addTemporaryEmployeeList(TemporaryEmployee employee){temporaryEmployeeArrayList.add(employee);}
 
     /**
      * Metodo che controlla le potenziali violazioni dei vincoli del Model dopo l'inserimento dei dati in input e restituisce

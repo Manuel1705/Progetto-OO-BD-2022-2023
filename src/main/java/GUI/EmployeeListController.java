@@ -40,7 +40,7 @@ public class EmployeeListController implements Initializable {
     @FXML private Button modifyButton;
     @FXML private Button CareerChanges;
     private Controller controller;
-    public ObservableList<Employee> list= FXCollections.observableArrayList();
+    private ObservableList<Employee> list= FXCollections.observableArrayList();
 
     /**
      * Metodo che carica gli impiegati salvati dal controller nell'Observable List
@@ -90,14 +90,16 @@ public class EmployeeListController implements Initializable {
      * Metodo che elimina l'impiegato selezionato dall'utente usando il controller.
      */
     @FXML public void fireEmployee() throws IOException{
-        String selectedSsn = ssnEmployeeTable.getCellObservableValue(getSelectedEmployeeIndex()).getValue();
-        ArrayList<String> errors = controller.getEmployeeController().checkEmployeeDelete(selectedSsn);
-        if(errors.isEmpty())
-            controller.getEmployeeController().fireEmployee(selectedSsn);
-        else{
-            showErrorWindow(errors);
+        if(ssnEmployeeTable.getCellObservableValue(getSelectedEmployeeIndex()) != null) {
+            String selectedSsn = ssnEmployeeTable.getCellObservableValue(getSelectedEmployeeIndex()).getValue();
+            ArrayList<String> errors = controller.getEmployeeController().checkEmployeeDelete(selectedSsn);
+            if (errors.isEmpty())
+                controller.getEmployeeController().fireEmployee(selectedSsn);
+            else {
+                showErrorWindow(errors);
+            }
+            loadList();
         }
-        loadList();
     }
 
     /**
@@ -179,18 +181,20 @@ public class EmployeeListController implements Initializable {
 
         modifyEmployeeController modifyController = loader.getController();
         int i = getSelectedEmployeeIndex();
-        modifyController.setDefaultFields(ssnEmployeeTable.getCellObservableValue(i).getValue(),
-                FirstNameEmployeeTable.getCellObservableValue(i).getValue(),
-                LastNameEmployeeTable.getCellObservableValue(i).getValue(),
-                phoneNumEmployeeTable.getCellObservableValue(i).getValue(),
-                AddressEmployeeTable.getCellObservableValue(i).getValue(),
-                RoleEmployeeTable.getCellObservableValue(i).getValue(),
-                LaboratoryEmployeeTable.getCellObservableValue(i).getValue(),
-                SalaryEmployeeTable.getCellObservableValue(i).getValue().toString() ,
-                emailEmployeeTable.getCellObservableValue(i).getValue(),
-                EmploymentDateEmployeeTable.getCellObservableValue(i).getValue().toString());
-        stage.getIcons().add(new Image("app-icon.png"));
-        stage.showAndWait();
-        loadList();
+        if(ssnEmployeeTable.getCellObservableValue(i) != null) {
+            modifyController.setDefaultFields(ssnEmployeeTable.getCellObservableValue(i).getValue(),
+                    FirstNameEmployeeTable.getCellObservableValue(i).getValue(),
+                    LastNameEmployeeTable.getCellObservableValue(i).getValue(),
+                    phoneNumEmployeeTable.getCellObservableValue(i).getValue(),
+                    AddressEmployeeTable.getCellObservableValue(i).getValue(),
+                    RoleEmployeeTable.getCellObservableValue(i).getValue(),
+                    LaboratoryEmployeeTable.getCellObservableValue(i).getValue(),
+                    SalaryEmployeeTable.getCellObservableValue(i).getValue().toString(),
+                    emailEmployeeTable.getCellObservableValue(i).getValue(),
+                    EmploymentDateEmployeeTable.getCellObservableValue(i).getValue().toString());
+            stage.getIcons().add(new Image("app-icon.png"));
+            stage.showAndWait();
+            loadList();
+        }
     }
 }

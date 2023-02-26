@@ -4,11 +4,10 @@ import DAO.DAOEmployee;
 import DAOPostgresImplementation.*;
 import Database.PostgresDBConnection;
 import Model.*;
-import javafx.geometry.Pos;
+
 
 import java.sql.Date;
 import java.sql.SQLException;
-import java.time.LocalDate;
 import java.util.ArrayList;
 
 public class Controller
@@ -22,7 +21,10 @@ public class Controller
     private TemporaryEmployeeController temporaryEmployeeController;
     private CareerDevelopmentController careerDevelopmentController;
 
-    private Controller(){ //costruttore
+    /**
+     * Costruttore privato della classe che crea le istanze degli altri controller e implementa il pattern Singleton.
+     */
+    private Controller(){
         employeeController = new EmployeeController(this);
         projectController = new ProjectController(this);
         laboratoryController = new LaboratoryController(this);
@@ -31,21 +33,64 @@ public class Controller
         careerDevelopmentController= new CareerDevelopmentController();
     }
     private static Controller instance = null;
+
+    /**
+     * Metodo statico che restituisce l'istanza del controller se essa esiste, altrimenti ne crea una nuova. Implementa il
+     * pattern Singleton.
+     * @return
+     */
     public static Controller getInstance(){//singleton controller
         if(instance==null)
             instance=new Controller();
 
         return instance;
     }
+
+    /**
+     * Metodo che restituisce employeeController.
+     * @return Il controller.
+     */
     public EmployeeController getEmployeeController(){return employeeController; }
+    /**
+     * Metodo che restituisce projectController.
+     * @return Il controller.
+     */
     public ProjectController getProjectController(){return projectController;}
+    /**
+     * Metodo che restituisce laboratoryController.
+     * @return Il controller.
+     */
     public LaboratoryController getLaboratoryController(){return laboratoryController;}
+    /**
+     * Metodo che restituisce equipmentController.
+     * @return Il controller.
+     */
     public EquipmentController getEquipmentController(){return equipmentController;}
+    /**
+     * Metodo che restituisce temporaryEmployeeController.
+     * @return Il controller.
+     */
     public TemporaryEmployeeController getTemporaryEmployeeController(){return temporaryEmployeeController;}
+    /**
+     * Metodo che restituisce careerDevelopmentController.
+     * @return Il controller.
+     */
     public CareerDevelopmentController getCareerDevelopmentController(){ return careerDevelopmentController;}
+    /**
+     * Metodo che restituisce il valore di DBSet.
+     */
     public Boolean isDBConnected(){return DBSet;}
+
+    /**
+     * Metodo che setta il valore di DBSet.
+     * @param value
+     */
     public void setDBConnectionState(Boolean value){DBSet = value;}
 
+    /**
+     * Metodo che restituisce la Stringa contenente il nome del DBMS utilizzato dal database.
+     * @return
+     */
     public String getDBMS(){return dbms;}
 
 
@@ -118,7 +163,10 @@ public class Controller
         careerDevelopmentController.getCareerDevelopmentArrayList().clear();
     }
 
-    //WIP
+    /**
+     * Metodo che carica i dati dal database.
+     * @throws SQLException
+     */
     private void loadDB() throws SQLException{
         clearData();
         if (dbms.equals("PostgreSQL")) {

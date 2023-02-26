@@ -42,17 +42,8 @@ public class TemporaryEmployeeListController implements Initializable {
     @FXML private Button modifyButton;
     private Controller controller;
 
-    public static ObservableList<TemporaryEmployee> list= FXCollections.observableArrayList();
+    private static ObservableList<TemporaryEmployee> list= FXCollections.observableArrayList();
 
-   /* @FXML
-    void hireTemporaryEmployee(ActionEvent event) throws IOException {
-        Parent root = FXMLLoader.load(getClass().getResource("../GUI/addTemporaryEmployee.fxml"));
-        scene = new Scene(root);
-        stage= new Stage();
-        stage.initModality(Modality.APPLICATION_MODAL);
-        stage.setScene(scene);
-        stage.showAndWait();
-    }*/
 
     /**
      * Metodo che carica in memoria i dati del controller.
@@ -98,15 +89,17 @@ public class TemporaryEmployeeListController implements Initializable {
      * Metodo che rimuove l'impiegato selezionato dall'utente.
      */
     @FXML public void fireTemporaryEmployee() throws IOException{
-        String selectedSsn = ssnTemporaryEmployeeTable.getCellObservableValue(getSelectedTemporaryEmployeeIndex()).getValue();
-        String selectedProject = projectTemporaryEmployeeTable.getCellObservableValue(getSelectedTemporaryEmployeeIndex()).getValue();
-        ArrayList<String> errors = controller.getTemporaryEmployeeController().checkTemporaryEmployeeDelete(selectedSsn);
-        if(errors.isEmpty())
-            controller.getTemporaryEmployeeController().fireTemporaryEmployee(selectedSsn, selectedProject);
-        else{
-            showErrorWindow(errors);
+        if(ssnTemporaryEmployeeTable.getCellObservableValue(getSelectedTemporaryEmployeeIndex()) != null) {
+            String selectedSsn = ssnTemporaryEmployeeTable.getCellObservableValue(getSelectedTemporaryEmployeeIndex()).getValue();
+            String selectedProject = projectTemporaryEmployeeTable.getCellObservableValue(getSelectedTemporaryEmployeeIndex()).getValue();
+            ArrayList<String> errors = controller.getTemporaryEmployeeController().checkTemporaryEmployeeDelete(selectedSsn);
+            if (errors.isEmpty())
+                controller.getTemporaryEmployeeController().fireTemporaryEmployee(selectedSsn, selectedProject);
+            else {
+                showErrorWindow(errors);
+            }
+            loadList();
         }
-        loadList();
     }
     private Stage stage;
     private Scene scene;
@@ -154,18 +147,20 @@ public class TemporaryEmployeeListController implements Initializable {
         stage.initModality(Modality.APPLICATION_MODAL);
         modifyTemporaryEmployeeController controller= loader.getController();
         int i = getSelectedTemporaryEmployeeIndex();
-        controller.setDefaultFields(ssnTemporaryEmployeeTable.getCellObservableValue(i).getValue(),
-                FirstNameTemporaryEmployeeTable.getCellObservableValue(i).getValue(),
-                LastNameTemporaryEmployeeTable.getCellObservableValue(i).getValue(),
-                phoneNumTemporaryEmployeeTable.getCellObservableValue(i).getValue(),
-                AddressTemporaryEmployeeTable.getCellObservableValue(i).getValue(),
-                projectTemporaryEmployeeTable.getCellObservableValue(i).getValue(),
-                LaboratoryTemporaryEmployeeTable.getCellObservableValue(i).getValue(),
-                SalaryTemporaryEmployeeTable.getCellObservableValue(i).getValue().toString(),
-                emailTemporaryEmployeeTable.getCellObservableValue(i).getValue());
-        stage.getIcons().add(new Image("app-icon.png"));
-        stage.showAndWait();
-        loadList();
+        if(ssnTemporaryEmployeeTable.getCellObservableValue(i) != null) {
+            controller.setDefaultFields(ssnTemporaryEmployeeTable.getCellObservableValue(i).getValue(),
+                    FirstNameTemporaryEmployeeTable.getCellObservableValue(i).getValue(),
+                    LastNameTemporaryEmployeeTable.getCellObservableValue(i).getValue(),
+                    phoneNumTemporaryEmployeeTable.getCellObservableValue(i).getValue(),
+                    AddressTemporaryEmployeeTable.getCellObservableValue(i).getValue(),
+                    projectTemporaryEmployeeTable.getCellObservableValue(i).getValue(),
+                    LaboratoryTemporaryEmployeeTable.getCellObservableValue(i).getValue(),
+                    SalaryTemporaryEmployeeTable.getCellObservableValue(i).getValue().toString(),
+                    emailTemporaryEmployeeTable.getCellObservableValue(i).getValue());
+            stage.getIcons().add(new Image("app-icon.png"));
+            stage.showAndWait();
+            loadList();
+        }
     }
 
     /**

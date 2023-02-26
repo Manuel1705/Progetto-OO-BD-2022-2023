@@ -69,22 +69,23 @@ public class DBConnectController implements Initializable {
 
     }
 
-        /**
-         * Metodo che apre una finestra elencando gli errori passati in input.
-         * @param errors
-         * @throws IOException
-         */
-        private void showErrorWindow (ArrayList<String> errors) throws IOException {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("../GUI/ErrorWindow.fxml"));
-            root=loader.load();
-            stage= new Stage();
-            scene = new Scene(root);
-            stage.setScene(scene);
-            stage.initModality(Modality.APPLICATION_MODAL);
-            stage.setScene(scene);
-            stage.getIcons().add(new Image("app-icon.png"));
-            ErrorWindowController errorWindow = loader.getController();
-            errorWindow.setErrors(errors);
-            stage.showAndWait();
-        }
+    /**
+     * Metodo che apre una finestra elencando gli errori passati in input.
+     *
+     * @param errors
+     * @throws IOException
+     */
+    private void showErrorWindow(ArrayList<String> errors) throws IOException {
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("../GUI/ErrorWindow.fxml"));
+        root = loader.load();
+        stage = new Stage();
+        scene = new Scene(root);
+        stage.setScene(scene);
+        stage.initModality(Modality.APPLICATION_MODAL);
+        stage.setScene(scene);
+        stage.getIcons().add(new Image("app-icon.png"));
+        ErrorWindowController errorWindow = loader.getController();
+        errorWindow.setErrors(errors);
+        stage.showAndWait();
+    }
 }

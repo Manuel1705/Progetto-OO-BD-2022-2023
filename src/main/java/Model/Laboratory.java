@@ -30,24 +30,7 @@ public class Laboratory {
         Sresp=null;
         project=null;
     }
-    
-    /**
-     * Metodo che inizializza Sresp ma solo se l'impiegato ha ruolo "Senior".
-     * @param employee Riferimento all'oggetto impiegato scelto come responsabile scientifico
-     */
-    public void addScientificResponsible(Employee employee){
-            if(employee.getRole().equals("Senior")){
-                Sresp = employee;
-            }
-    }
-    
-    /**
-     * Metodo che associa un progetto a un laboratorio.
-     * @param project Riferimento all'oggetto progetto che vogliamo aggiungere
-     */
-    public void addProject(Project project){
-        this.project = project;
-     }
+
     
      /**
      * Metodo che restituisce il nome del laboratorio

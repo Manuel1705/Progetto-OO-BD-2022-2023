@@ -55,36 +55,12 @@ public class Project{
     }
 
 
-    
-    /**
-     * Metodo che permette di assegnare un responsabile scientifico a un progetto.
-     * Il responsabile scientifico deve avere ruolo "Executive".
-     * @param ssn           SSN dell'impiegato che sarà il responsabile scientifico del progetto
-     * @param firstName     Nome dell'impiegato scelto come responsabile scientifico
-     * @param lastName      Cognome dell'impiegato scelto come responsabile scientifico
-     * @param phoneNum      Recapito telefonico del responsabile scientifico
-     * @param salary        Salario del responsabile scientifico
-    */
-    public void addScientificResponsible(String ssn, String firstName, String lastName, String phoneNum, float salary){
-            Sresp = new Employee(ssn, firstName, lastName, phoneNum, "Executive", salary);
-    }
-    
-    /**
-     * Metodo che permette di assegnare un referente scientifico a un progetto.
-     * Il referente scientifico deve avere ruolo "Senior".
-     * @param ssn           SSN dell'impiegato che sarà il referente scientifico del progetto
-     * @param firstName     Nome dell'impiegato scelto come referente scientifico
-     * @param lastName      Cognome dell'impiegato scelto come referente scientifico
-     * @param phoneNum      Recapito telefonico del referente scientifico
-     * @param salary        Salario del referente scientifico
-    */
-    public void addReferent(String ssn, String firstName, String lastName, String phoneNum, float salary){
-            Sref = new Employee(ssn, firstName, lastName, phoneNum, "Senior", salary);
-    }
+
+
 
 
     /**
-     * Metodo che restituisce true se il progetto e' terimanto, false altrimenti.
+     * Metodo che restituisce true se il progetto e' terminato, false altrimenti.
      * @return
      */
     public Boolean isExpired(){
@@ -112,21 +88,21 @@ public class Project{
     
     /**
      * Metodo che restituisce l'SSN del referente scientifico del progetto se esso esiste, altrimenti restituisce un messaggio
-     * @return L'SSN dell'attuale referente scientifico del progetto oppure "Empty Position"
+     * @return L'SSN dell'attuale referente scientifico del progetto oppure null.
     */
     public String getSrefSSN(){
         if(Sref == null)
-            return "Empty Position";
+            return null;
         return Sref.getSSN();
     }
     
     /**
      * Metodo che restituisce l'SSN del responsabile scientifico del progetto se esso esiste, altrimenti restituisce un messaggio
-     * @return L'SSN dell'attuale responsabile scientifico del progetto oppure "Empty Position"
+     * @return L'SSN dell'attuale responsabile scientifico del progetto oppure null.
     */
     public String getSrespSSN(){
         if(Sresp == null)
-            return "Empty Position";
+            return null;
         return Sresp.getSSN();
     }
     
@@ -134,13 +110,13 @@ public class Project{
      * Metodo che restituisce il codice identificativo del progetto
      * @return La cup del progetto
     */
-    public String getCup(){return cup;  }
+    public String getCup(){return cup;}
     
     /**
      * Metodo che restituisce il budget del progetto
      * @return Il budget del progetto
     */
-    public float getBudget(){return budget;  }
+    public float getBudget(){return budget;}
     
     /**
      * Metodo che restituisce i fondi che non sono ancora stati spesi per il progetto

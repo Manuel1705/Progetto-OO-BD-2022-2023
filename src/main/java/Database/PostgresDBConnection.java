@@ -115,6 +115,10 @@ public class PostgresDBConnection {
 
     }
 
+    /**
+     * Metodo che restituisce errors.
+     * @return errors.
+     */
     public ArrayList<String> getErrors(){return errors;}
 }
 

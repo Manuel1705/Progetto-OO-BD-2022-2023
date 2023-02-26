@@ -1,7 +1,6 @@
 package Controller;
-import DAOPostgresImplementation.DAOLaboratoryPostgres;
+
 import DAOPostgresImplementation.DAOProjectPostgres;
-import GUI.ProjectListController;
 import Model.*;
 
 import java.sql.Date;
@@ -11,12 +10,15 @@ import java.util.ArrayList;
 public class ProjectController {
     private Controller controller;
     private ArrayList<Project> projectArrayList= new ArrayList<>();
+
+    /**
+     * Metodo che restituisce projectArrayList.
+     * @return L'ArrayList.
+     */
     public ArrayList<Project> getProjectArrayList(){
         return projectArrayList;
     }
-    public void addProjectList(Project project){
-        projectArrayList.add(project);
-    }
+
 
 
     /**
@@ -29,8 +31,8 @@ public class ProjectController {
 
     /**
      * Metodo che restituisce il progetto con il cup passato in input se esso esiste, altrimenti restituisce null.
-     * @param cup
-     * @return
+     * @param cup CUP del progetto da cercare.
+     * @return L'ogetto Project trovato oppure null.
      */
     public Project findProject(String cup){
         for(Project project: projectArrayList){

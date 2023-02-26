@@ -50,7 +50,7 @@ public class  CareerDevelopmentListController implements Initializable {
     @FXML
     private TableColumn<CareerDevelopment, String> ssnCarrerDevelpmentTable;
     private Controller controller;
-    public ObservableList<CareerDevelopment> list= FXCollections.observableArrayList();
+    private ObservableList<CareerDevelopment> list= FXCollections.observableArrayList();
 
     /**
      * Metodo che carica i dati dal controller.

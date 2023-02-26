@@ -2,7 +2,6 @@ package GUI;
 import Controller.Controller;
 import Model.Laboratory;
 import Model.Project;
-import Model.TemporaryEmployee;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -113,7 +112,7 @@ public class addTemporaryEmployeeController implements Initializable {
      * @param resourceBundle
      */
     @Override public void initialize(URL url, ResourceBundle resourceBundle) {
-        controller=Controller.getInstance();
+        controller = Controller.getInstance();
         ArrayList<Laboratory> labs= controller.getLaboratoryController().getLaboratoryArrayList();
         labAddTemporaryEmployee.getItems().add("");
         for (Laboratory lab: labs) {

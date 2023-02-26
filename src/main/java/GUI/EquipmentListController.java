@@ -33,7 +33,7 @@ public class EquipmentListController implements Initializable {
     @FXML private TableColumn<Equipment , Integer>  idEquipmentTable;
     @FXML private Button buyEquipmentButton;
     @FXML private Button modifyEquipmentButton;
-    public ObservableList<Equipment> list = FXCollections.observableArrayList();
+    private ObservableList<Equipment> list = FXCollections.observableArrayList();
     private Controller controller;
 
     /**
@@ -57,16 +57,18 @@ public class EquipmentListController implements Initializable {
         stage.initModality(Modality.APPLICATION_MODAL);
         modifyEquipmentController controller= loader.getController();
         int i = getSelectedEquipmentIndex();
-        controller.setDefaultFields(idEquipmentTable.getCellObservableValue(i).getValue(),
-                equipmentDescriptionTable.getCellObservableValue(i).getValue(),
-                equipmentDealerTable.getCellObservableValue(i).getValue(),
-                equipmentLaboratoryTable.getCellObservableValue(i).getValue(),
-                equipmentProjectTable.getCellObservableValue(i).getValue(),
-                equipmentPriceTable.getCellObservableValue(i).getValue(),
-                equipmentNameTable.getCellObservableValue(i).getValue());
-        stage.getIcons().add(new Image("app-icon.png"));
-        stage.showAndWait();
-        loadList();
+        if(idEquipmentTable.getCellObservableValue(i) != null) {
+            controller.setDefaultFields(idEquipmentTable.getCellObservableValue(i).getValue(),
+                    equipmentDescriptionTable.getCellObservableValue(i).getValue(),
+                    equipmentDealerTable.getCellObservableValue(i).getValue(),
+                    equipmentLaboratoryTable.getCellObservableValue(i).getValue(),
+                    equipmentProjectTable.getCellObservableValue(i).getValue(),
+                    equipmentPriceTable.getCellObservableValue(i).getValue(),
+                    equipmentNameTable.getCellObservableValue(i).getValue());
+            stage.getIcons().add(new Image("app-icon.png"));
+            stage.showAndWait();
+            loadList();
+        }
     }
 
     /**
@@ -89,8 +91,10 @@ public class EquipmentListController implements Initializable {
      * Metodo che permette di rimuovere l'equipaggiamento selezionato dall'utente.
      */
     @FXML public void sellEquipment(){
-        controller.getEquipmentController().deleteEquipment(idEquipmentTable.getCellObservableValue(getSelectedEquipmentIndex()).getValue());
-        loadList();
+        if(idEquipmentTable.getCellObservableValue(getSelectedEquipmentIndex()) != null) {
+            controller.getEquipmentController().deleteEquipment(idEquipmentTable.getCellObservableValue(getSelectedEquipmentIndex()).getValue());
+            loadList();
+        }
     }
 
     /**
@@ -144,7 +148,7 @@ public class EquipmentListController implements Initializable {
      * Metodo che restituisce l'Observable List usata dalla tabella.
      * @return
      */
-    public ObservableList<Equipment> getEquipmentList(){
+    private ObservableList<Equipment> getEquipmentList(){
         return list;
     }
 }

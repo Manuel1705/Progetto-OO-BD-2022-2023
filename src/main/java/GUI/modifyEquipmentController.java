@@ -31,7 +31,7 @@ public class modifyEquipmentController {
     private Scene scene;
     private Parent root;
     private Controller controller;
-    int id;
+    private int id;
 
     /**
      * Metodo che inizializza i campi della finestra.

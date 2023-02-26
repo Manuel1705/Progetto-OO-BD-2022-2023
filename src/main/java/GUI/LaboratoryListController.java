@@ -31,9 +31,9 @@ public class LaboratoryListController implements Initializable {
     @FXML private Button addLabButton;
     @FXML private Button dismissLabButton;
     @FXML private Button modifyLabButton;
-    Controller controller;
+    private Controller controller;
 
-    public ObservableList<Laboratory> list = FXCollections.observableArrayList();
+    private ObservableList<Laboratory> list = FXCollections.observableArrayList();
 
     /**
      * Metodo che carica i dati dal controller.
@@ -47,7 +47,7 @@ public class LaboratoryListController implements Initializable {
      * Metodo che restituisce list.
      * @return
      */
-    public ObservableList<Laboratory> getLaboratoryList(){
+    private ObservableList<Laboratory> getLaboratoryList(){
             return list;
     }
 
@@ -80,13 +80,15 @@ public class LaboratoryListController implements Initializable {
         stage.initModality(Modality.APPLICATION_MODAL);
         modifyLaboratoryController controller = loader.getController();
         int i = getSelectedLabIndex();
-        controller.setDefaultFields(LabNameTable.getCellObservableValue(i).getValue(),
-                LabTopicTable.getCellObservableValue(i).getValue(),
-                SrespLabTable.getCellObservableValue(i).getValue(),
-                LabProjectTable.getCellObservableValue(i).getValue());
-        stage.getIcons().add(new Image("app-icon.png"));
-        stage.showAndWait();
-        loadList();
+        if(LabNameTable.getCellObservableValue(i) != null) {
+            controller.setDefaultFields(LabNameTable.getCellObservableValue(i).getValue(),
+                    LabTopicTable.getCellObservableValue(i).getValue(),
+                    SrespLabTable.getCellObservableValue(i).getValue(),
+                    LabProjectTable.getCellObservableValue(i).getValue());
+            stage.getIcons().add(new Image("app-icon.png"));
+            stage.showAndWait();
+            loadList();
+        }
     }
 
     /**
@@ -94,13 +96,15 @@ public class LaboratoryListController implements Initializable {
      */
     @FXML
     void dismissLaboratory() throws IOException{
-        String selectedName = LabNameTable.getCellObservableValue(getSelectedLabIndex()).getValue();
-        ArrayList<String> errors = controller.getLaboratoryController().checkLaboratoryDelete(selectedName);
-        if(errors.isEmpty())
-            controller.getLaboratoryController().dismissLaboratory(selectedName);
-        else
-            showErrorWindow(errors);
-        loadList();
+        if(LabNameTable.getCellObservableValue(getSelectedLabIndex()) != null) {
+            String selectedName = LabNameTable.getCellObservableValue(getSelectedLabIndex()).getValue();
+            ArrayList<String> errors = controller.getLaboratoryController().checkLaboratoryDelete(selectedName);
+            if (errors.isEmpty())
+                controller.getLaboratoryController().dismissLaboratory(selectedName);
+            else
+                showErrorWindow(errors);
+            loadList();
+        }
     }
 
     /**

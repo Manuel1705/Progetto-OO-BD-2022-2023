@@ -37,7 +37,7 @@ public class ProjectListController implements Initializable {
     @FXML private Button dismissProjectButton;
     @FXML private Button modifyProjectButton;
 
-    public ObservableList<Project> list= FXCollections.observableArrayList();
+    private ObservableList<Project> list= FXCollections.observableArrayList();
     private Controller controller;
 
     /**
@@ -67,14 +67,15 @@ public class ProjectListController implements Initializable {
      * Metodo che rimuove il progetto selezionato dall'utente.
      */
     @FXML public void dismissProject() throws IOException{
-        String selectedCUP = ProjectCupTable.getCellObservableValue(getSelectedProjectIndex()).getValue();
-        ArrayList<String> errors = controller.getProjectController().checkProjectDelete(selectedCUP);
-        if(errors.isEmpty())
-            controller.getProjectController().dismissProject(selectedCUP);
-        else
-            showErrorWindow(errors);
-        loadList();
-
+        if(ProjectCupTable.getCellObservableValue(getSelectedProjectIndex()) != null) {
+            String selectedCUP = ProjectCupTable.getCellObservableValue(getSelectedProjectIndex()).getValue();
+            ArrayList<String> errors = controller.getProjectController().checkProjectDelete(selectedCUP);
+            if (errors.isEmpty())
+                controller.getProjectController().dismissProject(selectedCUP);
+            else
+                showErrorWindow(errors);
+            loadList();
+        }
     }
 
     /**
@@ -98,15 +99,17 @@ public class ProjectListController implements Initializable {
         stage.initModality(Modality.APPLICATION_MODAL);
         modifyProjectController controller= loader.getController();
         int i = getSelectedProjectIndex();
-        controller.setDefaultFields(ProjectCupTable.getCellObservableValue(i).getValue(),
-                ProjectNameTable.getCellObservableValue(i).getValue(),
-                ProjectBudgetTable.getCellObservableValue(i).getValue().toString(),
-                scientificResponsibleTable.getCellObservableValue(i).getValue(),
-                scientificReferentTable.getCellObservableValue(i).getValue(),
-                ProjectEndDateTable.getCellObservableValue(i).getValue().toString());
-        stage.getIcons().add(new Image("app-icon.png"));
-        stage.showAndWait();
-        loadList();
+        if(ProjectCupTable.getCellObservableValue(i) != null) {
+            controller.setDefaultFields(ProjectCupTable.getCellObservableValue(i).getValue(),
+                    ProjectNameTable.getCellObservableValue(i).getValue(),
+                    ProjectBudgetTable.getCellObservableValue(i).getValue().toString(),
+                    scientificResponsibleTable.getCellObservableValue(i).getValue(),
+                    scientificReferentTable.getCellObservableValue(i).getValue(),
+                    ProjectEndDateTable.getCellObservableValue(i).getValue().toString());
+            stage.getIcons().add(new Image("app-icon.png"));
+            stage.showAndWait();
+            loadList();
+        }
     }
     private Stage stage;
     private Scene scene;
@@ -130,7 +133,7 @@ public class ProjectListController implements Initializable {
      * Metodo che restituisce la lista della tabella.
      * @return
      */
-    public ObservableList<Project> getProjectsList(){
+    private ObservableList<Project> getProjectsList(){
         return list;
     }
 

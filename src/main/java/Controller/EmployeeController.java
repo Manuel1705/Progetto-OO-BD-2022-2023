@@ -1,7 +1,5 @@
 package Controller;
-import DAO.DAOEmployee;
 import DAOPostgresImplementation.DAOEmployeePostgres;
-import Model.CareerDevelopment;
 import Model.Employee;
 import Model.Laboratory;
 import Model.Project;
@@ -16,7 +14,7 @@ public class EmployeeController {
 
     /**
      * Costruttore della classe che inizializza l'attributo controller.
-     * @param controller
+     * @param controller Valore iniziale di controller.
      */
     public EmployeeController(Controller controller){
         this.controller = controller;
@@ -24,7 +22,7 @@ public class EmployeeController {
 
     /**
      * Metodo che restituisce la lista degli impiegati.
-     * @return
+     * @return L'ArrayList.
      */
     public ArrayList<Employee> getEmployeeArrayList(){
         return employeeArrayList;
@@ -34,7 +32,7 @@ public class EmployeeController {
     /**
      * Metodo che restituisce l'impiegato con l'ssn fornito in input, se non esiste restituisce null.
      * @param ssn
-     * @return
+     * @return L'impiegato trovato oppure null.
      */
     public Employee findEmployee(String ssn){
         for(Employee employee: employeeArrayList){
@@ -314,11 +312,7 @@ public class EmployeeController {
 
     }
 
-    /**
-     * Metodo che aggiunge un oggetto Employee passato in input alla lista.
-     * @param employee
-     */
-    public void addEmployeeList(Employee employee){employeeArrayList.add(employee);}
+
 
     /**
      * Metodo che usa i dati passati in input per creare un oggetto Employee e aggiungerlo alla lista, con ruolo esplicito.
@@ -516,7 +510,7 @@ public class EmployeeController {
      * Metodo che converte una stringa che rappresenta il ruolo di un impiegato dal formatto adottato dall'applicativo
      * e il formato utilizzato dal database e viceversa.
      * @param role Ruolo da convertire
-     * @return
+     * @return Il ruolo convertito.
      */
     public String convertRole(String role){
         switch(role){

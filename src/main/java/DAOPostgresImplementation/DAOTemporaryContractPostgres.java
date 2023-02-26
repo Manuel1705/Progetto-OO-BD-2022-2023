@@ -2,7 +2,7 @@ package DAOPostgresImplementation;
 
 import DAO.DAOTemporaryContract;
 import Database.PostgresDBConnection;
-import com.sun.scenario.effect.impl.sw.java.JSWLinearConvolvePeer;
+
 
 import java.sql.*;
 import java.util.ArrayList;

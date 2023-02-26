@@ -46,19 +46,13 @@ public class Equipment {
         project=null;
     }
     
-    /**
-     * Metodo che assegna all'equipaggiamento il laboratorio che l'ha richiesto
-     * @param lab Riferimento all'oggetto laboratorio
-    */
-    public void AssignLaboratory(Laboratory lab){
-        this.lab=lab;
-    }
+
     
     /**
      * Metodo che restituisce il nome dell'equipaggiamento
      * @return Il nome dell'equipaggiamento
     */
-    public String getName(){return name;  }
+    public String getName(){return name;}
     
     /**
      * Metodo che restituisce il codice identificativo, se esiste, del progetto per il quale l'equipaggiamento è stato richiesto. Altrimenti restituisce null.
@@ -85,13 +79,13 @@ public class Equipment {
      * Metodo che restituisce la descrizione dell'equipaggiamento
      * @return La descrizione dell'equipaggiamento
     */
-    public String getDescription() {return description; }
+    public String getDescription() {return description;}
     
     /**
      * Metodo che restituisce il venditore dell'equipaggiamento
      * @return Il dealer dell'equipaggiamento
     */
-    public String getDealer(){ return dealer; }
+    public String getDealer(){ return dealer;}
     
     /**
      * Metodo che restituisce l'identificativo dell'equipaggiamento
@@ -130,7 +124,7 @@ public class Equipment {
     public void setDescription(String description){
         if (!description.isBlank()) {
             this.description = description;
-        }else this.description="No description";
+        }else this.description = "No description";
     }
     
     /**

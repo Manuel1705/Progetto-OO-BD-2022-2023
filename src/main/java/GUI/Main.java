@@ -9,6 +9,11 @@ import javafx.stage.Stage;
 
 public class Main extends Application{
 
+    /**
+     * Metodo che carica la schermata Home.
+     * @param stage
+     * @throws Exception
+     */
     @Override
     public void start(Stage stage) throws Exception {
         Parent homeRoot = FXMLLoader.load(getClass().getResource("../GUI/Home.fxml"));
@@ -19,6 +24,11 @@ public class Main extends Application{
         stage.getIcons().add(new Image("app-icon.png"));
         stage.show();
     }
+
+    /**
+     * Funzione main del programma.
+     * @param args
+     */
     public static void main(String[] args){
         launch(args);
     }

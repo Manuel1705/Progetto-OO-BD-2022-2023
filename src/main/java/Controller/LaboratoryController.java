@@ -1,12 +1,9 @@
 package Controller;
-import DAOPostgresImplementation.DAOEquipmentPostgres;
+
 import DAOPostgresImplementation.DAOLaboratoryPostgres;
-import GUI.EmployeeListController;
-import GUI.LaboratoryListController;
-import GUI.ProjectListController;
 import Model.*;
 
-import java.sql.Date;
+
 import java.sql.SQLException;
 import java.util.ArrayList;
 public class LaboratoryController {
@@ -21,6 +18,10 @@ public class LaboratoryController {
         this.controller = controller;
     }
 
+    /**
+     * Metodo che restituisce laboratoryArrayList.
+     * @return L'ArrayList.
+     */
     public ArrayList<Laboratory> getLaboratoryArrayList() {
         return laboratoryArrayList;
     }
@@ -172,8 +173,8 @@ public class LaboratoryController {
     /**
      * Metodo che restituisce l'oggetto Laboratory il cui nome corrisponde al parametro passato in input. Se non esiste
      * allora viene restituito null.
-     * @param name
-     * @return
+     * @param name Il nome del laboratorio da cercare.
+     * @return L'oggetto Laboratory trovato oppure null.
      */
     public Laboratory findLaboratory(String name){
         for(Laboratory laboratory: laboratoryArrayList){

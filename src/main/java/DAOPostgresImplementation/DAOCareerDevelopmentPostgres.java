@@ -19,7 +19,6 @@ public class DAOCareerDevelopmentPostgres implements DAOCareerDevelopment {
     }
 
 
-    //Potrebbe non servire
     /**
      * Metodo che inserisce una nuova tupla nella tabella CareerDevelopment
      * @param oldRole Vecchio ruolo dell'impiegato
