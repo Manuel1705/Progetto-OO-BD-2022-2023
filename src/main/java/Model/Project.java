@@ -1,15 +1,14 @@
 package Model;
 
 import java.time.LocalDate;
-import java.util.ArrayList;
 
 public class Project{
     private String cup, name;
     private float budget;
     private float remainingFunds;
     private LocalDate startDate, endDate;
-    private Employee Sresp;
-    private Employee Sref;
+    private CompanyEmployee Sresp;
+    private CompanyEmployee Sref;
     
     /**
      * Costruttore della classe Project. Riceve in input i dati necessari per la creazione dell'oggetto Project e inizializza i suoi attributi.
@@ -21,7 +20,7 @@ public class Project{
      * @param Sresp     È l'impiegato che viene scelto come responsabile scientifico del progetto
      * @param Sref      È l'impiegato che viene scelto come referente scientifico del progetto
      */
-    public Project(String cup, String name, float budget, LocalDate startDate, LocalDate endDate, Employee Sresp,Employee Sref){
+    public Project(String cup, String name, float budget, LocalDate startDate, LocalDate endDate, CompanyEmployee Sresp, CompanyEmployee Sref){
         this.cup=cup;
         this.name=name;
         this.budget=budget;
@@ -43,7 +42,7 @@ public class Project{
      * @param Sresp     È l'impiegato che viene scelto come responsabile scientifico del progetto
      * @param Sref      È l'impiegato che viene scelto come referente scientifico del progetto
      */
-    public Project(String cup, String name, float budget, float remainingFunds, LocalDate startDate, LocalDate endDate, Employee Sresp,Employee Sref){
+    public Project(String cup, String name, float budget, float remainingFunds, LocalDate startDate, LocalDate endDate, CompanyEmployee Sresp, CompanyEmployee Sref){
         this.cup=cup;
         this.name=name;
         this.budget=budget;
@@ -78,13 +77,13 @@ public class Project{
      * Metodo che restituisce il referente scientifico del progetto
      * @return Il riferimento all'oggetto Employee memorizzato nell'attributo Sref
     */
-    public Employee getSref() {return Sref;}
+    public CompanyEmployee getSref() {return Sref;}
     
     /**
      * Metodo che restituisce il responsabile scientifico del progetto
      * @return Il riferimento all'oggetto Employee memorizzato nell'attributo Sresp
     */
-    public Employee getSResp(){return Sresp; }
+    public CompanyEmployee getSResp(){return Sresp; }
     
     /**
      * Metodo che restituisce l'SSN del referente scientifico del progetto se esso esiste, altrimenti restituisce un messaggio
@@ -140,13 +139,13 @@ public class Project{
      * Metodo che aggiorna il responsabile scientifico del progetto
      * @param employee Riferimento all'oggetto impiegato (colui che vogliamo sia il nuovo responsabile scientifico)
     */
-    public void setSresp(Employee employee){Sresp=employee;  }
+    public void setSresp(CompanyEmployee employee){Sresp=employee;  }
     
     /**
      * Metodo che aggiorna il referente scientifico del progetto
      * @param employee Riferimento all'oggetto impiegato (colui che vogliamo sia il nuovo referente scientifico)
     */
-    public void setSref(Employee employee){Sref=employee;  }
+    public void setSref(CompanyEmployee employee){Sref=employee;  }
     
     /**
      * Metodo che aggiorna il nome del progetto

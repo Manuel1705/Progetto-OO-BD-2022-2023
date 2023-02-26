@@ -34,12 +34,26 @@ public class ProjectController {
      * @param cup CUP del progetto da cercare.
      * @return L'ogetto Project trovato oppure null.
      */
-    public Project findProject(String cup){
+    public Project findProjectCup(String cup){
         for(Project project: projectArrayList){
             if (project.getCup().equals(cup)) return project;
         }
         return null;
     }
+
+    /**
+     * Metodo che restituisce il progetto con il nome passato in input se esso esiste, altrimenti restituisce null.
+     * @param name Nome del progetto da cercare.
+     * @return L'ogetto Project trovato oppure null.
+     */
+    public Project findProjectName(String name){
+        for(Project project: projectArrayList){
+            if (project.getName().equals(name)) return project;
+        }
+        return null;
+    }
+
+
 
     /**
      * Metodo che restituisce il numero di laboratori che partecipano al progetto associato al cup passato in input.
@@ -95,7 +109,9 @@ public class ProjectController {
             errors.add("Scientific reference must be a senior employee.");
 
         //Controllo unicita' cup
-        if(findProject(cup) != null) errors.add("CUP already belongs to another project.");
+        if(findProjectCup(cup) != null) errors.add("CUP already belongs to another project.");
+        //Controllo unicita' nome
+        if(findProjectName(name) != null) errors.add("Name already in use by another project.");
 
 
         return errors;
@@ -115,9 +131,9 @@ public class ProjectController {
                                String SrefSSN)
     {
 
-        ArrayList<Employee> employeeArrayList = controller.getEmployeeController().getEmployeeArrayList();
-        Employee Sresp = controller.getEmployeeController().findEmployee(SrespSSN);
-        Employee Sref = controller.getEmployeeController().findEmployee(SrefSSN);
+        ArrayList<CompanyEmployee> employeeArrayList = controller.getEmployeeController().getEmployeeArrayList();
+        CompanyEmployee Sresp = controller.getEmployeeController().findEmployee(SrespSSN);
+        CompanyEmployee Sref = controller.getEmployeeController().findEmployee(SrefSSN);
 
 
         Project project = new Project(cup, name, budget, LocalDate.now(), endDate, Sresp, Sref);
@@ -152,7 +168,7 @@ public class ProjectController {
                                                 LocalDate endDate, String SrespSSN,
                                                 String SrefSSN){
         ArrayList<String> errors = new ArrayList<String>();
-        Project project = findProject(cup);
+        Project project = findProjectCup(cup);
 
         //Controllo dominio nome
         if(name == null || name.isBlank()) errors.add("Name must not be blank.");
@@ -163,6 +179,8 @@ public class ProjectController {
         if(endDate == null) errors.add("Project end date must be inserted.");
         else if(endDate.isBefore(LocalDate.now())) errors.add("Project end date must be a future date.");
         else if (endDate.isBefore(project.getStartDate())) errors.add("Project end date must not be before start date.");
+        //Controllo unicita' nome
+        if(findProjectName(name) != null) errors.add("Name already in use by another project.");
         //Controllo chiavi esterne
         if(SrespSSN == null || SrespSSN.isBlank()) errors.add("Must insert scientific responsible.");
         else if(controller.getEmployeeController().findEmployee(SrespSSN) == null)
@@ -201,9 +219,9 @@ public class ProjectController {
     public void modifyProjectList(String cup,String name,
                                   float budget,LocalDate endDate,
                                   String Sref,String Sresp) {
-        Project project = findProject(cup);
+        Project project = findProjectCup(cup);
 
-        ArrayList<Employee> employeeArrayList = controller.getEmployeeController().getEmployeeArrayList();
+        ArrayList<CompanyEmployee> employeeArrayList = controller.getEmployeeController().getEmployeeArrayList();
         if (Sref != null && !Sref.isBlank()) {
             project.setSref(controller.getEmployeeController().findEmployee(Sref));
         } else project.setSref(null);
@@ -239,7 +257,7 @@ public class ProjectController {
     public ArrayList<String> checkProjectDelete(String cup){
         ArrayList<String> errors = new ArrayList<String>();
 
-        Project project = findProject(cup);
+        Project project = findProjectCup(cup);
         if (project == null) {
             errors.add("Project does not exist.");
             return errors;
@@ -252,7 +270,7 @@ public class ProjectController {
      * @param cup
      */
     public void dismissProject(String cup){
-        Project project= findProject(cup);
+        Project project= findProjectCup(cup);
         //Il metodo setta a null l'attributo project dell'equipaggiamento acquistato dal progetto
         ArrayList<Equipment>equipmentArrayList=controller.getEquipmentController().getEquipmentArrayList();
         for(Equipment equipment: equipmentArrayList){

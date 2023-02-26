@@ -1,6 +1,6 @@
 package GUI;
 import Controller.Controller;
-import Model.Employee;
+import Model.CompanyEmployee;
 import Model.Project;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -63,11 +63,11 @@ public class addLaboratoryController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         controller = Controller.getInstance();
-        ArrayList<Employee> employeeArrayList = controller.getEmployeeController().getEmployeeArrayList();
+        ArrayList<CompanyEmployee> employeeArrayList = controller.getEmployeeController().getEmployeeArrayList();
 
         //Inizializza il menu a tendina dei possibili responsabili scientifici
         ArrayList<String> Sresp= new ArrayList<>();
-        for (Employee employee: employeeArrayList) {
+        for (CompanyEmployee employee: employeeArrayList) {
             if(employee.getRole().equals("Senior")) {
                 Sresp.add(employee.getSSN());
             }

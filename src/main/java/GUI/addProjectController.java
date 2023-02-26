@@ -1,6 +1,6 @@
 package GUI;
 import Controller.Controller;
-import Model.Employee;
+import Model.CompanyEmployee;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -16,7 +16,6 @@ import javafx.stage.Stage;
 
 import java.io.IOException;
 import java.net.URL;
-import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
 public class addProjectController implements Initializable {
@@ -76,8 +75,8 @@ public class addProjectController implements Initializable {
      */
     @Override public void initialize(URL url, ResourceBundle resourceBundle) {
         controller=Controller.getInstance();
-        ArrayList<Employee> employeeArrayList=controller.getEmployeeController().getEmployeeArrayList();
-        for (Employee employee: employeeArrayList) {
+        ArrayList<CompanyEmployee> employeeArrayList=controller.getEmployeeController().getEmployeeArrayList();
+        for (CompanyEmployee employee: employeeArrayList) {
             if(employee.getRole().equals("Executive")){
                 SrespAddProject.getItems().add(employee.getSSN());
             }

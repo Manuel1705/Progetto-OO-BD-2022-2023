@@ -2,7 +2,7 @@ package Model;
 
 public class Laboratory {
     private String name, topic;
-    private Employee Sresp;
+    private CompanyEmployee Sresp;
     private Project project;
     
     /**
@@ -12,7 +12,7 @@ public class Laboratory {
      * @param Sresp     È l'impiegato che viene scelto come responsabile scientifico del laboratorio
      * @param project   È il progetto di cui si occuperà il laboratorio
      */
-    public Laboratory(String name, String topic, Employee Sresp, Project project){
+    public Laboratory(String name, String topic, CompanyEmployee Sresp, Project project){
         this.name=name;
         this.topic=topic;
         this.Sresp=Sresp;
@@ -84,7 +84,7 @@ public class Laboratory {
      * Metodo che aggiorna il responsabile scientifico del laboratorio
      * @param employee Riferimento all'oggetto impiegato che vogliamo sia il nuovo responsabile scientifico
      */
-    public void setSresp(Employee employee){
+    public void setSresp(CompanyEmployee employee){
         Sresp=employee;
     }
     

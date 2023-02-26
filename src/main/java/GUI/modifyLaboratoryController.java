@@ -1,7 +1,6 @@
 package GUI;
 import Controller.Controller;
-import Model.Employee;
-import Model.Laboratory;
+import Model.CompanyEmployee;
 import Model.Project;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -43,8 +42,8 @@ public class modifyLaboratoryController {
         controller = Controller.getInstance();
 
         //Inizializza il campo del responsabile scientifico
-        ArrayList<Employee>employeeArrayList=controller.getEmployeeController().getEmployeeArrayList();
-        for (Employee employee:employeeArrayList) {
+        ArrayList<CompanyEmployee>employeeArrayList=controller.getEmployeeController().getEmployeeArrayList();
+        for (CompanyEmployee employee:employeeArrayList) {
             if(employee.getRole().equals("Senior"))
                 SrespModifyLaboratory.getItems().add(employee.getSSN());
         }

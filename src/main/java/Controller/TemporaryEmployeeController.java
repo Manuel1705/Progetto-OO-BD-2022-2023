@@ -117,7 +117,7 @@ public class TemporaryEmployeeController {
 
         if (project == null || project.isBlank()) errors.add("Project must not be blank.");
         else {
-            Project newProject = controller.getProjectController().findProject(project);
+            Project newProject = controller.getProjectController().findProjectCup(project);
             if (newProject == null) errors.add("Project does not exist.");
             else if (newProject.getEndDate().isBefore(LocalDate.now())) errors.add("Project has already ended.");
             //Controllo fondi progetto
@@ -156,7 +156,7 @@ public class TemporaryEmployeeController {
     {
 
 
-        Project newProject = controller.getProjectController().findProject(project);
+        Project newProject = controller.getProjectController().findProjectCup(project);
 
         System.out.println(salary * (employmentDate.until(newProject.getEndDate())).toTotalMonths());
         //Aggiornamento fondi rimanenti progetto
@@ -254,7 +254,7 @@ public class TemporaryEmployeeController {
             errors.add("Laboratory does not exist.");
 
         //Controllo fondi progetto
-        Project newProject = controller.getProjectController().findProject(project);
+        Project newProject = controller.getProjectController().findProjectCup(project);
         if ((getTotalProjectSalaries(newProject, newProject.getStartDate(), newProject.getEndDate())
                 + salary * (LocalDate.now().until(newProject.getEndDate())).toTotalMonths()
                 - employee.getSalary() * (LocalDate.now().until(newProject.getEndDate())).toTotalMonths())
@@ -294,7 +294,7 @@ public class TemporaryEmployeeController {
             employee.setLab(controller.getLaboratoryController().findLaboratory(lab));
         }else employee.setLab(null);
 
-        Project employeeProject = controller.getProjectController().findProject(project);
+        Project employeeProject = controller.getProjectController().findProjectCup(project);
         employee.setProject(employeeProject);
 
         LocalDate employmentDate = employee.getEmploymentDate();
@@ -356,7 +356,7 @@ public class TemporaryEmployeeController {
      */
     public void fireTemporaryEmployee(String ssn, String projectCup){
         TemporaryEmployee temporaryEmployee = findTemporaryEmployee(ssn);
-        Project project = controller.getProjectController().findProject(projectCup);
+        Project project = controller.getProjectController().findProjectCup(projectCup);
 
         if(project != null) {
             int remainingMonths = (int)(LocalDate.now().until(project.getEndDate())).toTotalMonths();

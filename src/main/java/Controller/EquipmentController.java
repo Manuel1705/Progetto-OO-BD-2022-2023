@@ -67,7 +67,7 @@ public class EquipmentController {
         //Controllo budget progetto
         if(project == null || project.isBlank()) errors.add("Project must not be blank.");
         else {
-            Project newProject = controller.getProjectController().findProject(project);
+            Project newProject = controller.getProjectController().findProjectCup(project);
             if (getTotalProjectPrice(newProject) + price > newProject.getBudget() / 2)
                 errors.add("Project budget is too low to purchase equipment.");
         }
@@ -90,7 +90,7 @@ public class EquipmentController {
 
 
         Equipment equipment = new Equipment(id_equipment, name, price, dealer);
-        Project newProject = controller.getProjectController().findProject(project);
+        Project newProject = controller.getProjectController().findProjectCup(project);
         equipment.setProject(newProject);
 
         newProject.setRemainingFunds(newProject.getRemainingFunds() - price);
@@ -211,7 +211,7 @@ public class EquipmentController {
     public void deleteEquipment(int id){
         Equipment equipment = findEquipment(id);
         if(equipment.getProjectCup() != null && !equipment.getProjectCup().isBlank()) {
-            Project newProject = controller.getProjectController().findProject(equipment.getProjectCup());
+            Project newProject = controller.getProjectController().findProjectCup(equipment.getProjectCup());
             newProject.setRemainingFunds(newProject.getRemainingFunds() + equipment.getPrice());
         }
         equipmentArrayList.remove(equipment);
@@ -226,7 +226,7 @@ public class EquipmentController {
 
                     DAOProjectPostgres daoProjectPostgres = new DAOProjectPostgres();
                     daoProjectPostgres.updateProjectDBRemainingFunds(equipment.getProjectCup(),
-                            controller.getProjectController().findProject(equipment.getProjectCup()).getRemainingFunds());
+                            controller.getProjectController().findProjectCup(equipment.getProjectCup()).getRemainingFunds());
                 }
 
             }

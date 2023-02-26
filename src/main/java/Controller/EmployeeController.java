@@ -1,6 +1,6 @@
 package Controller;
 import DAOPostgresImplementation.DAOEmployeePostgres;
-import Model.Employee;
+import Model.CompanyEmployee;
 import Model.Laboratory;
 import Model.Project;
 
@@ -10,7 +10,7 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 public class EmployeeController {
     private Controller controller;
-    private ArrayList<Employee> employeeArrayList= new ArrayList<Employee>();
+    private ArrayList<CompanyEmployee> employeeArrayList= new ArrayList<CompanyEmployee>();
 
     /**
      * Costruttore della classe che inizializza l'attributo controller.
@@ -24,7 +24,7 @@ public class EmployeeController {
      * Metodo che restituisce la lista degli impiegati.
      * @return L'ArrayList.
      */
-    public ArrayList<Employee> getEmployeeArrayList(){
+    public ArrayList<CompanyEmployee> getEmployeeArrayList(){
         return employeeArrayList;
 
     }
@@ -34,8 +34,8 @@ public class EmployeeController {
      * @param ssn
      * @return L'impiegato trovato oppure null.
      */
-    public Employee findEmployee(String ssn){
-        for(Employee employee: employeeArrayList){
+    public CompanyEmployee findEmployee(String ssn){
+        for(CompanyEmployee employee: employeeArrayList){
             if (employee.getSSN().equals(ssn)) return employee;
         }
         return null;
@@ -193,7 +193,7 @@ public class EmployeeController {
                                                  String email, float salary, String lab){
         ArrayList<String> errors = new ArrayList<String>();
 
-        Employee employee = findEmployee(ssn);
+        CompanyEmployee employee = findEmployee(ssn);
         if(employee == null){
             errors.add("Employee does not exist.");
             return errors;
@@ -273,7 +273,7 @@ public class EmployeeController {
     public ArrayList<String> checkEmployeeDelete(String ssn){
         ArrayList<String> errors = new ArrayList<String>();
 
-        Employee employee = findEmployee(ssn);
+        CompanyEmployee employee = findEmployee(ssn);
         if(employee == null){
             errors.add("Employee does not exist.");
             return errors;
@@ -334,7 +334,7 @@ public class EmployeeController {
     {
 
 
-        Employee employee = new Employee(ssn, firstName, lastName, phoneNum, role, salary, employmentDate);
+        CompanyEmployee employee = new CompanyEmployee(ssn, firstName, lastName, phoneNum, role, salary, employmentDate);
         if (lab != null && !lab.isBlank()) {
             ArrayList<Laboratory> labs = controller.getLaboratoryController().getLaboratoryArrayList();
             for (Laboratory laboratory : labs) {
@@ -394,7 +394,7 @@ public class EmployeeController {
         else if (employmentDate.until(LocalDate.now()).getYears() < 7) role = "Middle";
         else role = "Senior";
 
-        Employee employee = new Employee(ssn, firstName, lastName, phoneNum, role, salary, employmentDate);
+        CompanyEmployee employee = new CompanyEmployee(ssn, firstName, lastName, phoneNum, role, salary, employmentDate);
         if (lab != null && !lab.isBlank()) {
             ArrayList<Laboratory> labs = controller.getLaboratoryController().getLaboratoryArrayList();
             for (Laboratory laboratory : labs) {
@@ -448,7 +448,7 @@ public class EmployeeController {
                                                 String lab, String address, String email)
     {
 
-        Employee employee = findEmployee(ssn);
+        CompanyEmployee employee = findEmployee(ssn);
         employee.setFirstName(firstName);
         employee.setLastName(lastName);
         employee.setPhoneNum(phoneNumber);
@@ -490,7 +490,7 @@ public class EmployeeController {
      */
     public void fireEmployee(String ssn){
 
-        Employee employee = findEmployee(ssn);
+        CompanyEmployee employee = findEmployee(ssn);
 
         employeeArrayList.remove(employee);
 

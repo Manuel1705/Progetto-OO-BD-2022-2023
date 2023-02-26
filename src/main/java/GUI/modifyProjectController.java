@@ -1,8 +1,7 @@
 package GUI;
 import Controller.Controller;
-import Model.Employee;
+import Model.CompanyEmployee;
 import Model.Project;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -63,8 +62,8 @@ public class modifyProjectController {
     {
         controller=Controller.getInstance();
         this.cup = cup;
-        ArrayList<Employee> employeeArrayList=controller.getEmployeeController().getEmployeeArrayList();
-        for (Employee employee: employeeArrayList) {
+        ArrayList<CompanyEmployee> employeeArrayList=controller.getEmployeeController().getEmployeeArrayList();
+        for (CompanyEmployee employee: employeeArrayList) {
             if(employee.getRole().equals("Executive")){
                 SrespModifyProject.getItems().add(employee.getSSN());
             }

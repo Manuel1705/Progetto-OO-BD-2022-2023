@@ -1,6 +1,6 @@
 package GUI;
 import Controller.Controller;
-import Model.Employee;
+import Model.CompanyEmployee;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -24,23 +24,23 @@ import java.util.ArrayList;
 import java.util.ResourceBundle;
 public class EmployeeListController implements Initializable {
 
-    @FXML public TableView<Employee> EmployeesTable;
-    @FXML private TableColumn<Employee, String> AddressEmployeeTable;
-    @FXML private TableColumn<Employee, LocalDate> EmploymentDateEmployeeTable;
-    @FXML private TableColumn<Employee, String> FirstNameEmployeeTable;
-    @FXML private TableColumn<Employee, String> LaboratoryEmployeeTable;
-    @FXML private TableColumn<Employee, String> LastNameEmployeeTable;
-    @FXML private TableColumn<Employee, String> RoleEmployeeTable;
-    @FXML private TableColumn<Employee, Float> SalaryEmployeeTable;
-    @FXML private TableColumn<Employee, String> emailEmployeeTable;
-    @FXML private TableColumn<Employee, String> phoneNumEmployeeTable;
-    @FXML private TableColumn<Employee, String> ssnEmployeeTable;
+    @FXML public TableView<CompanyEmployee> EmployeesTable;
+    @FXML private TableColumn<CompanyEmployee, String> AddressEmployeeTable;
+    @FXML private TableColumn<CompanyEmployee, LocalDate> EmploymentDateEmployeeTable;
+    @FXML private TableColumn<CompanyEmployee, String> FirstNameEmployeeTable;
+    @FXML private TableColumn<CompanyEmployee, String> LaboratoryEmployeeTable;
+    @FXML private TableColumn<CompanyEmployee, String> LastNameEmployeeTable;
+    @FXML private TableColumn<CompanyEmployee, String> RoleEmployeeTable;
+    @FXML private TableColumn<CompanyEmployee, Float> SalaryEmployeeTable;
+    @FXML private TableColumn<CompanyEmployee, String> emailEmployeeTable;
+    @FXML private TableColumn<CompanyEmployee, String> phoneNumEmployeeTable;
+    @FXML private TableColumn<CompanyEmployee, String> ssnEmployeeTable;
     @FXML private Button fireButton;
     @FXML private Button hireButton;
     @FXML private Button modifyButton;
     @FXML private Button CareerChanges;
     private Controller controller;
-    private ObservableList<Employee> list= FXCollections.observableArrayList();
+    private ObservableList<CompanyEmployee> list= FXCollections.observableArrayList();
 
     /**
      * Metodo che carica gli impiegati salvati dal controller nell'Observable List
@@ -65,16 +65,16 @@ public class EmployeeListController implements Initializable {
 
         //Inserisce gli elementi della lista in tabella
 
-        FirstNameEmployeeTable.setCellValueFactory(new PropertyValueFactory<Employee,String>("firstName"));
-        LastNameEmployeeTable.setCellValueFactory(new PropertyValueFactory<Employee, String>("lastName"));
-        AddressEmployeeTable.setCellValueFactory(new PropertyValueFactory<Employee, String>("address"));
-        EmploymentDateEmployeeTable.setCellValueFactory(new PropertyValueFactory<Employee, LocalDate>("employmentDate"));
-        LaboratoryEmployeeTable.setCellValueFactory(new PropertyValueFactory<Employee, String>("labName"));
-        RoleEmployeeTable.setCellValueFactory(new PropertyValueFactory<Employee, String>("role"));
-        SalaryEmployeeTable.setCellValueFactory(new PropertyValueFactory<Employee, Float>("salary"));
-        emailEmployeeTable.setCellValueFactory(new PropertyValueFactory<Employee, String>("email"));
-        phoneNumEmployeeTable.setCellValueFactory(new PropertyValueFactory<Employee,String>("phoneNum"));
-        ssnEmployeeTable.setCellValueFactory(new PropertyValueFactory<Employee,String>("SSN"));
+        FirstNameEmployeeTable.setCellValueFactory(new PropertyValueFactory<CompanyEmployee,String>("firstName"));
+        LastNameEmployeeTable.setCellValueFactory(new PropertyValueFactory<CompanyEmployee, String>("lastName"));
+        AddressEmployeeTable.setCellValueFactory(new PropertyValueFactory<CompanyEmployee, String>("address"));
+        EmploymentDateEmployeeTable.setCellValueFactory(new PropertyValueFactory<CompanyEmployee, LocalDate>("employmentDate"));
+        LaboratoryEmployeeTable.setCellValueFactory(new PropertyValueFactory<CompanyEmployee, String>("labName"));
+        RoleEmployeeTable.setCellValueFactory(new PropertyValueFactory<CompanyEmployee, String>("role"));
+        SalaryEmployeeTable.setCellValueFactory(new PropertyValueFactory<CompanyEmployee, Float>("salary"));
+        emailEmployeeTable.setCellValueFactory(new PropertyValueFactory<CompanyEmployee, String>("email"));
+        phoneNumEmployeeTable.setCellValueFactory(new PropertyValueFactory<CompanyEmployee,String>("phoneNum"));
+        ssnEmployeeTable.setCellValueFactory(new PropertyValueFactory<CompanyEmployee,String>("SSN"));
         EmployeesTable.setItems(list);
     }
 

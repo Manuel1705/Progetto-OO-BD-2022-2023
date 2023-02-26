@@ -99,7 +99,7 @@ public class Controller
      */
     public void updateData(){
         //Aggiornamento impiegati
-        for(Employee employee: employeeController.getEmployeeArrayList()) {
+        for(CompanyEmployee employee: employeeController.getEmployeeArrayList()) {
             String newRole = employee.CheckRole();
             if(newRole != null){
                 employeeController.modifyEmployeeList(employee.getSSN(), employee.getFirstName(), employee.getLastName(),
@@ -248,7 +248,7 @@ public class Controller
             //Creazione oggetti employee e inizializzazione attributi (tranne lab)
             for (int i = 0; i < ssnListEmp.size(); i++) {
                 if (!roleListEmp.get(i).equals("temporary")) {
-                    Employee employee = new Employee(ssnListEmp.get(i), firstNameListEmp.get(i),
+                    CompanyEmployee employee = new CompanyEmployee(ssnListEmp.get(i), firstNameListEmp.get(i),
                             lastNameListEmp.get(i), phoneNumListEmp.get(i),
                             employeeController.convertRole(roleListEmp.get(i)), salaryListEmp.get(i),
                             employmentDateListEmp.get(i).toLocalDate());
@@ -260,8 +260,8 @@ public class Controller
             }
             //Creazione oggetti project e inizializzazione attributi
             for (int i = 0; i < cupListProject.size(); i++) {
-                Employee sResp = employeeController.findEmployee(sRespListProject.get(i));
-                Employee sRef = employeeController.findEmployee(sRefListProject.get(i));
+                CompanyEmployee sResp = employeeController.findEmployee(sRespListProject.get(i));
+                CompanyEmployee sRef = employeeController.findEmployee(sRefListProject.get(i));
                 Project project = new Project(cupListProject.get(i), nameListProject.get(i), budgetListProject.get(i),
                         remainingFundsListProject.get(i), startDateListProject.get(i).toLocalDate(),
                         endDateListProject.get(i).toLocalDate(), sResp, sRef);
@@ -270,8 +270,8 @@ public class Controller
 
             //Creazione oggetti laboratory e inizializzazione attributi
             for (int i = 0; i < nameListLab.size(); i++) {
-                Employee sResp = employeeController.findEmployee(sRespListLab.get(i));
-                Project project = projectController.findProject(projectListLab.get(i));
+                CompanyEmployee sResp = employeeController.findEmployee(sRespListLab.get(i));
+                Project project = projectController.findProjectCup(projectListLab.get(i));
                 Laboratory laboratory = new Laboratory(nameListLab.get(i), topicListLab.get(i), sResp, project);
                 laboratoryController.getLaboratoryArrayList().add(laboratory);
             }
@@ -279,7 +279,7 @@ public class Controller
             //Creazione oggetti equipment e inizializzazione attributi
             for (int i = 0; i < idListEquipment.size(); i++) {
                 Laboratory lab = laboratoryController.findLaboratory(laboratoryNameListEquipment.get(i));
-                Project project = projectController.findProject(projectCupListEquipment.get(i));
+                Project project = projectController.findProjectCup(projectCupListEquipment.get(i));
                 Equipment equipment = new Equipment(idListEquipment.get(i), nameListEquipment.get(i), priceListEquipment.get(i),
                         project, lab, dealerListEquipment.get(i));
                 equipment.setDescription(descriptionListEquipment.get(i));
@@ -291,7 +291,7 @@ public class Controller
                 if (roleListEmp.get(i).equals("temporary")) {
                     Laboratory lab = laboratoryController.findLaboratory(laboratoryListEmp.get(i));
                     int j = ssnListTC.indexOf(ssnListEmp.get(i));
-                    Project project = projectController.findProject(cupListTC.get(j));
+                    Project project = projectController.findProjectCup(cupListTC.get(j));
                     TemporaryEmployee employee = new TemporaryEmployee(ssnListEmp.get(i), firstNameListEmp.get(i),
                             lastNameListEmp.get(i), phoneNumListEmp.get(i), salaryListEmp.get(i),
                             employmentDateListEmp.get(i).toLocalDate(), project);
@@ -306,7 +306,7 @@ public class Controller
 
             //Creazione oggetti career development e inizializzazione attributi
             for(int i = 0; i < ssnListCD.size(); i++){
-                Employee employee = employeeController.findEmployee(ssnListCD.get(i));
+                CompanyEmployee employee = employeeController.findEmployee(ssnListCD.get(i));
                 CareerDevelopment careerDevelopment = new CareerDevelopment(employee, employeeController.convertRole(oldRoleListCD.get(i)),
                         employeeController.convertRole(newRoleListCD.get(i)), salaryChangeListCD.get(i));
 

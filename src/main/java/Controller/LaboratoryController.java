@@ -53,7 +53,7 @@ public class LaboratoryController {
         else if(!controller.getEmployeeController().findEmployee(Sresp).getRole().equals("Senior"))
             errors.add("Scientific responsible must be a senior employee");
         if((project != null) && (!project.isBlank())){
-            if((controller.getProjectController().findProject(project)) == null) errors.add("Selected project does not exist.");
+            if((controller.getProjectController().findProjectCup(project)) == null) errors.add("Selected project does not exist.");
             //Controllo numero massimo di laboratori che possono lavorare sullo stesso progetto.
             else if(controller.getProjectController().labCount(project) >= 3) errors.add("Project already has 3 laboratories working on it.");
         }
@@ -69,19 +69,19 @@ public class LaboratoryController {
      */
     public void addLaboratoryList(String name, String topic, String Sresp, String project) {
 
-        ArrayList<Employee> employeeArrayList = controller.getEmployeeController().getEmployeeArrayList();
+        ArrayList<CompanyEmployee> employeeArrayList = controller.getEmployeeController().getEmployeeArrayList();
         ArrayList<Project> projectArrayList = controller.getProjectController().getProjectArrayList();
         if (topic == null || topic.isBlank()) {
             topic = "No description";
         }
-        Employee sRespEmp = null;
+        CompanyEmployee sRespEmp = null;
         Project newProject = null;
 
         if (Sresp != null && !Sresp.isBlank()) {
             sRespEmp = controller.getEmployeeController().findEmployee(Sresp);
         }
         if (project != null && !project.isBlank()) {
-            newProject = controller.getProjectController().findProject(project);
+            newProject = controller.getProjectController().findProjectCup(project);
         }
         Laboratory laboratory = new Laboratory(name, topic, sRespEmp, newProject);
         laboratoryArrayList.add(laboratory);
@@ -125,7 +125,7 @@ public class LaboratoryController {
         else if(!controller.getEmployeeController().findEmployee(Sresp).getRole().equals("Senior"))
             errors.add("Scientific responsible must be a senior employee");
         if((project != null) && (!project.isBlank())){
-            if((controller.getProjectController().findProject(project)) == null) errors.add("Selected project does not exist.");
+            if((controller.getProjectController().findProjectCup(project)) == null) errors.add("Selected project does not exist.");
             //Controllo numero massimo di laboratori che possono lavorare sullo stesso progetto.
             else if(laboratory.getProjectCup() != project
                     && controller.getProjectController().labCount(project) >= 3) errors.add("Project already has 3 laboratories working on it.");
@@ -153,7 +153,7 @@ public class LaboratoryController {
 
 
         if(project != null && !project.isBlank()){
-            laboratory.setProject(controller.getProjectController().findProject(project));
+            laboratory.setProject(controller.getProjectController().findProjectCup(project));
         }
         else laboratory.setProject(null);
 
@@ -206,8 +206,8 @@ public class LaboratoryController {
     public void dismissLaboratory(String name) {
         controller = Controller.getInstance();
         Laboratory laboratory = findLaboratory(name);
-        ArrayList<Employee> employeeArrayList = controller.getEmployeeController().getEmployeeArrayList();
-        for (Employee employee : employeeArrayList) {
+        ArrayList<CompanyEmployee> employeeArrayList = controller.getEmployeeController().getEmployeeArrayList();
+        for (CompanyEmployee employee : employeeArrayList) {
             if (employee.getLabName() != null && employee.getLabName().equals(laboratory.getName())) {
                 employee.setLab(null);
             }

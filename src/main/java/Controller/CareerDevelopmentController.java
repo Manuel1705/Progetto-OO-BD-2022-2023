@@ -1,6 +1,6 @@
 package Controller;
 import Model.CareerDevelopment;
-import Model.Employee;
+import Model.CompanyEmployee;
 import java.util.ArrayList;
 public class CareerDevelopmentController {
     private ArrayList<CareerDevelopment>careerDevelopmentArrayList = new ArrayList<>();
@@ -11,7 +11,7 @@ public class CareerDevelopmentController {
      * @param newRole Il nuovo ruolo dell'impiegato.
      * @param newSalary Il nuovo salario dell'impiegato.
      */
-    public void addCareerDevelopment(Employee employee, String newRole, float newSalary){
+    public void addCareerDevelopment(CompanyEmployee employee, String newRole, float newSalary){
         CareerDevelopment careerDevelopment = new CareerDevelopment(employee, employee.getRole(), newRole,
                 newSalary - employee.getSalary());
                 careerDevelopmentArrayList.add(careerDevelopment);
