@@ -63,7 +63,7 @@ public class addTemporaryEmployeeController implements Initializable {
      * validita' dell'input.
      */
     @FXML
-    void hireTemporaryEmployee() throws IOException {
+    public void hireTemporaryEmployee() throws IOException {
         ArrayList<String> errors = new ArrayList<String>();
 
         try{

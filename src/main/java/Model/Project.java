@@ -73,18 +73,8 @@ public class Project{
     */
     public String getName(){return name; }
     
-    /**
-     * Metodo che restituisce il referente scientifico del progetto
-     * @return Il riferimento all'oggetto Employee memorizzato nell'attributo Sref
-    */
-    public CompanyEmployee getSref() {return Sref;}
-    
-    /**
-     * Metodo che restituisce il responsabile scientifico del progetto
-     * @return Il riferimento all'oggetto Employee memorizzato nell'attributo Sresp
-    */
-    public CompanyEmployee getSResp(){return Sresp; }
-    
+
+
     /**
      * Metodo che restituisce l'SSN del referente scientifico del progetto se esso esiste, altrimenti restituisce un messaggio
      * @return L'SSN dell'attuale referente scientifico del progetto oppure null.

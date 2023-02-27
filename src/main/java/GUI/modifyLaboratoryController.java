@@ -28,7 +28,6 @@ public class modifyLaboratoryController {
     private Scene scene;
     private Parent root;
     private Controller controller;
-    private String name;
 
     /**
      * Metodo che inizializza i campi della finestra.
@@ -38,7 +37,6 @@ public class modifyLaboratoryController {
      * @param projectCup
      */
     public void setDefaultFields(String name, String topic, String srespSsn, String projectCup){
-        this.name = name;
         controller = Controller.getInstance();
 
         //Inizializza il campo del responsabile scientifico
@@ -64,12 +62,12 @@ public class modifyLaboratoryController {
      * Questo metodo viene chiamato quando l'utente conferma la modifica del laboratorio e passa i dati inseriti al controller.
      */
     @FXML void modifyLaboratory() throws IOException{
-        ArrayList<String> errors = controller.getLaboratoryController().checkLaboratoryModify(name,
+        ArrayList<String> errors = controller.getLaboratoryController().checkLaboratoryModify(nameModifyLaboratory.getText(),
                 topicModifyLaboratory.getText(),
                 SrespModifyLaboratory.getValue(),
                 projectModifyLaboratory.getValue());
         if (errors.isEmpty()) {
-            controller.getLaboratoryController().modifyLaboratory(name,
+            controller.getLaboratoryController().modifyLaboratory(nameModifyLaboratory.getText(),
                     topicModifyLaboratory.getText(),
                     SrespModifyLaboratory.getValue(),
                     projectModifyLaboratory.getValue());

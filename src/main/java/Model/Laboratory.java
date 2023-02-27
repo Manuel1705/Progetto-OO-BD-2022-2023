@@ -48,17 +48,7 @@ public class Laboratory {
         return topic;
      }
     
-    /**
-     * Metodo che restituisce il nome del progetto di cui si occupa il laboratorio se esso esiste, altrimenti restituisce null
-     * @return Il nome del progetto del laboratorio oppure Null
-     */
-     public String getProjectName(){
-        if(project !=null){
-            return project.getName();
-        }
-        else return null;
-     }
-     
+
      /**
      * Metodo che restituisce la Cup del progetto di cui di occupa il laboratorio se esso esiste, altrimenti restituisce null
      * @return La cup del progetto oppure Null

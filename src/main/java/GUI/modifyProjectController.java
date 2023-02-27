@@ -46,8 +46,6 @@ public class modifyProjectController {
     private Parent root;
     private Controller controller;
 
-    private String cup;
-
     /**
      * Metodo che inizializza i campi della finestra.
      * @param cup
@@ -61,7 +59,6 @@ public class modifyProjectController {
                                  String endDate)
     {
         controller=Controller.getInstance();
-        this.cup = cup;
         ArrayList<CompanyEmployee> employeeArrayList=controller.getEmployeeController().getEmployeeArrayList();
         for (CompanyEmployee employee: employeeArrayList) {
             if(employee.getRole().equals("Executive")){
@@ -94,7 +91,7 @@ public class modifyProjectController {
             errors.add("Budget must be a valid number.");
             budgetModifyProject.setText("0");
         }
-        errors.addAll(controller.getProjectController().checkProjectModify(cup,
+        errors.addAll(controller.getProjectController().checkProjectModify(cupModifyProject.getText(),
                 nameModifyProject.getText(),
                 Float.parseFloat(budgetModifyProject.getText()),
                 endDateModifyProject.getValue(),
@@ -102,7 +99,7 @@ public class modifyProjectController {
                 SrespModifyProject.getValue()));
 
         if (errors.isEmpty()) {
-            controller.getProjectController().modifyProjectList(cup,
+            controller.getProjectController().modifyProjectList(cupModifyProject.getText(),
                     nameModifyProject.getText(),
                     Float.parseFloat(budgetModifyProject.getText()),
                     endDateModifyProject.getValue(),

@@ -327,48 +327,6 @@ public class EmployeeController {
      * @param salary
      * @param lab
      */
-    public void addEmployeeList(String ssn, String firstName, String lastName,
-                                    String phoneNum, String address, String role,
-                                    String email, LocalDate employmentDate,
-                                    float salary, String lab)
-    {
-
-
-        CompanyEmployee employee = new CompanyEmployee(ssn, firstName, lastName, phoneNum, role, salary, employmentDate);
-        if (lab != null && !lab.isBlank()) {
-            ArrayList<Laboratory> labs = controller.getLaboratoryController().getLaboratoryArrayList();
-            for (Laboratory laboratory : labs) {
-                if(laboratory.getName().equals(lab)){
-                    employee.setLab(laboratory);
-                }
-            }
-        }
-        else
-            employee.setLab(null);
-
-        if (address != null && !address.isBlank())
-            employee.setAddress(address);
-        else
-            employee.setAddress(null);
-
-        if (email != null && !email.isBlank())
-            employee.setEmail(email);
-        else
-            employee.setEmail(null);
-
-        employeeArrayList.add(employee);
-        //L'impiegato viene inserito nel database.
-        try{
-            if(controller.isDBConnected() && controller.getDBMS().equals("PostgreSQL")){
-                DAOEmployeePostgres daoEmployee = new DAOEmployeePostgres();
-                daoEmployee.addEmployeeDB(ssn, firstName, lastName, phoneNum, role, salary, Date.valueOf(employmentDate), email,
-                        address, lab);
-            }
-        }
-        catch(SQLException ex) {
-            controller.setDBConnectionState(false);
-        }
-    }
 
     /**
      * Metodo che usa i dati passati in input per creare un oggetto Employee e aggiungerlo alla lista, con ruolo implicito.

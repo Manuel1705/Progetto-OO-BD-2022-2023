@@ -1,6 +1,5 @@
 package GUI;
 import Model.Project;
-import Model.TemporaryEmployee;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -52,7 +51,7 @@ public class ProjectListController implements Initializable {
      * Metodo che apre la finestra per inserire un progetto.
      * @throws IOException
      */
-    @FXML void AddProject() throws IOException{
+    @FXML public void AddProject() throws IOException{
         Parent root = FXMLLoader.load(getClass().getResource("../GUI/addProject.fxml"));
         scene = new Scene(root);
         Stage stage= new Stage();
@@ -90,7 +89,7 @@ public class ProjectListController implements Initializable {
      * Metodo che apre la finestra per modificare il progetto selezionato dall'utente.
      * @throws IOException
      */
-    @FXML void modifyProject() throws IOException{
+    @FXML public void modifyProject() throws IOException{
         FXMLLoader loader = new FXMLLoader(getClass().getResource("../GUI/modifyProject.fxml"));
         root=loader.load();
         stage= new Stage();
@@ -120,7 +119,7 @@ public class ProjectListController implements Initializable {
      * @param event
      * @throws IOException
      */
-    @FXML void switchToHomeScene(ActionEvent event) throws IOException {
+    @FXML public void switchToHomeScene(ActionEvent event) throws IOException {
         root = FXMLLoader.load(getClass().getResource("../GUI/Home.fxml"));
         stage = (Stage)((Node)event.getSource()).getScene().getWindow();
         scene = new Scene(root);

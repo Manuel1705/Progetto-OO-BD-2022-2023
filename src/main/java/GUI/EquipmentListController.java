@@ -33,6 +33,7 @@ public class EquipmentListController implements Initializable {
     @FXML private TableColumn<Equipment , Integer>  idEquipmentTable;
     @FXML private Button buyEquipmentButton;
     @FXML private Button modifyEquipmentButton;
+    @FXML private Button sellEquipmentButton;
     private ObservableList<Equipment> list = FXCollections.observableArrayList();
     private Controller controller;
 
@@ -48,7 +49,7 @@ public class EquipmentListController implements Initializable {
      * Metodo che apre la finestra che permette di modificare l'equipaggiamento selezionato dall'utente.
      * @throws IOException
      */
-    @FXML void modifyEquipment() throws IOException{
+    @FXML public void modifyEquipment() throws IOException{
         FXMLLoader loader = new FXMLLoader(getClass().getResource("../GUI/modifyEquipment.fxml"));
         root=loader.load();
         stage= new Stage();
@@ -75,7 +76,7 @@ public class EquipmentListController implements Initializable {
      * Metodo che apre la finestra che permette di acquistare nuovo equipaggiamento.
      * @throws IOException
      */
-    @FXML void buyEquipment()throws IOException{
+    @FXML public void buyEquipment()throws IOException{
         Parent root = FXMLLoader.load(getClass().getResource("../GUI/addEquipment.fxml"));
         scene = new Scene(root);
         stage= new Stage();
@@ -85,7 +86,7 @@ public class EquipmentListController implements Initializable {
         stage.showAndWait();
         loadList();
     }
-    @FXML private Button sellEquipmentButton;
+
 
     /**
      * Metodo che permette di rimuovere l'equipaggiamento selezionato dall'utente.
@@ -113,7 +114,7 @@ public class EquipmentListController implements Initializable {
      * @param event
      * @throws IOException
      */
-    @FXML void switchToHomeScene(ActionEvent event) throws IOException {
+    @FXML public void switchToHomeScene(ActionEvent event) throws IOException {
         root = FXMLLoader.load(getClass().getResource("../GUI/Home.fxml"));
         stage = (Stage)((Node)event.getSource()).getScene().getWindow();
         scene = new Scene(root);

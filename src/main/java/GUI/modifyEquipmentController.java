@@ -31,7 +31,6 @@ public class modifyEquipmentController {
     private Scene scene;
     private Parent root;
     private Controller controller;
-    private int id;
 
     /**
      * Metodo che inizializza i campi della finestra.
@@ -46,7 +45,6 @@ public class modifyEquipmentController {
     public void setDefaultFields(int id, String description, String dealer, String labName, String projectCup, float price,
                                   String name){
         controller=Controller.getInstance();
-        this.id = id;
         ArrayList<Laboratory> labs = controller.getLaboratoryController().getLaboratoryArrayList();
         labModifyEquipment.getItems().add("");
         for (Laboratory lab: labs) {
@@ -70,14 +68,13 @@ public class modifyEquipmentController {
      * Metodo che viene chiamato quando l'utente conferma la modifica.
      */
     @FXML void modifyEquipment() throws IOException{
-        ArrayList<String> errors = controller.getEquipmentController().checkEquipmentModify(id,
+        ArrayList<String> errors = controller.getEquipmentController().checkEquipmentModify(
                 nameModifyEquipment.getText(),
-                descriptionModifyEquipment.getText(),
-                labModifyEquipment.getValue());
+                descriptionModifyEquipment.getText());
 
 
         if (errors.isEmpty()) {
-            controller.getEquipmentController().modifyEquipment(id,
+            controller.getEquipmentController().modifyEquipment(Integer.parseInt(idEquipmentModifyEquipment.getText()),
                     nameModifyEquipment.getText(),
                     descriptionModifyEquipment.getText(),
                     labModifyEquipment.getValue());

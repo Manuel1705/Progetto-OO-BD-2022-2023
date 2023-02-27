@@ -171,7 +171,7 @@ public class EmployeeListController implements Initializable {
      * Metodo che apre la finestra per modificare l'impiegato selezionato dall'utente.
      * @throws IOException
      */
-    @FXML void modifyEmployee()throws IOException  {
+    @FXML public void modifyEmployee()throws IOException  {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("../GUI/modifyEmployee.fxml"));
         root=loader.load();
         stage= new Stage();

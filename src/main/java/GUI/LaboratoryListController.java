@@ -55,7 +55,7 @@ public class LaboratoryListController implements Initializable {
      * Metodo che apre la finestra per aggiungere un nuovo laboratorio.
      * @throws IOException
      */
-    @FXML void AddLaboratory() throws IOException {
+    @FXML public void AddLaboratory() throws IOException {
         Parent root = FXMLLoader.load(getClass().getResource("../GUI/addLaboratory.fxml"));
         scene = new Scene(root);
         stage= new Stage();
@@ -71,7 +71,7 @@ public class LaboratoryListController implements Initializable {
      * @throws IOException
      */
     @FXML
-    void modifyLaboratory() throws IOException {
+    public void modifyLaboratory() throws IOException {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("../GUI/modifyLaboratory.fxml"));
         root = loader.load();
         stage = new Stage();
@@ -95,7 +95,7 @@ public class LaboratoryListController implements Initializable {
      * Metodo che rimuove il laboratorio selezionato dall'utente.
      */
     @FXML
-    void dismissLaboratory() throws IOException{
+    public void dismissLaboratory() throws IOException{
         if(LabNameTable.getCellObservableValue(getSelectedLabIndex()) != null) {
             String selectedName = LabNameTable.getCellObservableValue(getSelectedLabIndex()).getValue();
             ArrayList<String> errors = controller.getLaboratoryController().checkLaboratoryDelete(selectedName);
@@ -142,7 +142,7 @@ public class LaboratoryListController implements Initializable {
      * @param event
      * @throws IOException
      */
-    @FXML void switchToHomeScene(ActionEvent event)  throws IOException {
+    @FXML public void switchToHomeScene(ActionEvent event)  throws IOException {
             root = FXMLLoader.load(getClass().getResource("../GUI/Home.fxml"));
             stage = (Stage)((Node)event.getSource()).getScene().getWindow();
             scene = new Scene(root);

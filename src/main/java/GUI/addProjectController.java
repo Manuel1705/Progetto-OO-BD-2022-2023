@@ -35,7 +35,7 @@ public class addProjectController implements Initializable {
     /**
      * Metodo che verifica la validita' dell'input e passa al controller i dati inseriti dall'utente.
      */
-    @FXML void addProject() throws IOException{
+    @FXML public void addProject() throws IOException{
         ArrayList<String> errors = new ArrayList<String>();
 
         try{

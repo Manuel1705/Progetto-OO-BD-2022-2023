@@ -17,30 +17,17 @@ import java.net.URL;
 import java.util.ResourceBundle;
 
 public class HomeController implements Initializable {
-        @FXML
-        private Label EmpNumLabel;
+
         @FXML
         private Pane EmployeesButton;
         @FXML
         private Pane EquipmentButton;
         @FXML
-        private Label EquipmentNumLabel;
-        @FXML
         private Pane LabButton;
-
         @FXML
-        private Label LabNumLabel;
-
-        @FXML
-        private Label databseConnectionStateLabel;
+        private Label databaseConnectionStateLabel;
         @FXML
         private Pane ProjectButton;
-
-        @FXML
-        private Label ProjectNumLabel;
-        @FXML
-        private Label TempEmpNumLabel;
-
         @FXML
         private Pane TemporaryEmployeesButton;
 
@@ -144,9 +131,9 @@ public class HomeController implements Initializable {
                 stage.getIcons().add(new Image("app-icon.png"));
                 stage.showAndWait();
                 if(controller.isDBConnected())
-                        databseConnectionStateLabel.setText("Database is connected.");
+                        databaseConnectionStateLabel.setText("Database is connected.");
                 else
-                        databseConnectionStateLabel.setText("Database is not connected.");
+                        databaseConnectionStateLabel.setText("Database is not connected.");
 
         }
 
@@ -159,9 +146,9 @@ public class HomeController implements Initializable {
         public void initialize(URL url, ResourceBundle resourceBundle) {
                 controller = Controller.getInstance();
                 if(controller.isDBConnected())
-                        databseConnectionStateLabel.setText("Database is connected.");
+                        databaseConnectionStateLabel.setText("Database is connected.");
                 else
-                        databseConnectionStateLabel.setText("Database is not connected.");
+                        databaseConnectionStateLabel.setText("Database is not connected.");
 
         }
 }

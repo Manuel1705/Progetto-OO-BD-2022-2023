@@ -33,7 +33,6 @@ public class modifyEmployeeController {
     private Parent root;
     private Controller controller;
 
-    private String ssn;
 
     /**
      * Inizializza i campi della finestra con i dati passati in input.
@@ -52,7 +51,6 @@ public class modifyEmployeeController {
                                  String role, String labName, String salary, String email, String employmentDate)
     {
 
-        this.ssn = ssn;
         controller=Controller.getInstance();
 
         //Inizializzazione menu a tendina per il ruolo dell'impiegato.
@@ -96,7 +94,7 @@ public class modifyEmployeeController {
             errors.add("Salary must be a valid number.");
         }
 
-        errors.addAll(controller.getEmployeeController().checkEmployeeModify(ssn,
+        errors.addAll(controller.getEmployeeController().checkEmployeeModify(ssnModifyEmployee.getText(),
                 firstNameModifyEmployee.getText(),
                 lastNameModifyEmployee.getText(),
                 phoneNumberModifyEmployee.getText(),
@@ -109,7 +107,7 @@ public class modifyEmployeeController {
 
         //Chiamata a controller
         if (errors.isEmpty()) {
-            controller.getEmployeeController().modifyEmployeeList(ssn,
+            controller.getEmployeeController().modifyEmployeeList(ssnModifyEmployee.getText(),
                     firstNameModifyEmployee.getText(),
                     lastNameModifyEmployee.getText(),
                     phoneNumberModifyEmployee.getText(),

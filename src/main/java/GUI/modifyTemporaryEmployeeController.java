@@ -1,7 +1,6 @@
 package GUI;
 import Controller.Controller;
 import Model.Laboratory;
-import Model.Project;
 import Model.TemporaryEmployee;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -53,7 +52,6 @@ public class modifyTemporaryEmployeeController {
     private Scene scene;
     private Parent root;
     private Controller controller;
-    private String ssn;
 
     /**
      * Metodo che inizializza i campi della finestra con i dati passati in input.
@@ -71,7 +69,6 @@ public class modifyTemporaryEmployeeController {
                                  String project, String labName, String salary, String email)
     {
     controller=Controller.getInstance();
-    this.ssn = ssn;
     ArrayList<Laboratory> labs = controller.getLaboratoryController().getLaboratoryArrayList();
     //Inizializzazione menu a tendina laboratori
     labModifyTemporaryEmployee.getItems().add("");
@@ -106,7 +103,7 @@ public class modifyTemporaryEmployeeController {
             salaryModifyTemporaryEmployee.setText("0");
         }
 
-        errors.addAll(controller.getTemporaryEmployeeController().checkTemporaryEmployeeModify(ssn,
+        errors.addAll(controller.getTemporaryEmployeeController().checkTemporaryEmployeeModify(ssnModifyTemporaryEmployee.getText(),
                 firstNameModifyTemporaryEmployee.getText(),
                 lastNameModifyTemporaryEmployee.getText(),
                 phoneNumberModifyTemporaryEmployee.getText(),
@@ -117,7 +114,7 @@ public class modifyTemporaryEmployeeController {
                 projectModifyTemporaryEmployee.getText()));
 
         if (errors.isEmpty()) {
-            controller.getTemporaryEmployeeController().modifyTemporaryEmployeeList(ssn,
+            controller.getTemporaryEmployeeController().modifyTemporaryEmployeeList(ssnModifyTemporaryEmployee.getText(),
                     firstNameModifyTemporaryEmployee.getText(),
                     lastNameModifyTemporaryEmployee.getText(),
                     phoneNumberModifyTemporaryEmployee.getText(),

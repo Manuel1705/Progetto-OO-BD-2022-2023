@@ -132,13 +132,12 @@ public class EquipmentController {
     /**
      * Metodo che controlla le potenziali violazioni dei vincoli del Model dopo la modifica dei dati in input e restituisce
      * un elenco di violazioni individuate.
-     * @param id_equipment
      * @param name
      * @param description
-     * @param lab
+
      * @return
      */
-    public ArrayList<String> checkEquipmentModify(int id_equipment, String name, String description, String lab){
+    public ArrayList<String> checkEquipmentModify(String name, String description){
         ArrayList<String> errors = new ArrayList<String>();
 
         //Controllo dominio nome

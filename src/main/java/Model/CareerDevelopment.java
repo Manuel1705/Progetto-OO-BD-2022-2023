@@ -49,41 +49,7 @@ public class CareerDevelopment {
     public String getLastName(){
         return employee.getLastName();
     }
-    
-    /**
-     * Metodo che restituisce il vecchio ruolo dell'impiegato interessato dallo scatto di carriera
-     * @return Il vecchio ruolo dell'impiegato
-    */
-    public String getOldRole(){
-        return oldRole;
-    }
-    
-    /**
-     * Metodo che restituisce il nuovo ruolo dell'impiegato interessato dallo scatto di carriera
-     * @return Il ruolo attuale dell'impiegato
-    */
-    public String getNewRole(){
-        return newRole;
-    }
-    
-    /**
-     * Metodo che restituisce il vecchio salario dell'impiegato interessato dallo scatto di carriera
-     * @return Il valore del precedente salario retribuito all'impiegato
-    */
-    public float getOldSalary(){ return oldSalary; }
-    
-    /**
-     * Metodo che restituisce il nuovo salario dell'impiegato interessato dallo scatto di carriera
-     * @return Il salario attuale dell'impiegato
-    */
-    public float getNewSalary(){
-        return newSalary;
-    }
-    
-    /**
-     * Metodo che restituisce la data in cui è avvenuto lo scatto di carriera dell'impiegato
-     * @return La data dello scatto di carriera
-    */
+
     public LocalDate getDate(){
         return date;
     }

@@ -1,5 +1,4 @@
 package GUI;
-
 import Controller.Controller;
 import Model.TemporaryEmployee;
 import javafx.collections.FXCollections;
@@ -18,7 +17,6 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.Image;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
-
 import java.io.IOException;
 import java.net.URL;
 import java.time.LocalDate;
@@ -42,7 +40,7 @@ public class TemporaryEmployeeListController implements Initializable {
     @FXML private Button modifyButton;
     private Controller controller;
 
-    private static ObservableList<TemporaryEmployee> list= FXCollections.observableArrayList();
+    private ObservableList<TemporaryEmployee> list= FXCollections.observableArrayList();
 
 
     /**
@@ -138,7 +136,7 @@ public class TemporaryEmployeeListController implements Initializable {
      * Metodo che apre la finestra che permette di modificare l'impiegato temporaneo selezionato dall'utente.
      * @throws IOException
      */
-    @FXML void modifyTemporaryEmployee()throws IOException  {
+    @FXML public void modifyTemporaryEmployee()throws IOException  {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("../GUI/modifyTemporaryEmployee.fxml"));
         root=loader.load();
         stage= new Stage();

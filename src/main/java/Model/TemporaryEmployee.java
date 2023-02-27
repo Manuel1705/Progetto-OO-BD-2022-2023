@@ -18,11 +18,7 @@ public class TemporaryEmployee extends Employee{
      * @param salary        Il salario iniziale dell'impiegato
      * @param project       Il progetto per cui lavora l'impiegato temporaneo
      */
-    public TemporaryEmployee(String ssn, String firstName, String lastName, String phoneNum, float salary,Project project) {
-        super(ssn, firstName, lastName, phoneNum, salary);
-        this.project=project;
 
-    }
     /**
      * Costruttore della classe TemporaryEmployee. Riceve in input i dati necessari per la creazione dell'oggetto
      * TemporaryEmployee e inizializza i suoi attributi. Con employment date esplicito.
