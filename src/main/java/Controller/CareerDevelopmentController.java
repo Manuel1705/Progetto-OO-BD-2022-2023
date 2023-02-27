@@ -3,7 +3,7 @@ import Model.CareerDevelopment;
 import Model.CompanyEmployee;
 import java.util.ArrayList;
 public class CareerDevelopmentController {
-    private ArrayList<CareerDevelopment>careerDevelopmentArrayList = new ArrayList<>();
+    private ArrayList<CareerDevelopment> careerDevelopmentArrayList = new ArrayList<>();
 
     /**
      * Metodo che crea un oggetto Career Development usando i dati passati in input e lo aggiunge alla lista.

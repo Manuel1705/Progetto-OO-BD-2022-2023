@@ -15,7 +15,6 @@ public interface DAOCareerDevelopment {
      * @param salaryChange Differenza tra salario nuovo e salario vecchio
      * @param ssn SSN dell'impiegato
      */
-    public void addCareerDevelopmentDB(String oldRole, String newRole, Date roleChangeDate, float salaryChange, String ssn);
 
     /**
      * Metodo che carica tutte le tuple della tabella Career Development

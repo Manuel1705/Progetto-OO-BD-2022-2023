@@ -13,8 +13,8 @@ public interface DAOProject {
      * @param name Nome del progetto.
      * @param budget Budget del progetto.
      * @param remainingFunds Fondi rimanenti del progetto.
-     * @param startDate Data in cui e' iniziato il progetto.
-     * @param endDate Data per cui e' prevista la fine del progetto.
+     * @param startDate Data in cui è iniziato il progetto.
+     * @param endDate Data per cui è prevista la fine del progetto.
      * @param sResp Responsabile scientifico del progetto.
      * @param sRef Referente scientifico del progetto.
      */
@@ -34,8 +34,8 @@ public interface DAOProject {
      * @param name Nome del progetto.
      * @param budget Budget del progetto.
      * @param remainingFunds Fondi rimanenti del progetto.
-     * @param startDate Data in cui e' iniziato il progetto.
-     * @param endDate Data per cui e' prevista la fine del progetto.
+     * @param startDate Data in cui è iniziato il progetto.
+     * @param endDate Data per cui è prevista la fine del progetto.
      * @param sResp Responsabile scientifico del progetto.
      * @param sRef Referente scientifico del progetto.
      */
