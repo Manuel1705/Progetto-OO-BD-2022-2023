@@ -11,14 +11,15 @@
 
 <AnchorPane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="500.0" prefWidth="1300.0" style="-fx-background-color: gray;" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="GUI.HomeController">
    <children>
-      <FlowPane alignment="CENTER" columnHalignment="CENTER" hgap="100.0" layoutY="68.0" nodeOrientation="LEFT_TO_RIGHT" prefHeight="365.0" prefWidth="978.0" style="-fx-background-color: #21252f;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="68.0">
+      <FlowPane alignment="CENTER" columnHalignment="CENTER" hgap="100.0" layoutY="68.0" nodeOrientation="LEFT_TO_RIGHT" prefHeight="365.0" prefWidth="1300.0" style="-fx-background-color: #21252f;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="68.0">
          <children>
             <Pane fx:id="LabButton" prefHeight="140.0" prefWidth="140.0" style="-fx-background-color: #2b313c;">
                <children>
                   <Label layoutX="35.0" layoutY="104.0" text="Laboratories" textFill="WHITE">
                      <font>
                         <Font name="System Italic" size="13.0" />
-                     </font></Label>
+                     </font>
+                  </Label>
                   <FontAwesomeIconView fill="WHITE" glyphName="TABLE" layoutX="56.0" layoutY="80.0" size="30" />
                   <Button alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#switchToLabListScene" prefHeight="140.0" prefWidth="140.0" style="-fx-background-color: none;" textFill="WHITE" />
                </children>
@@ -32,7 +33,8 @@
                   <Label layoutX="49.0" layoutY="104.0" text="Projects" textFill="WHITE">
                      <font>
                         <Font name="System Italic" size="13.0" />
-                     </font></Label>
+                     </font>
+                  </Label>
                   <Button alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#switchToProjectsListScene" prefHeight="140.0" prefWidth="140.0" style="-fx-background-color: none;" textFill="WHITE" />
                </children>
             </Pane>
@@ -42,7 +44,8 @@
                   <Label layoutX="38.0" layoutY="104.0" text="Employees" textFill="WHITE">
                      <font>
                         <Font name="System Italic" size="13.0" />
-                     </font></Label>
+                     </font>
+                  </Label>
                   <Button alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#switchToEmployeeListScene" prefHeight="140.0" prefWidth="140.0" style="-fx-background-color: none;" textFill="WHITE" />
                </children>
                <FlowPane.margin>
@@ -55,7 +58,8 @@
                   <Label alignment="CENTER" layoutX="15.0" layoutY="90.0" prefHeight="36.0" prefWidth="110.0" text="Temporary Employees" textAlignment="CENTER" textFill="WHITE" wrapText="true">
                      <font>
                         <Font name="System Italic" size="12.0" />
-                     </font></Label>
+                     </font>
+                  </Label>
                   <Button alignment="CENTER" contentDisplay="CENTER" layoutX="1.0" mnemonicParsing="false" onAction="#switchToTemporaryEmployeeListScene" prefHeight="140.0" prefWidth="140.0" style="-fx-background-color: none;" textFill="WHITE" />
                </children>
             </Pane>
@@ -65,25 +69,41 @@
                   <Label layoutX="40.0" layoutY="104.0" text="Equipment" textFill="WHITE">
                      <font>
                         <Font name="System Italic" size="13.0" />
-                     </font></Label>
+                     </font>
+                  </Label>
                   <Button alignment="CENTER" contentDisplay="CENTER" layoutY="-1.0" mnemonicParsing="false" onAction="#switchToEquipmentListScene" prefHeight="140.0" prefWidth="140.0" style="-fx-background-color: none;" textFill="WHITE" />
                </children>
             </Pane>
          </children>
       </FlowPane>
-      <Pane prefHeight="68.0" prefWidth="817.0" style="-fx-background-color: #2b313c;" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+      <FlowPane alignment="CENTER_LEFT" columnHalignment="CENTER" prefHeight="68.0" prefWidth="687.0" style="-fx-background-color: #2b313c;" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <children>
-            <Label layoutX="54.0" layoutY="23.0" text="Dashboard" textFill="WHITE">
+            <Label text="Dashboard" textFill="WHITE">
                <font>
                   <Font name="System Bold Italic" size="17.0" />
                </font>
+               <FlowPane.margin>
+                  <Insets left="30.0" />
+               </FlowPane.margin>
             </Label>
-            <Button layoutX="1159.0" layoutY="22.0" mnemonicParsing="false" onAction="#switchToDBConnectScene" style="-fx-background-color: #21252f;" text="Connect Database" textFill="WHITE">
+         </children>
+      </FlowPane>
+      <FlowPane alignment="CENTER_RIGHT" columnHalignment="CENTER" layoutX="677.0" prefHeight="68.0" prefWidth="624.0" style="-fx-background-color: #2b313c;" AnchorPane.leftAnchor="300.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+         <children>
+            <Label fx:id="databaseConnectionStateLabel" text="Database not connected" textFill="WHITE">
+               <FlowPane.margin>
+                  <Insets right="20.0" />
+               </FlowPane.margin>
+            </Label>
+            <Button mnemonicParsing="false" onAction="#switchToDBConnectScene" style="-fx-background-color: #21252f;" text="Connect Database" textFill="WHITE">
                <font>
                   <Font name="System Bold Italic" size="13.0" />
-               </font></Button>
-            <Label fx:id="databaseConnectionStateLabel" layoutX="1007.0" layoutY="28.0" text="Database not connected" textFill="WHITE" />
+               </font>
+               <FlowPane.margin>
+                  <Insets right="25.0" />
+               </FlowPane.margin>
+            </Button>
          </children>
-      </Pane>
+      </FlowPane>
    </children>
 </AnchorPane>

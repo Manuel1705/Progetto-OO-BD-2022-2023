@@ -12,6 +12,8 @@ import javafx.scene.image.Image;
 import javafx.scene.layout.Pane;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
+
+import java.awt.*;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -130,10 +132,14 @@ public class HomeController implements Initializable {
                 stage.setScene(scene);
                 stage.getIcons().add(new Image("app-icon.png"));
                 stage.showAndWait();
-                if(controller.isDBConnected())
-                        databaseConnectionStateLabel.setText("Database is connected.");
-                else
-                        databaseConnectionStateLabel.setText("Database is not connected.");
+                if(controller.isDBConnected()) {
+                        databaseConnectionStateLabel.setText("Database is connected");
+                        databaseConnectionStateLabel.setStyle("-fx-text-fill: #029e02;");
+                }
+                else {
+                        databaseConnectionStateLabel.setText("Database is not connected");
+                        databaseConnectionStateLabel.setStyle("-fx-text-fill: red;");
+                }
 
         }
 
@@ -145,10 +151,15 @@ public class HomeController implements Initializable {
         @Override
         public void initialize(URL url, ResourceBundle resourceBundle) {
                 controller = Controller.getInstance();
-                if(controller.isDBConnected())
-                        databaseConnectionStateLabel.setText("Database is connected.");
-                else
-                        databaseConnectionStateLabel.setText("Database is not connected.");
+                if(controller.isDBConnected()) {
+                        databaseConnectionStateLabel.setText("Database is connected");
+                        databaseConnectionStateLabel.setStyle("-fx-text-fill: #029e02;");
+                }
+                else {
+                        databaseConnectionStateLabel.setText("Database is not connected");
+                        databaseConnectionStateLabel.setStyle("-fx-text-fill: red;");
+
+                }
 
         }
 }
