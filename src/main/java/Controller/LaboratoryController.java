@@ -12,7 +12,7 @@ public class LaboratoryController {
 
     /**
      * Costruttore che riceve in input il controller che lo ha chiamato e inizializza l'attributo controller.
-     * @param controller
+     * @param controller Valore iniziale di controller
      */
     public LaboratoryController(Controller controller){
         this.controller = controller;
@@ -29,11 +29,11 @@ public class LaboratoryController {
     /**
      * Metodo che controlla le potenziali violazioni dei vincoli del Model dopo l'inserimento dei dati in input e restituisce
      * un elenco di violazioni individuate.
-     * @param name
-     * @param topic
-     * @param Sresp
-     * @param project
-     * @return
+     * @param name      Nome del laboratorio
+     * @param topic     Argomento di studio
+     * @param Sresp     Responsabile Scientifico del laboratorio
+     * @param project   La cup del progetto di cui si occupa
+     * @return delle stringhe che spiegano l'eventuale errore rilevato
      */
     public ArrayList<String> checkLaboratoryInsert(String name, String topic, String Sresp, String project){
         ArrayList<String> errors = new ArrayList<String>();
@@ -43,7 +43,7 @@ public class LaboratoryController {
         else if(name.length() > 30) errors.add("Name is too long. (Max. 30 characters)");
         //Controllo dominio topic
         if(topic != null && topic.length() > 50) errors.add("Topic is too long. (Max. 50 characters)");
-        //Controllo unicita' nome
+        //Controllo unicità nome
 
         //Controllo inserimento sresp
         if(Sresp == null || Sresp.isBlank()) errors.add("Must insert scientific responsible.");
@@ -62,24 +62,28 @@ public class LaboratoryController {
 
     /**
      * Metodo che crea un nuovo oggetto Laboratory usando i dati passati in input e lo inserisce nella lista.
-     * @param name
-     * @param topic
-     * @param Sresp
-     * @param project
+     * @param name      Nome del laboratorio
+     * @param topic     Argomento di studio
+     * @param Sresp     Responsabile Scientifico del laboratorio
+     * @param project   La cup del progetto di cui si occupa
      */
     public void addLaboratoryList(String name, String topic, String Sresp, String project) {
 
         ArrayList<CompanyEmployee> employeeArrayList = controller.getEmployeeController().getEmployeeArrayList();
         ArrayList<Project> projectArrayList = controller.getProjectController().getProjectArrayList();
+        //argomento
         if (topic == null || topic.isBlank()) {
             topic = "No description";
         }
         CompanyEmployee sRespEmp = null;
         Project newProject = null;
-
+        
+        //responsabile scientifico
         if (Sresp != null && !Sresp.isBlank()) {
             sRespEmp = controller.getEmployeeController().findEmployee(Sresp);
         }
+        
+        //progetto
         if (project != null && !project.isBlank()) {
             newProject = controller.getProjectController().findProjectCup(project);
         }
@@ -102,11 +106,11 @@ public class LaboratoryController {
     /**
      * Metodo che controlla le potenziali violazioni dei vincoli del Model dopo la modifica dei dati in input e restituisce
      * un elenco di violazioni individuate.
-     * @param name
-     * @param topic
-     * @param Sresp
-     * @param project
-     * @return
+     * @param name      Nome del laboratorio
+     * @param topic     Argomento di studio
+     * @param Sresp     Responsabile Scientifico del laboratorio
+     * @param project   La cup del progetto di cui si occupa
+     * @return  Stringhe contenenti eventuali errori
      */
     public ArrayList<String> checkLaboratoryModify(String name, String topic, String Sresp, String project){
         ArrayList<String> errors = new ArrayList<String>();
@@ -135,23 +139,25 @@ public class LaboratoryController {
 
     /**
      * Metodo che modifica i dati del laboratorio corrispondente al nome in input.
-     * @param name
-     * @param topic
-     * @param Sresp
-     * @param project
+     * @param name      Nome del laboratorio
+     * @param topic     Argomento di studio
+     * @param Sresp     Responsabile Scientifico del laboratorio
+     * @param project   La cup del progetto di cui si occupa
      */
     public void modifyLaboratory(String name, String topic, String Sresp, String project) {
         Laboratory laboratory = findLaboratory(name);
+        //argomento di ricerca
         if (topic != null && !topic.isBlank()) {
             laboratory.setTopic(topic);
         } else laboratory.setTopic("No Description");
-
+        
+        //responsabile scinetifico
         if (Sresp != null && !Sresp.isBlank()) {
             laboratory.setSresp(controller.getEmployeeController().findEmployee(Sresp));
         }
         else laboratory.setSresp(null);
 
-
+        //progetto
         if(project != null && !project.isBlank()){
             laboratory.setProject(controller.getProjectController().findProjectCup(project));
         }
@@ -185,8 +191,8 @@ public class LaboratoryController {
     /**
      * Metodo che controlla le potenziali violazioni dei vincoli del Model dopo l'eliminazione del laboratorio associato
      * al nome passato in input e restituisce un elenco di violazioni individuate.
-     * @param name
-     * @return
+     * @param name  Nome del laboratorio da eliminare
+     * @return  Stringhe di eventuali errori riscontrati
      */
     public ArrayList<String> checkLaboratoryDelete(String name) {
         ArrayList<String> errors = new ArrayList<String>();
@@ -201,23 +207,26 @@ public class LaboratoryController {
 
     /**
      * Metodo che rimuove il laboratorio corrispondente al nome passato in input.
-     * @param name
+     * @param name  Nome del laboratorio da rimuovere
      */
     public void dismissLaboratory(String name) {
         controller = Controller.getInstance();
         Laboratory laboratory = findLaboratory(name);
+        //setta a null il nome del laboratorio che compare nelle tuple degli impiegati
         ArrayList<CompanyEmployee> employeeArrayList = controller.getEmployeeController().getEmployeeArrayList();
         for (CompanyEmployee employee : employeeArrayList) {
             if (employee.getLabName() != null && employee.getLabName().equals(laboratory.getName())) {
                 employee.setLab(null);
             }
         }
+        //setta a null il nome del laboratorio che compare nelle tuple degli impiegati temporanei
         ArrayList<TemporaryEmployee> temporaryEmployeeArrayList = controller.getTemporaryEmployeeController().getTemporaryEmployeeArrayList();
         for (TemporaryEmployee temporaryEmployee : temporaryEmployeeArrayList) {
             if (temporaryEmployee.getLabName() != null && temporaryEmployee.getLabName().equals(laboratory.getName())) {
                 temporaryEmployee.setLab(null);
             }
         }
+        //setta a null il nome del laboratorio se esso compare nelle tuple di un qualche equipaggiamento
         ArrayList<Equipment> equipmentArrayList = controller.getEquipmentController().getEquipmentArrayList();
         for (Equipment equipment : equipmentArrayList) {
             if (equipment.getLabName() != null && equipment.getLabName().equals(laboratory.getName())) {
