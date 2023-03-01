@@ -20,7 +20,7 @@ public class TemporaryEmployeeController {
 
     /**
      * Costruttore della classe che inizializza l'attributo controller.
-     * @param controller
+     * @param controller Valore iniziale del controller
      */
     public TemporaryEmployeeController(Controller controller){
         this.controller = controller;
@@ -29,8 +29,8 @@ public class TemporaryEmployeeController {
     /**
      * Metodo che cerca l'impiegato temporaneo con l'ssn fornito e se esso esiste viene restituito. Altrimenti il metodo
      * restituisce null.
-     * @param ssn
-     * @return
+     * @param ssn   SSN dell'impiegato temporaneo che ci interessa cercare
+     * @return Il riferimento all'oggetto TemporaryEmployee oppure null
      */
     public TemporaryEmployee findTemporaryEmployee(String ssn){
         for(TemporaryEmployee temporaryEmployee: temporaryEmployeeArrayList){
@@ -40,12 +40,12 @@ public class TemporaryEmployeeController {
     }
 
     /**
-     * Metodo che restituisce il totale dei salari da pagare ai dipendenti temporanei assunti dal progetto passato in input
+     * Metodo che restituisce il totale dei salari da pagare ai dipendenti temporanei assunti per il progetto passato in input
      * tra le due date fornite in input.
-     * @param project Progetto che ha assunto gli impiegati
+     * @param project   Progetto che ha assunto gli impiegati
      * @param startDate Data iniziale
-     * @param endDate Data finale
-     * @return Salario totale
+     * @param endDate   Data finale
+     * @return  Salario totale
      */
     public float getTotalProjectSalaries(Project project, LocalDate startDate, LocalDate endDate){
         float totalSalary = 0;
@@ -59,17 +59,17 @@ public class TemporaryEmployeeController {
     /**
      * Metodo che controlla le potenziali violazioni dei vincoli del Model dopo l'inserimento dei dati in input e restituisce
      * un elenco di violazioni individuate.
-     * @param ssn
-     * @param firstName
-     * @param lastName
-     * @param phoneNum
-     * @param address
-     * @param email
-     * @param employmentDate
-     * @param salary
-     * @param lab
-     * @param project
-     * @return
+     * @param ssn               Il Social Security Number dell'impiegato temporaneo
+     * @param firstName         Il nome dell'impiegato temporaneo
+     * @param lastName          Il cognome dell'impiegato temporaneo
+     * @param phoneNum          Il recapito telefonico dell'impiegato temporaneo
+     * @param address           L'indirizzo dell'impiegato temporaneo
+     * @param email             L'email dell'impiegato temporaneo
+     * @param employmentDate    La data di assunzione dell'impiegato temporaneo
+     * @param salary            Il salario dell'impiegato temporaneo
+     * @param lab               Il laboratorio presso cui l'impiegato temporaneo lavora
+     * @param project           Il progetto di cui l'impiegato temporaneo si occupa
+     * @return Stringhe che comunicano gli eventuali errori riscontrati
      */
     public ArrayList<String> checkTemporaryEmployeeInsert(String ssn, String firstName, String lastName,
                                                           String phoneNum, String address,
@@ -93,7 +93,7 @@ public class TemporaryEmployeeController {
         else if(firstName.length() > 30) errors.add("First name is too long. (Max. 20 characters)");
         if(lastName == null || lastName.isBlank()) errors.add("Last name must not be blank.");
         else if(lastName.length() > 30) errors.add("Last name is too long. (Max. 20 characters)");
-        //Contollo dominio numero di telefono
+        //Controllo dominio numero di telefono
         if(phoneNum == null || phoneNum.isBlank()) errors.add("Phone number must not be blank.");
         else if(phoneNum.length() != 10) errors.add("Phone number must be 10 digits long.");
         else{
@@ -126,28 +126,27 @@ public class TemporaryEmployeeController {
                 errors.add("Project budget too low to hire employee.");
         }
 
-        //Controllo unicita' ssn
+        //Controllo unicità ssn
         if(findTemporaryEmployee(ssn) != null
                 || controller.getEmployeeController().findEmployee(ssn) != null) errors.add("SSN already belongs to an employee.");
 
 
         return errors;
-
-
+        
     }
 
     /**
      * Metodo che crea un oggetto Temporary Employee usando i dati passati in input e lo aggiunge alla lista.
-     * @param ssn
-     * @param firstName
-     * @param lastName
-     * @param phoneNum
-     * @param address
-     * @param email
-     * @param employmentDate
-     * @param salary
-     * @param lab
-     * @param project
+     * @param ssn               Il Social Security Number dell'impiegato temporaneo
+     * @param firstName         Il nome dell'impiegato temporaneo
+     * @param lastName          Il cognome dell'impiegato temporaneo
+     * @param phoneNum          Il recapito telefonico dell'impiegato temporaneo
+     * @param address           L'indirizzo dell'impiegato temporaneo
+     * @param email             L'email dell'impiegato temporaneo
+     * @param employmentDate    La data di assunzione dell'impiegato temporaneo
+     * @param salary            Il salario dell'impiegato temporaneo
+     * @param lab               Il laboratorio presso il quale l'impiegato temporaneo lavora
+     * @param project           Il progetto per cui l'impiegato temporaneo lavora
      */
     public void addTemporaryEmployeeList(String ssn, String firstName, String lastName,
                                 String phoneNum, String address,
@@ -162,7 +161,7 @@ public class TemporaryEmployeeController {
         //Aggiornamento fondi rimanenti progetto
         newProject.setRemainingFunds(newProject.getRemainingFunds() - salary * (employmentDate.until(newProject.getEndDate())).toTotalMonths());
 
-
+        //laboratorio
         TemporaryEmployee employee = new TemporaryEmployee(ssn, firstName, lastName, phoneNum, salary, employmentDate, newProject);
         if (lab != null && !lab.isBlank()) {
             employee.setLab(controller.getLaboratoryController().findLaboratory(lab));
@@ -170,12 +169,12 @@ public class TemporaryEmployeeController {
         else
             employee.setLab(null);
 
-
+        //indirizzo
         if (address != null && !address.isBlank())
             employee.setAddress(address);
         else
             employee.setAddress(null);
-
+        //email
         if (email != null && !email.isBlank())
             employee.setEmail(email);
         else
@@ -206,16 +205,16 @@ public class TemporaryEmployeeController {
     /**
      * Metodo che controlla le potenziali violazioni dei vincoli del Model dopo la modifica dei dati in input e restituisce
      * un elenco di violazioni individuate.
-     * @param ssn
-     * @param firstName
-     * @param lastName
-     * @param phoneNum
-     * @param salary
-     * @param lab
-     * @param address
-     * @param email
-     * @param project
-     * @return
+     * @param ssn           Il Social Security Number dell'impiegato temporaneo
+     * @param firstName     Il nome dell'impiegato temporaneo
+     * @param lastName      Il cognome dell'impiegato temporaneo
+     * @param phoneNum      Il recapito telefonico dell'impiegato temporaneo
+     * @param salary        Il salario dell'impiegato temporaneo
+     * @param lab           Il laboratorio presso cui l'impiegato temporaneo lavora
+     * @param address       L'indirizzo dell'impiegato temporaneo
+     * @param email         L'email dell'impiegato temporaneo
+     * @param project       Il progetto per cui l'impiegato temporaneo lavora
+     * @return  Stringhe che comunicano gli eventuali errori riscontrati
      */
     public ArrayList<String> checkTemporaryEmployeeModify(String ssn, String firstName, String lastName,
                                                           String phoneNum, float salary,
@@ -232,7 +231,7 @@ public class TemporaryEmployeeController {
         else if(firstName.length() > 30) errors.add("First name is too long. (Max. 20 characters)");
         if(lastName == null || lastName.isBlank()) errors.add("Last name must not be blank.");
         else if(lastName.length() > 30) errors.add("Last name is too long. (Max. 20 characters)");
-        //Contollo dominio numero di telefono
+        //Controllo dominio numero di telefono
         if(phoneNum == null || phoneNum.isBlank()) errors.add("Phone number must not be blank.");
         else if(phoneNum.length() != 10) errors.add("Phone number must be 10 digits long.");
         else{
@@ -262,22 +261,20 @@ public class TemporaryEmployeeController {
             errors.add("Project budget too low for new salary.");
 
 
-
         return errors;
-
     }
 
     /**
      * Metodo che modifica l'impiegato con l'ssn passato in input usando i parametri ricevuti.
-     * @param ssn
-     * @param firstName
-     * @param lastName
-     * @param phoneNumber
-     * @param salary
-     * @param lab
-     * @param address
-     * @param email
-     * @param project
+     * @param ssn           Il Social Security Number dell'impiegato temporaneo
+     * @param firstName     Il nome dell'impiegato temporaneo
+     * @param lastName      Il cognome dell'impiegato temporaneo
+     * @param phoneNumber   Il recapito telefonico dell'impiegato temporaneo
+     * @param salary        Il salario dell'impiegato temporaneo
+     * @param lab           Il laboratorio presso cui l'impiegato temporaneo lavora
+     * @param address       L'indirizzo dell'impiegato temporaneo
+     * @param email         L'email dell'impiegato temporaneo
+     * @param project       Il progetto per cui l'impiegato temporaneo lavora
      */
     public void modifyTemporaryEmployeeList(String ssn, String firstName, String lastName,
                                    String phoneNumber, float salary,
@@ -285,31 +282,38 @@ public class TemporaryEmployeeController {
     {
 
         TemporaryEmployee employee = findTemporaryEmployee(ssn);
+        //nome
         employee.setFirstName(firstName);
+        //cognome
         employee.setLastName(lastName);
+        //numero di telefono
         employee.setPhoneNum(phoneNumber);
 
-
+        //laboratorio
         if(lab != null && !lab.isBlank()) {
             employee.setLab(controller.getLaboratoryController().findLaboratory(lab));
         }else employee.setLab(null);
-
+        
+        //progetto
         Project employeeProject = controller.getProjectController().findProjectCup(project);
         employee.setProject(employeeProject);
-
+        
+        //data di assunzione
         LocalDate employmentDate = employee.getEmploymentDate();
+        
         //Aggiornamento fondi rimanenti progetto
         employeeProject.setRemainingFunds(employeeProject.getRemainingFunds()
                 - salary * (LocalDate.now().until(employeeProject.getEndDate())).toTotalMonths()
                 + employee.getSalary() * (LocalDate.now().until(employeeProject.getEndDate())).toTotalMonths());
-
+        //salario
         employee.setSalary(salary);
 
-
+        //indirizzo
         if(address != null && !address.isBlank()){
             employee.setAddress(address);
         }else employee.setAddress(null);
-
+        
+        //email
         if(email != null && !email.isBlank()){
             employee.setEmail(email);
         }else employee.setEmail(null);
@@ -334,8 +338,8 @@ public class TemporaryEmployeeController {
     /**
      * Metodo che controlla le potenziali violazioni dei vincoli del Model dopo l'eliminazione dell'impiegato associato
      * all'ssn passato in input e restituisce un elenco di violazioni individuate.
-     * @param ssn
-     * @return
+     * @param ssn   SSN dell'impiegato temporaneo da licenziare
+     * @return  Stringa di eventuali errori
      */
     public ArrayList<String> checkTemporaryEmployeeDelete(String ssn){
         ArrayList<String> errors = new ArrayList<String>();
@@ -351,14 +355,15 @@ public class TemporaryEmployeeController {
 
     /**
      * Metodo che licenzia l'impiegato temporaneo che possiede l'SSN passato in input.
-     * @param ssn
-     * @param projectCup
+     * @param ssn   SSN dell'impiegato temporaneo da licenziare
+     * @param projectCup  Cup del progetto per cui lavora l'impiegato temporaneo
      */
     public void fireTemporaryEmployee(String ssn, String projectCup){
         TemporaryEmployee temporaryEmployee = findTemporaryEmployee(ssn);
         Project project = controller.getProjectController().findProjectCup(projectCup);
 
         if(project != null) {
+            //se l'impiegato è stato licenziato prima della scadenza del progetto, viene recuperato il salario che gli spettava nei restanti mesi sotto forma di budget
             int remainingMonths = (int)(LocalDate.now().until(project.getEndDate())).toTotalMonths();
 
             float recoveredBudget = temporaryEmployee.getSalary() * remainingMonths;
