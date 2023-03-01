@@ -33,14 +33,14 @@ public class EquipmentController {
     /**
      * Metodo che controlla le potenziali violazioni dei vincoli del Model dopo l'inserimento dei dati in input e restituisce
      * un elenco di violazioni individuate.
-     * @param id_equipment
-     * @param name
-     * @param description
-     * @param price
-     * @param dealer
-     * @param lab
-     * @param project
-     * @return
+     * @param id_equipment      Codice Identificativo dell'equipaggiamento
+     * @param name              Nome dell'equipaggiamento
+     * @param description       Descrizione dell'equipaggiamento
+     * @param price             Prezzo dell'equipaggiamento
+     * @param dealer            Colui che ha venduto l'equipaggiamento
+     * @param lab               Laboratorio che ha richiesto l'equipaggiamento
+     * @param project           Progetto per cui è richiesto l'equipaggiamento
+     * @return  Stringhe di eventuali errori riscontrati
      */
     public ArrayList<String> checkEquipmentInsert(int id_equipment, String name, String description,
                                                   float price, String dealer,
@@ -61,7 +61,7 @@ public class EquipmentController {
         //Controllo dominio descrizione
         if(description != null && !description.isBlank() && description.length() > 200) errors.add("Description is too long. (MAX. 200 characters.)");
 
-        //Unicita' id
+        //Unicità id
         if(findEquipment(id_equipment) != null) errors.add("ID is already taken.");
 
         //Controllo budget progetto
@@ -76,13 +76,13 @@ public class EquipmentController {
 
     /**
      * Metodo che crea un oggetto Equipment usando i dati passati in input e lo aggiunge alla lista.
-     * @param id_equipment
-     * @param name
-     * @param description
-     * @param price
-     * @param dealer
-     * @param lab
-     * @param project
+     * @param id_equipment      Codice Identificativo dell'equipaggiamento
+     * @param name              Nome dell'equipaggiamento
+     * @param description       Descrizione dell'equipaggiamento
+     * @param price             Prezzo dell'equipaggiamento
+     * @param dealer            Colui che ha venduto l'equipaggiamento
+     * @param lab               Laboratorio che ha richiesto l'equipaggiamento
+     * @param project           Progetto per cui è richiesto l'equipaggiamento
      */
     public void addEquipmentList(int id_equipment, String name, String description,
                                  float price, String dealer,
@@ -92,9 +92,11 @@ public class EquipmentController {
         Equipment equipment = new Equipment(id_equipment, name, price, dealer);
         Project newProject = controller.getProjectController().findProjectCup(project);
         equipment.setProject(newProject);
-
+        
+        //aggiorna i fondi rimanenti del progetto
         newProject.setRemainingFunds(newProject.getRemainingFunds() - price);
-
+        
+        //laboratorio
         if (lab != null && !lab.isBlank()) {
             ArrayList<Laboratory> laboratoryArrayList = controller.getLaboratoryController().getLaboratoryArrayList();
             for (Laboratory laboratory : laboratoryArrayList) {
@@ -103,7 +105,8 @@ public class EquipmentController {
                 }
             }
         } else equipment.setLab(null);
-
+        
+        //descrizione
         if (description != null && !description.isBlank()) {
             equipment.setDescription(description);
         } else equipment.setDescription("No description");
@@ -125,17 +128,14 @@ public class EquipmentController {
         catch(SQLException ex) {
             controller.setDBConnectionState(false);
         }
-
-
     }
 
     /**
      * Metodo che controlla le potenziali violazioni dei vincoli del Model dopo la modifica dei dati in input e restituisce
      * un elenco di violazioni individuate.
-     * @param name
-     * @param description
-
-     * @return
+     * @param name          Nome dell'equipaggiamento
+     * @param description   Descrizione dell'equipaggiamento
+     * @return  Stringhe che comunicano eventuali errori
      */
     public ArrayList<String> checkEquipmentModify(String name, String description){
         ArrayList<String> errors = new ArrayList<String>();
@@ -152,7 +152,7 @@ public class EquipmentController {
     }
 
     /**
-     * Metodo che restituisce l'oggetto Equipment che corrisponde al parametro id se esso e' salvato nella lista, altrimenti
+     * Metodo che restituisce l'oggetto Equipment che corrisponde al parametro id se esso è salvato nella lista, altrimenti
      * il metodo restituisce null.
      * @param id L'id dell'equipaggiamento da cercare.
      * @return L'oggetto Equipment oppure null.
@@ -166,17 +166,20 @@ public class EquipmentController {
 
     /**
      * Metodo che modifica l'oggetto Equipment che corrisponde all'id fornito usando i dati passati in input.
-     * @param id
-     * @param name
-     * @param description
-     * @param lab
+     * @param id            Codice Identificativo dell'equipaggiamento
+     * @param name          Nome dell'equipaggiamento
+     * @param description   Descrizione dell'equipaggiamento
+     * @param lab           Laboratorio che ha richiesto l'equipaggiamento
      */
     public void modifyEquipment(int id,String name,
                                 String description,String lab){
 
         Equipment equipment = findEquipment(id);
+        //nome
         equipment.setName(name);
+        //descrizione
         equipment.setDescription(description);
+        //laboratorio
         if(lab != null && !lab.isBlank()){
             ArrayList<Laboratory>laboratoryArrayList = controller.getLaboratoryController().getLaboratoryArrayList();
             for (Laboratory laboratory : laboratoryArrayList) {
@@ -205,12 +208,14 @@ public class EquipmentController {
     /**
      * Metodo che rimuove l'oggetto Equipment che corrisponde all'id fornito dalla lista e aggiorna i fondi del progetto che l'ha
      * acquistato.
-     * @param id
+     * @param id  Codice Identificativo dell'equipaggiamento
      */
     public void deleteEquipment(int id){
         Equipment equipment = findEquipment(id);
         if(equipment.getProjectCup() != null && !equipment.getProjectCup().isBlank()) {
+            
             Project newProject = controller.getProjectController().findProjectCup(equipment.getProjectCup());
+            
             newProject.setRemainingFunds(newProject.getRemainingFunds() + equipment.getPrice());
         }
         equipmentArrayList.remove(equipment);
@@ -236,8 +241,8 @@ public class EquipmentController {
     }
 
     /**
-     * Metodo che restituisce il costo totale di tutto l'equipaggiamento acquistato da un determinato progetto.
-     * @param project Progetto che ha acquistato l'equipaggiamento.
+     * Metodo che restituisce il costo totale di tutto l'equipaggiamento acquistato per un determinato progetto.
+     * @param project Progetto che ha richiesto l'equipaggiamento.
      * @return Costo totale.
      */
     public float getTotalProjectPrice(Project project){
