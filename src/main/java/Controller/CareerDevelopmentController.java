@@ -7,8 +7,8 @@ public class CareerDevelopmentController {
 
     /**
      * Metodo che crea un oggetto Career Development usando i dati passati in input e lo aggiunge alla lista.
-     * @param employee L'impiegato che ha cambiato ruolo.
-     * @param newRole Il nuovo ruolo dell'impiegato.
+     * @param employee  L'impiegato che ha cambiato ruolo.
+     * @param newRole   Il nuovo ruolo dell'impiegato.
      * @param newSalary Il nuovo salario dell'impiegato.
      */
     public void addCareerDevelopment(CompanyEmployee employee, String newRole, float newSalary){
