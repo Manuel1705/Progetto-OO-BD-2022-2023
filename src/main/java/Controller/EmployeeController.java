@@ -93,7 +93,8 @@ public class EmployeeController {
         if(email != null && email.length() > 50) errors.add("E-mail is too long. (Max. 50 characters)");
         if(address != null && address.length() > 50) errors.add("Address is too long. (Max. 50 characters)");
         //Controllo dominio data di assunzione
-        if(employmentDate.isAfter(LocalDate.now())) errors.add("Employment date must be a past or current date.");
+        if(employmentDate == null) errors.add("Employment date must be inserted.");
+        else if(employmentDate.isAfter(LocalDate.now())) errors.add("Employment date must be a past or current date.");
         //Controllo dominio salario
         if(salary < 0) errors.add("Salary must be positive.");
         //Controllo dominio ruolo
@@ -160,7 +161,8 @@ public class EmployeeController {
         if(email != null && email.length() > 50) errors.add("E-mail is too long. (Max. 50 characters)");
         if(address != null && address.length() > 50) errors.add("Address is too long. (Max. 50 characters)");
         //Controllo dominio data di assunzione
-        if(employmentDate.isAfter(LocalDate.now())) errors.add("Employment date must be a past or current date.");
+        if(employmentDate == null) errors.add("Employment date must be inserted.");
+        else if(employmentDate.isAfter(LocalDate.now())) errors.add("Employment date must be a past or current date.");
         //Controllo dominio salario
         if(salary < 0) errors.add("Salary must be positive.");
         //Controllo esistenza chiave esterna

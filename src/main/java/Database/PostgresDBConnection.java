@@ -84,7 +84,6 @@ public class PostgresDBConnection {
      * Metodo statico che connette la classe al database con le nuove credenziali passate in input.
      *
      * @return instance Istanza della classe PostgresDBConnection
-     * @throws SQLException
      */
     public static PostgresDBConnection getInstance(String username, String newPassword, String database){
 

@@ -157,7 +157,7 @@ public class TemporaryEmployeeController {
 
         Project newProject = controller.getProjectController().findProjectCup(project);
 
-        System.out.println(salary * (employmentDate.until(newProject.getEndDate())).toTotalMonths());
+
         //Aggiornamento fondi rimanenti progetto
         newProject.setRemainingFunds(newProject.getRemainingFunds() - salary * (employmentDate.until(newProject.getEndDate())).toTotalMonths());
 
