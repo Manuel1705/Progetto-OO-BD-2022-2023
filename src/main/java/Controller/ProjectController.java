@@ -20,10 +20,9 @@ public class ProjectController {
     }
 
 
-
     /**
      * Costruttore che riceve in input il controller che lo ha chiamato e inizializza l'attributo controller.
-     * @param controller
+     * @param controller Valore iniziale del controller
      */
     public ProjectController(Controller controller){
         this.controller = controller;
@@ -32,7 +31,7 @@ public class ProjectController {
     /**
      * Metodo che restituisce il progetto con il cup passato in input se esso esiste, altrimenti restituisce null.
      * @param cup CUP del progetto da cercare.
-     * @return L'ogetto Project trovato oppure null.
+     * @return L'oggetto Project trovato oppure null.
      */
     public Project findProjectCup(String cup){
         for(Project project: projectArrayList){
@@ -44,7 +43,7 @@ public class ProjectController {
     /**
      * Metodo che restituisce il progetto con il nome passato in input se esso esiste, altrimenti restituisce null.
      * @param name Nome del progetto da cercare.
-     * @return L'ogetto Project trovato oppure null.
+     * @return L'oggetto Project trovato oppure null.
      */
     public Project findProjectName(String name){
         for(Project project: projectArrayList){
@@ -54,11 +53,10 @@ public class ProjectController {
     }
 
 
-
     /**
      * Metodo che restituisce il numero di laboratori che partecipano al progetto associato al cup passato in input.
-     * @param cup
-     * @return
+     * @param cup Cup del progetto
+     * @return  Il numero di laboratori che partecipano al progetto
      */
     public int labCount(String cup){
         int count = 0;
@@ -71,13 +69,13 @@ public class ProjectController {
     /**
      * Metodo che controlla le potenziali violazioni dei vincoli del Model dopo l'inserimento dei dati in input e restituisce
      * un elenco di violazioni individuate.
-     * @param cup
-     * @param name
-     * @param budget
-     * @param endDate
-     * @param SrespSSN
-     * @param SrefSSN
-     * @return
+     * @param cup       La cup del progetto
+     * @param name      Il nome del progetto
+     * @param budget    I fondi depositati per il progetto
+     * @param endDate   La data di scadenza del progetto
+     * @param SrespSSN  SSN del responsabile scientifico del progetto
+     * @param SrefSSN   SSN del referente scientifico del progetto
+     * @return Stringhe che comunicano eventuali errori riscontrati
      */
     public ArrayList<String> checkProjectInsert(String cup, String name, float budget,
                                                 LocalDate endDate, String SrespSSN,
@@ -108,9 +106,9 @@ public class ProjectController {
         else if(!controller.getEmployeeController().findEmployee(SrefSSN).getRole().equals("Senior"))
             errors.add("Scientific reference must be a senior employee.");
 
-        //Controllo unicita' cup
+        //Controllo unicità cup
         if(findProjectCup(cup) != null) errors.add("CUP already belongs to another project.");
-        //Controllo unicita' nome
+        //Controllo unicità nome
         if(findProjectName(name) != null) errors.add("Name already in use by another project.");
 
 
@@ -119,12 +117,12 @@ public class ProjectController {
 
     /**
      * Metodo che crea un oggetto Project usando i dati passati in input e lo aggiunge alla lista.
-     * @param cup
-     * @param name
-     * @param budget
-     * @param endDate
-     * @param SrespSSN
-     * @param SrefSSN
+     * @param cup       La cup del progetto
+     * @param name      Il nome del progetto
+     * @param budget    I fondi depositati per il progetto
+     * @param endDate   La data di scadenza del progetto
+     * @param SrespSSN  SSN del responsabile scientifico del progetto
+     * @param SrefSSN   SSN del referente scientifico del progetto
      */
     public void addProjectList(String cup, String name, float budget,
                                LocalDate endDate, String SrespSSN,
@@ -132,7 +130,9 @@ public class ProjectController {
     {
 
         ArrayList<CompanyEmployee> employeeArrayList = controller.getEmployeeController().getEmployeeArrayList();
+        //trova il responsabile scientifico
         CompanyEmployee Sresp = controller.getEmployeeController().findEmployee(SrespSSN);
+        //trova il referente scientifico
         CompanyEmployee Sref = controller.getEmployeeController().findEmployee(SrefSSN);
 
 
@@ -156,13 +156,13 @@ public class ProjectController {
     /**
      * Metodo che controlla le potenziali violazioni dei vincoli del Model dopo la modifica dei dati in input e restituisce
      * un elenco di violazioni individuate.
-     * @param cup
-     * @param name
-     * @param budget
-     * @param endDate
-     * @param SrespSSN
-     * @param SrefSSN
-     * @return
+     * @param cup       La cup del progetto
+     * @param name      Il nome del progetto
+     * @param budget    I fondi depositati per il progetto
+     * @param endDate   La data di scadenza del progetto
+     * @param SrespSSN  SSN del responsabile scientifico del progetto
+     * @param SrefSSN   SSN del referente scientifico del progetto
+     * @return  Stringhe che comunicano eventuali errori riscontrati
      */
     public ArrayList<String> checkProjectModify(String cup, String name, float budget,
                                                 LocalDate endDate, String SrespSSN,
@@ -179,7 +179,7 @@ public class ProjectController {
         if(endDate == null) errors.add("Project end date must be inserted.");
         else if(endDate.isBefore(LocalDate.now())) errors.add("Project end date must be a future date.");
         else if (endDate.isBefore(project.getStartDate())) errors.add("Project end date must not be before start date.");
-        //Controllo unicita' nome
+        //Controllo unicità nome
         if(findProjectName(name) != null) errors.add("Name already in use by another project.");
         //Controllo chiavi esterne
         if(SrespSSN == null || SrespSSN.isBlank()) errors.add("Must insert scientific responsible.");
@@ -203,18 +203,17 @@ public class ProjectController {
         }
 
 
-
         return errors;
     }
 
     /**
      * Metodo che modifica il progetto associato al CUP passato in input usando i dati associati ai parametri.
-     * @param cup
-     * @param name
-     * @param budget
-     * @param endDate
-     * @param Sref
-     * @param Sresp
+     * @param cup       La cup del progetto
+     * @param name      Il nome del progetto
+     * @param budget    I fondi depositati per il progetto
+     * @param endDate   La data di scadenza del progetto
+     * @param Sresp     SSN del responsabile scientifico del progetto
+     * @param Sref      SSN del referente scientifico del progetto
      */
     public void modifyProjectList(String cup,String name,
                                   float budget,LocalDate endDate,
@@ -222,17 +221,22 @@ public class ProjectController {
         Project project = findProjectCup(cup);
 
         ArrayList<CompanyEmployee> employeeArrayList = controller.getEmployeeController().getEmployeeArrayList();
+        //referente scientifico
         if (Sref != null && !Sref.isBlank()) {
             project.setSref(controller.getEmployeeController().findEmployee(Sref));
         } else project.setSref(null);
+        //responsabile scientifico
         if (Sresp != null && !Sresp.isBlank()) {
             project.setSresp(controller.getEmployeeController().findEmployee(Sresp));
         } else project.setSresp(null);
+        //nome
         project.setName(name);
+        //budget
         project.setRemainingFunds(budget
                 - (controller.getTemporaryEmployeeController().getTotalProjectSalaries(project, project.getStartDate(), endDate)
                 - controller.getEquipmentController().getTotalProjectPrice(project)));
         project.setBudget(budget);
+        //data di scadenza
         project.setEndDate(endDate);
 
         //Il progetto viene modificato nel database.
@@ -251,8 +255,8 @@ public class ProjectController {
     /**
      * Metodo che controlla le potenziali violazioni dei vincoli del Model dopo l'eliminazione del progetto associato
      * al CUP passato in input e restituisce un elenco di violazioni individuate.
-     * @param cup
-     * @return
+     * @param cup   Cup del progetto da eliminare
+     * @return  Stringhe di eventuali errori
      */
     public ArrayList<String> checkProjectDelete(String cup){
         ArrayList<String> errors = new ArrayList<String>();
@@ -267,7 +271,7 @@ public class ProjectController {
 
     /**
      * Metodo che rimuove il progetto associato al cup passato in input.
-     * @param cup
+     * @param cup  Cup del progetto da rimuovere
      */
     public void dismissProject(String cup){
         Project project= findProjectCup(cup);
