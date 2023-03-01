@@ -31,7 +31,7 @@ public class EmployeeController {
 
     /**
      * Metodo che restituisce l'impiegato con l'ssn fornito in input, se non esiste restituisce null.
-     * @param ssn
+     * @param ssn   SSN dell'impiegato che ci interessa trovare.
      * @return L'impiegato trovato oppure null.
      */
     public CompanyEmployee findEmployee(String ssn){
@@ -44,17 +44,17 @@ public class EmployeeController {
     /**
      * Metodo che controlla le potenziali violazioni dei vincoli del Model dopo l'inserimento dei dati in input e restituisce
      * un elenco di violazioni individuate, con ruolo esplicito.
-     * @param ssn
-     * @param firstName
-     * @param lastName
-     * @param phoneNum
-     * @param address
-     * @param role
-     * @param email
-     * @param employmentDate
-     * @param salary
-     * @param lab
-     * @return
+     * @param ssn               Social Security Number dell'impiegato
+     * @param firstName         Nome dell'impiegato
+     * @param lastName          Cognome dell'impiegato
+     * @param phoneNum          Recapito telefonico dell'impiegato
+     * @param address           Indirizzo dell'impiegato
+     * @param role              Ruolo dell'impiegato
+     * @param email             Email dell'impiegato
+     * @param employmentDate    Data di assunzione dell'impiegato
+     * @param salary            Salario dell'impiegato
+     * @param lab               Laboratorio presso cui lavora l'impiegato
+     * @return  Stringhe di eventuali errori riscontrati
      */
     public ArrayList<String> checkEmployeeInsert(String ssn, String firstName, String lastName,
                                     String phoneNum, String address, String role,
@@ -102,10 +102,9 @@ public class EmployeeController {
         //Controllo esistenza chiave esterna
         if (lab != null && !lab.isBlank() && controller.getLaboratoryController().findLaboratory(lab) == null)
             errors.add("Laboratory does not exist.");
-        //Controllo unicita' ssn
+        //Controllo unicità ssn
         if(findEmployee(ssn) != null
                 || controller.getTemporaryEmployeeController().findTemporaryEmployee(ssn) != null) errors.add("SSN already belongs to an employee.");
-
 
         return errors;
     }
@@ -113,16 +112,16 @@ public class EmployeeController {
     /**
      * Metodo che controlla le potenziali violazioni dei vincoli del Model dopo l'inserimento dei dati in input e restituisce
      * un elenco di violazioni individuate, con ruolo implicito.
-     * @param ssn
-     * @param firstName
-     * @param lastName
-     * @param phoneNum
-     * @param address
-     * @param email
-     * @param employmentDate
-     * @param salary
-     * @param lab
-     * @return
+     * @param ssn               Social Security Number dell'impiegato
+     * @param firstName         Nome dell'impiegato
+     * @param lastName          Cognome dell'impiegato
+     * @param phoneNum          Recapito telefonico dell'impiegato
+     * @param address           Indirizzo dell'impiegato
+     * @param email             Email dell'impiegato
+     * @param employmentDate    Data di assunzione dell'impiegato
+     * @param salary            Salario dell'impiegato
+     * @param lab               Laboratorio presso cui lavora l'impiegato
+     * @return  Stringhe che comunicano eventuali errori riscontrati
      */
     public ArrayList<String> checkEmployeeInsert(String ssn, String firstName, String lastName,
                                                  String phoneNum, String address,
@@ -167,26 +166,27 @@ public class EmployeeController {
         //Controllo esistenza chiave esterna
         if (lab != null && !lab.isBlank() && controller.getLaboratoryController().findLaboratory(lab) == null)
             errors.add("Laboratory does not exist.");
-        //Controllo unicita' ssn
+        //Controllo unicità ssn
         if(findEmployee(ssn) != null
                 || controller.getTemporaryEmployeeController().findTemporaryEmployee(ssn) != null) errors.add("SSN already belongs to an employee.");
 
 
         return errors;
     }
+    
     /**
      * Metodo che controlla le potenziali violazioni dei vincoli del Model dopo la modifica dei dati in input e restituisce
      * un elenco di violazioni individuate.
-     * @param ssn
-     * @param firstName
-     * @param lastName
-     * @param phoneNum
-     * @param address
-     * @param role
-     * @param email
-     * @param salary
-     * @param lab
-     * @return
+     * @param ssn           Social Security Number dell'impiegato
+     * @param firstName     Nome dell'impiegato
+     * @param lastName      Cognome dell'impiegato
+     * @param phoneNum      Recapito telefonico dell'impiegato
+     * @param address       Indirizzo dell'impiegato
+     * @param role          Ruolo dell'impiegato
+     * @param email         Email dell'impiegato
+     * @param salary        Salario dell'impiegato
+     * @param lab           Laboratorio presso cui lavora l'impiegato
+     * @return  Stringhe che comunicano eventuali errori riscontrati
      */
     public ArrayList<String> checkEmployeeModify(String ssn, String firstName, String lastName,
                                                  String phoneNum, String address, String role,
@@ -205,7 +205,7 @@ public class EmployeeController {
         if(lastName == null || lastName.isBlank()) errors.add("Last name must not be blank.");
         else if(lastName.length() > 30) errors.add("Last name is too long. (Max. 20 characters)");
 
-        //Contollo dominio numero di telefono
+        //Controllo dominio numero di telefono
         if(phoneNum == null || phoneNum.isBlank()) errors.add("Phone number must not be blank.");
         else if(phoneNum.length() != 10) errors.add("Phone number must be 10 digits long.");
         else{
@@ -222,8 +222,8 @@ public class EmployeeController {
 
         //Controllo dominio salario
         if(salary < 0) errors.add("Salary must be positive.");
+        
         //Controllo dominio ruolo
-
         if(role == null || (!role.equals("Junior") && !role.equals("Middle") && !role.equals("Senior") && !role.equals("Executive")))
             errors.add("Role invalid.");
 
@@ -259,16 +259,14 @@ public class EmployeeController {
             }
         }
 
-
         return errors;
-
     }
 
     /**
      * Metodo che controlla le potenziali violazioni dei vincoli del Model dopo l'eliminazione dell'impiegato associato
      * all'ssn passato in input e restituisce un elenco di violazioni individuate.
-     * @param ssn
-     * @return
+     * @param ssn SSN dell'impiegato licenziato
+     * @return  Stringhe che comunicano eventuali errori riscontrati
      */
     public ArrayList<String> checkEmployeeDelete(String ssn){
         ArrayList<String> errors = new ArrayList<String>();
@@ -280,8 +278,8 @@ public class EmployeeController {
         }
 
 
-
         //Controllo posizioni legate al ruolo
+        //responsabile scientifico di un laboratorio
         if(employee.getRole().equals("Senior")){
             ArrayList<Laboratory> labList = controller.getLaboratoryController().getLaboratoryArrayList();
             for(Laboratory laboratory: labList){
@@ -290,6 +288,7 @@ public class EmployeeController {
                 }
             }
         }
+        //referente scientifico di un progetto
         if(employee.getRole().equals("Senior")){
             ArrayList<Project> projectList = controller.getProjectController().getProjectArrayList();
             for(Project project: projectList){
@@ -298,6 +297,7 @@ public class EmployeeController {
                 }
             }
         }
+        //responsabile scientifico di un progetto
         if(employee.getRole().equals("Executive")){
             ArrayList<Project> projectList = controller.getProjectController().getProjectArrayList();
             for(Project project: projectList){
@@ -307,51 +307,34 @@ public class EmployeeController {
             }
         }
 
-
+        
         return errors;
-
     }
-
-
-
-    /**
-     * Metodo che usa i dati passati in input per creare un oggetto Employee e aggiungerlo alla lista, con ruolo esplicito.
-     * @param ssn
-     * @param firstName
-     * @param lastName
-     * @param phoneNum
-     * @param address
-     * @param role
-     * @param email
-     * @param employmentDate
-     * @param salary
-     * @param lab
-     */
 
     /**
      * Metodo che usa i dati passati in input per creare un oggetto Employee e aggiungerlo alla lista, con ruolo implicito.
-     * @param ssn
-     * @param firstName
-     * @param lastName
-     * @param phoneNum
-     * @param address
-     * @param email
-     * @param employmentDate
-     * @param salary
-     * @param lab
+     * @param ssn               Social Security Number dell'impiegato
+     * @param firstName         Nome dell'impiegato
+     * @param lastName          Cognome dell'impiegato
+     * @param phoneNum          Recapito telefonico dell'impiegato
+     * @param address           Indirizzo dell'impiegato
+     * @param email             Email dell'impiegato
+     * @param employmentDate    Data di assunzione dell'impiegato
+     * @param salary            Salario dell'impiegato
+     * @param lab               Laboratorio presso cui lavora l'impiegato
      */
     public void addEmployeeList(String ssn, String firstName, String lastName,
                                 String phoneNum, String address,
                                 String email, LocalDate employmentDate,
                                 float salary, String lab)
-    {
-
+    {   //ruolo
         String role = null;
 
         if(employmentDate.until(LocalDate.now()).getYears() < 3) role = "Junior";
         else if (employmentDate.until(LocalDate.now()).getYears() < 7) role = "Middle";
         else role = "Senior";
-
+        
+        //laboratorio
         CompanyEmployee employee = new CompanyEmployee(ssn, firstName, lastName, phoneNum, role, salary, employmentDate);
         if (lab != null && !lab.isBlank()) {
             ArrayList<Laboratory> labs = controller.getLaboratoryController().getLaboratoryArrayList();
@@ -363,12 +346,14 @@ public class EmployeeController {
         }
         else
             employee.setLab(null);
-
+        
+        //indirizzo
         if (address != null && !address.isBlank())
             employee.setAddress(address);
         else
             employee.setAddress(null);
-
+        
+        //email
         if (email != null && !email.isBlank())
             employee.setEmail(email);
         else
@@ -391,39 +376,47 @@ public class EmployeeController {
 
     /**
      * Metodo che modifica i dati dell'impiegato che corrisponde all'SSN passato in input.
-     * @param ssn
-     * @param firstName
-     * @param lastName
-     * @param phoneNumber
-     * @param newRole
-     * @param newSalary
-     * @param lab
-     * @param address
-     * @param email
+     * @param ssn           Social Security Number dell'impiegato
+     * @param firstName     Nome dell'impiegato
+     * @param lastName      Cognome dell'impiegato
+     * @param phoneNumber   Recapito telefonico dell'impiegato
+     * @param newRole       Nuovo ruolo dell'impiegato
+     * @param newSalary     Nuovo salario correlato al nuovo ruolo
+     * @param lab           Laboratorio presso cui lavora l'impiegato
+     * @param address       Indirizzo dell'impiegato
+     * @param email         Email dell'impiegato
      */
     public void modifyEmployeeList(String ssn, String firstName, String lastName,
                                                 String phoneNumber, String newRole, float newSalary,
                                                 String lab, String address, String email)
     {
-
         CompanyEmployee employee = findEmployee(ssn);
+        //nome
         employee.setFirstName(firstName);
+        //cognome
         employee.setLastName(lastName);
+        //numero di telefono
         employee.setPhoneNum(phoneNumber);
+        
+        //ruolo
         if(!employee.getRole().equals(newRole)){
             controller.getCareerDevelopmentController().addCareerDevelopment(employee,newRole,newSalary);
             employee.setRole(newRole);
         }
+        //salario
         employee.setSalary(newSalary);
-
+        
+        //laboratorio
         if(lab != null && !lab.isBlank()) {
             employee.setLab(controller.getLaboratoryController().findLaboratory(lab));
         }else employee.setLab(null);
-
+        
+        //indirizzo
         if(address != null && !address.isBlank()){
             employee.setAddress(address);
         }else employee.setAddress(null);
-
+        
+        //email
         if(email != null && !email.isBlank()){
             employee.setEmail(email);
         }else employee.setEmail(null);
@@ -444,7 +437,7 @@ public class EmployeeController {
 
     /**
      * Metodo che licenzia l'impiegato con che possiede l'ssn passato in input.
-     * @param ssn
+     * @param ssn SSN dell'impiegato da licenziare
      */
     public void fireEmployee(String ssn){
 
