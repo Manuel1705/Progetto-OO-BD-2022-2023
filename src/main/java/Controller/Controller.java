@@ -37,7 +37,7 @@ public class Controller
     /**
      * Metodo statico che restituisce l'istanza del controller se essa esiste, altrimenti ne crea una nuova. Implementa il
      * pattern Singleton.
-     * @return
+     * @return l'istanza del controller
      */
     public static Controller getInstance(){//singleton controller
         if(instance==null)
@@ -83,13 +83,13 @@ public class Controller
 
     /**
      * Metodo che setta il valore di DBSet.
-     * @param value
+     * @param value  Falso o Vero a seconda se il DB è connesso.
      */
     public void setDBConnectionState(Boolean value){DBSet = value;}
 
     /**
      * Metodo che restituisce la Stringa contenente il nome del DBMS utilizzato dal database.
-     * @return
+     * @return Stringa contenente il nome del DBMS utilizzato.
      */
     public String getDBMS(){return dbms;}
 
@@ -111,18 +111,19 @@ public class Controller
         //Aggiornamento progetti
         ArrayList<Project> endedProjects = new ArrayList<Project>();
         for(Project project: projectController.getProjectArrayList()){
-            if(project.isExpired()) endedProjects.add(project);
+            if(project.isExpired()) endedProjects.add(project); //se un progetto risulta terminato viene aggiunto a endedProjects
         }
+        //i progetti vengono poi rimossi
         for(Project project: endedProjects)
             projectController.dismissProject(project.getCup());
     }
 
     /**
      * Metodo che collega il programma al database che corrisponde ai parametri di ingresso e carica i dati in memoria
-     * @param username Nome utente del server DBMS
-     * @param password Password del server DBMS
-     * @param database Nome del database
-     * @param dbms DBMS utilizzato
+     * @param username  Nome utente del server DBMS
+     * @param password  Password del server DBMS
+     * @param database  Nome del database
+     * @param dbms      DBMS utilizzato
      */
     public ArrayList<String> setDB(String username, String password, String database, String dbms){
         this.dbms = "";
@@ -165,7 +166,7 @@ public class Controller
 
     /**
      * Metodo che carica i dati dal database.
-     * @throws SQLException
+     * @throws SQLException gestione delle eccezioni SQL
      */
     private void loadDB() throws SQLException{
         clearData();
