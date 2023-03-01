@@ -4,7 +4,7 @@ package DAO;
 import java.util.ArrayList;
 
 /**
- * Interfaccia che permette di implementare i DAO della tabella Temporary Contract
+ * Interfaccia che permette d'implementare i DAO della tabella Temporary Contract
  */
 public interface DAOTemporaryContract {
     /**
