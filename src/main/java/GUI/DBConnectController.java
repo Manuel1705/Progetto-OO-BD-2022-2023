@@ -24,7 +24,7 @@ public class DBConnectController implements Initializable {
     private TextField usernameTextField;
 
     @FXML
-    private TextField passwordTextField;
+    private PasswordField passwordTextField;
 
     @FXML
     private TextField databaseTextField;
