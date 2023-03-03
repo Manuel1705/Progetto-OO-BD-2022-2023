@@ -113,22 +113,23 @@ begin
 if new.role = 'junior' or new.role = 'middle' or new.role = 'senior' then --si assicura che l’impiegato partecipa agli scatti di carriera 
 --(gli impiegati con contratto determinato non sono contemplati)
     --gli impiegati che lavorano per l’azienda da meno di 3 anni sono ‘junior’
-    if current_date - new.employment_date<3*365 and new.role<>'junior' then
+    if current_date - new.employment_date<3*365 and new.role not like 'junior' then
         update azienda.employee
         set role='junior'
         where ssn=new.ssn;
      --se l’impiegato lavora per l’azienda da più di 3 anni ma da meno di 7, diventa ‘middle’
-     elsif current_date-new.employment_date>=3*365 and current_date-new.employment_date<7*365 and new.role<>"middle" then
+     elsif current_date-new.employment_date>=3*365 and current_date-new.employment_date<7*365 and new.role not like 'middle' then
         update azienda.employee
         set role='middle'
         where ssn=new.ssn;
     --se l’impiegato lavora per l’azienda da più di 7 anni diventa ‘senior’
-    elsif current_date-new.employment_date>=7*365 and new.role<>"senior" then
+    elsif current_date-new.employment_date>=7*365 and new.role not like 'senior' then
         update azienda.employee
         set role='senior'
         where ssn=new.ssn;
     end if;
 end if;
+return null;
 end;
 $check_employment_date_trigger$ LANGUAGE plpgsql;
 
@@ -137,6 +138,7 @@ create trigger check_employment_date_trigger after insert or update of role on a
 --attivato ad ogni inserimento o modifica del ruolo della tabella employee
 for each row
 execute function azienda.check_employment_date();
+
 ---------------------------------
 
 create function azienda.add_career_development() returns trigger as $add_career_development_trigger$
@@ -259,6 +261,7 @@ remaining_months integer;
 end_date_prj azienda.project.end_date%type;
 
 begin
+if new.role = 'temporary' then
 --prendiamo tutte le cup dei progetti a cui lavorano dipendenti temporanei
 select cup into cup_new_emp
 from azienda.temporary_contract
@@ -286,11 +289,13 @@ if sum_salary*remaining_months>project_budget/2 then
 	where ssn=new.ssn;
 
 end if;
+end if;
+return null;
 end;
 $check_salary_temporary_trigger$ LANGUAGE plpgsql;
 
 --trigger corrispondente
-create trigger check_salary_temporary_trigger after insert on azienda.employee
+create trigger check_salary_temporary_trigger after insert on azienda.employee 
 --viene attivato a ogni inserimento nella tabella employee
 for each row
 execute function azienda.check_salary_temporary();
