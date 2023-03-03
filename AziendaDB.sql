@@ -20,7 +20,7 @@ create table azienda.employee(
     ssn azienda.ssn_type,
     first_name varchar(30) not null,
     last_name varchar(30) not null,
-    phone_num phone_num_type(10) not null,
+    phone_num azienda.phone_num_type not null,
     email varchar(50),
     address varchar(50),
     employment_date date not null,
@@ -42,19 +42,6 @@ create table azienda.career_development(
     on update cascade on delete cascade --se l’ssn di un impiegato viene aggiornato/eliminato 
     --vengono aggiornate/eliminate anche le tuple in career_development che lo referenziano
 );
---Laboratory
-create table azienda.laboratory(
-    name varchar(30),
-    topic varchar(50),
-    sresp azienda.ssn_type,
-    project char(15),
---vincoli referenziali
-    constraint lab_pk primary key(name),
-    constraint prj_lab_fk foreign key(project) references azienda.project(cup) on update cascade on delete set null, --se la primary key di project viene aggiornata vengono aggiornate anche le tuple in laboratory che la referenziano. 
-    --Se invece essa viene eliminata, l’attributo project in laboratory, in tutte le tuple che lo referenziano, viene settato a null
-    constraint lsresp_fk foreign key(sresp) references azienda.employee(ssn) on update cascade on delete cascade  --se l’ssn di un impiegato viene aggiornato/eliminato 
-    --vengono aggiornate/eliminate tutte tuple in laboratory che lo referenziano
-);
 --Project
 create table azienda.project(
     cup char(15),
@@ -72,6 +59,20 @@ create table azienda.project(
     constraint psref_fk foreign key(sref) references azienda.employee(ssn) on update cascade on delete cascade  --se l’ssn di un impiegato viene aggiornato/eliminato 
     --vengono aggiornate/eliminate tutte le tuple in project che lo referenziano
 );
+--Laboratory
+create table azienda.laboratory(
+    name varchar(30),
+    topic varchar(50),
+    sresp azienda.ssn_type,
+    project char(15),
+--vincoli referenziali
+    constraint lab_pk primary key(name),
+    constraint prj_lab_fk foreign key(project) references azienda.project(cup) on update cascade on delete set null, --se la primary key di project viene aggiornata vengono aggiornate anche le tuple in laboratory che la referenziano. 
+    --Se invece essa viene eliminata, l’attributo project in laboratory, in tutte le tuple che lo referenziano, viene settato a null
+    constraint lsresp_fk foreign key(sresp) references azienda.employee(ssn) on update cascade on delete cascade  --se l’ssn di un impiegato viene aggiornato/eliminato 
+    --vengono aggiornate/eliminate tutte tuple in laboratory che lo referenziano
+);
+
 --Equipment
 create table azienda.equipment(
     id_equipment serial,
@@ -458,7 +459,7 @@ end;
 $check_max_lab_insert_trigger$ LANGUAGE plpgsql;
 
 --trigger corrispondente
-create trigger check_max_lab_insert_trigger after insert of project on azienda.laboratory
+create trigger check_max_lab_insert_trigger after insert or update on azienda.laboratory
 --viene attivato ad ogni inserimento dell’attributo project in laboratory
 for each row
 execute function check_max_lab_insert();
@@ -596,4 +597,3 @@ if new.role = 'junior' or new.role = 'middle' or new.role = 'senior' then --si a
 end if;
 end;
 $$ LANGUAGE plpgsql;
-
