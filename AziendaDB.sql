@@ -105,12 +105,10 @@ alter table azienda.employee
 add constraint emp_lab_fk foreign key(laboratory_name) references azienda.laboratory(name);  --se il nome di un laboratorio viene aggiornato vengono aggiornate anche le tuple in employee che lo referenziano.
 --Se invece esso viene eliminato, l’attributo laboratory_name in employee, in tutte le tuple che lo referenziano, viene settato a null
 
-insert into azienda.employee values('123456789123451','io','sempre io','3465013137','manuelmignogna@alice.it','casa mia','2012-12-12',1,'junior',null);
-
 
 -----------------------------------------------------------------------------------------------
 --FUNZIONI E TRIGGER
-create function check_employment_date() returns trigger as $check_employment_date_trigger$
+create function azienda.check_employment_date() returns trigger as $check_employment_date_trigger$
 begin
 if new.role = 'junior' or new.role = 'middle' or new.role = 'senior' then --si assicura che l’impiegato partecipa agli scatti di carriera 
 --(gli impiegati con contratto determinato non sono contemplati)
@@ -138,10 +136,10 @@ $check_employment_date_trigger$ LANGUAGE plpgsql;
 create trigger check_employment_date_trigger after insert or update of role on azienda.employee
 --attivato ad ogni inserimento o modifica del ruolo della tabella employee
 for each row
-execute function check_employment_date();
+execute function azienda.check_employment_date();
 ---------------------------------
 
-create function add_career_development() returns trigger as $add_career_development_trigger$
+create function azienda.add_career_development() returns trigger as $add_career_development_trigger$
 begin
 --aggiunge le informazioni relative al cambio di ruolo e stipendio dell’impiegato
 if new.role<>old.role then --si assicura che ci sia stato un cambio di ruolo
@@ -154,10 +152,10 @@ $add_career_development_trigger$ LANGUAGE plpgsql;
 create trigger add_career_development_trigger after update of role on azienda.employee
 --attivato ad ogni modifica del ruolo nella tabella employee
 for each row
-execute function add_career_development();
+execute function azienda.add_career_development();
 ---------------------------------
 
-create function check_remaining_funds() returns trigger as $check_remaining_funds_trigger$
+create function azienda.check_remaining_funds() returns trigger as $check_remaining_funds_trigger$
 begin
 update azienda.project
 set remaining_funds=new.budget --il valore di remaining_funds viene inizializzato con il valore del budget
@@ -169,10 +167,10 @@ $check_remaining_funds_trigger$ LANGUAGE plpgsql;
 create trigger check_remaining_funds_trigger after insert on azienda.project
 --viene attivato ad ogni inserimento nella tabella project
 for each row
-execute function check_remaining_funds();
+execute function azienda.check_remaining_funds();
 ---------------------------------
 
-create function update_remaining_funds_employee_insert() returns trigger as $update_remaining_funds_employee_insert_trigger$
+create function azienda.update_remaining_funds_employee_insert() returns trigger as $update_remaining_funds_employee_insert_trigger$
 declare
 role_emp azienda.employee.role%type;
 emp_salary azienda.employee.salary%type;
@@ -193,10 +191,10 @@ $update_remaining_funds_employee_insert_trigger$ LANGUAGE plpgsql;
 create trigger update_remaining_funds_employee_insert_trigger after insert on azienda.temporary_contract
 --viene attivato ad ogni inserimento nella tabella temporary_contract
 for each row
-execute function update_remaining_funds_employee_insert();
+execute function azienda.update_remaining_funds_employee_insert();
 ---------------------------------
 
-create function update_remaining_funds_employee_delete() returns trigger as $update_remaining_funds_employee_delete_trigger$
+create function azienda.update_remaining_funds_employee_delete() returns trigger as $update_remaining_funds_employee_delete_trigger$
 declare
 role_emp azienda.employee.role%type;
 emp_salary azienda.employee.salary%type;
@@ -217,10 +215,10 @@ $update_remaining_funds_employee_delete_trigger$ LANGUAGE plpgsql;
 create trigger update_remaining_funds_employee_delete_trigger before delete on azienda.temporary_contract
 --viene attivato prima di ogni eliminazione nella tabella temporary_contract
 for each row
-execute function update_remaining_funds_employee_delete();
+execute function azienda.update_remaining_funds_employee_delete();
 ---------------------------------
 
-create function update_remaining_funds_equipment() returns trigger as $update_remaining_funds_equipment_trigger$
+create function azienda.update_remaining_funds_equipment() returns trigger as $update_remaining_funds_equipment_trigger$
 begin
 update azienda.project
 set remaining_funds=remaining_funds-new.price --manteniamo consistente il valore di remaining_funds a seguito dell’acquisto di nuovo equipaggiamento
@@ -232,10 +230,10 @@ $update_remaining_funds_equipment_trigger$ LANGUAGE plpgsql;
 create trigger update_remaining_funds_equipment_trigger after insert on azienda.temporary_contract
 --viene attivato ad ogni inserimento nella tabella equipment
 for each row
-execute function update_remaining_funds_equipment();
+execute function azienda.update_remaining_funds_equipment();
 ---------------------------------
 
-create function check_end_date() returns trigger as $check_end_date_trigger$
+create function azienda.check_end_date() returns trigger as $check_end_date_trigger$
 begin
 if new.start_date>=new.end_date then --controlla che la data iniziale sia successiva alla data finale
 	--se ciò accade la tupla viene eliminata
@@ -249,10 +247,10 @@ $check_end_date_trigger$ LANGUAGE plpgsql;
 create trigger check_end_date_trigger after insert on azienda.project
 --viene attivato ad ogni inserimento nella tabella project
 for each row
-execute function check_end_date();
+execute function azienda.check_end_date();
 ---------------------------------
 
-create function check_salary_temporary() returns trigger as $check_salary_temporary_trigger$
+create function azienda.check_salary_temporary() returns trigger as $check_salary_temporary_trigger$
 declare 
 sum_salary azienda.employee.salary%type;
 cup_new_emp azienda.project.cup%type;
@@ -295,10 +293,10 @@ $check_salary_temporary_trigger$ LANGUAGE plpgsql;
 create trigger check_salary_temporary_trigger after insert on azienda.employee
 --viene attivato a ogni inserimento nella tabella employee
 for each row
-execute function check_salary_temporary();
+execute function azienda.check_salary_temporary();
 ---------------------------------
 
-create function check_price_equipment() returns trigger as $check_price_equipment_trigger$
+create function azienda.check_price_equipment() returns trigger as $check_price_equipment_trigger$
 declare 
 sum_price azienda.equipment.price%type;
 project_budget azienda.project.budget%type;
@@ -327,10 +325,10 @@ $check_price_equipment_trigger$ LANGUAGE plpgsql;
 create trigger check_price_equipment_trigger after insert on azienda.equipment
 --viene attivato a ogni inserimento della tabella equipment
 for each row
-execute function check_price_equipment();
+execute function azienda.check_price_equipment();
 ---------------------------------
 
-create function check_budget() returns trigger as $check_budget_trigger$
+create function azienda.check_budget() returns trigger as $check_budget_trigger$
 declare
 sum_salary azienda.employee.salary%type;
 sum_price azienda.equipment.price%type;
@@ -373,10 +371,10 @@ $check_budget_trigger$ LANGUAGE plpgsql;
 create trigger check_budget_trigger after update of budget on azienda.project
 --viene attivato a ogni modifica di budget nella tabella project
 for each row
-execute function check_budget();
+execute function azienda.check_budget();
 ---------------------------------
 
-create function check_scientific_reference() returns trigger as $check_scientific_reference_trigger$
+create function azienda.check_scientific_reference() returns trigger as $check_scientific_reference_trigger$
 declare
 role_emp azienda.employee.role%type;
 
@@ -395,10 +393,10 @@ $check_scientific_reference_trigger$ LANGUAGE plpgsql;
 create trigger check_scientific_reference_trigger after insert or update of sref on azienda.project
 --viene attivato ad ogni inserimento o modifica di sref nella tabella project
 for each row
-execute function check_scientific_reference();
+execute function azienda.check_scientific_reference();
 ---------------------------------
 
-create function check_scientific_responsable_lab() returns trigger as $check_scientific_respnsable_lab_trigger$
+create function azienda.check_scientific_responsable_lab() returns trigger as $check_scientific_respnsable_lab_trigger$
 declare
 role_emp azienda.employee.role%type;
 
@@ -417,10 +415,10 @@ $check_scientific_respnsable_lab_trigger$ LANGUAGE plpgsql;
 create trigger check_scientific_respnsable_lab_trigger after insert or update of sresp on azienda.laboratory
 --viene attivato ad ogni inserimento o modifica di sresp nella tabella laboratory
 for each row
-execute function check_scientific_responsable_lab();
+execute function azienda.check_scientific_responsable_lab();
 -----------------------------------------
 
-create function check_scientific_responsable_prj() returns trigger as $check_scientific_responsable_prj_trigger$
+create function azienda.check_scientific_responsable_prj() returns trigger as $check_scientific_responsable_prj_trigger$
 declare
 role_emp azienda.employee.role%type;
 
@@ -439,10 +437,10 @@ $check_scientific_responsable_prj_trigger$ LANGUAGE plpgsql;
 create trigger check_scientific_responsable_prj_trigger after insert or update of sref on azienda.project
 --viene attivato a ogni inserimento o modifica di sref nella tabella project
 for each row
-execute function check_scientific_responsable_prj();
+execute function azienda.check_scientific_responsable_prj();
 ------------------------------------------
 
-create function check_max_lab_insert() returns trigger as $check_max_lab_insert_trigger$
+create function azienda.check_max_lab_insert() returns trigger as $check_max_lab_insert_trigger$
 declare 
 count_project integer;
    
@@ -462,10 +460,10 @@ $check_max_lab_insert_trigger$ LANGUAGE plpgsql;
 create trigger check_max_lab_insert_trigger after insert or update on azienda.laboratory
 --viene attivato ad ogni inserimento dell’attributo project in laboratory
 for each row
-execute function check_max_lab_insert();
+execute function azienda.check_max_lab_insert();
 -------------------------------------------
 
-create function check_max_lab_update() returns trigger as $check_max_lab_update_trigger$
+create function azienda.check_max_lab_update() returns trigger as $check_max_lab_update_trigger$
 declare 
 count_project integer;
 
@@ -484,10 +482,10 @@ $check_max_lab_update_trigger$ LANGUAGE plpgsql;
 create trigger check_max_lab_update_trigger after update of project on azienda.laboratory
 --viene attivato ad ogni modifica dell'attributo project in laboratory
 for each row
-execute function check_max_lab_update();  
+execute function azienda.check_max_lab_update();  
 ------------------------------
 
-create function check_expired_project() returns trigger as $check_expired_project_trigger$
+create function azienda.check_expired_project() returns trigger as $check_expired_project_trigger$
 declare
 end_date_prj azienda.project.end_date%type;
    
@@ -509,10 +507,10 @@ $check_expired_project_trigger$ LANGUAGE plpgsql;
 create trigger check_expired_project_trigger after insert on azienda.temporary_contract
 --viene attivato ad ogni inserimento nella tabella temporary_contract
 for each row
-execute function check_expired_project();
+execute function azienda.check_expired_project();
 ----------------------
  
-create function check_resp() returns trigger as $check_resp_trigger$
+create function azienda.check_resp() returns trigger as $check_resp_trigger$
 declare
 emp_exists integer;
   
@@ -550,11 +548,11 @@ $check_resp_trigger$ LANGUAGE plpgsql;
 create trigger check_resp_trigger after update of role on azienda.employee
 --viene attivato ad ogni modifica nella tabella employee
 for each row
-execute function check_resp();
+execute function azienda.check_resp();
 
 ----------------------------
 --PROCEDURE
-create or replace procedure update_role_check_date() as
+create or replace procedure azienda.update_role_check_date() as
 $$
 declare
 --il cursore scorre le tuple dei progetti scaduti
@@ -574,7 +572,7 @@ end;
 $$ LANGUAGE plpgsql;
 ------------------------------
 
-create procedure check_employment_date_procedure()as $$
+create procedure azienda.check_employment_date_procedure()as $$
 begin
 if new.role = 'junior' or new.role = 'middle' or new.role = 'senior' then --si assicura che l’impiegato partecipa agli scatti di carriera 
 --(gli impiegati con contratto determinato non sono contemplati)
