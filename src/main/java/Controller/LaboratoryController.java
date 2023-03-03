@@ -69,8 +69,7 @@ public class LaboratoryController {
      */
     public void addLaboratoryList(String name, String topic, String Sresp, String project) {
 
-        ArrayList<CompanyEmployee> employeeArrayList = controller.getEmployeeController().getEmployeeArrayList();
-        ArrayList<Project> projectArrayList = controller.getProjectController().getProjectArrayList();
+
         //argomento
         if (topic == null || topic.isBlank()) {
             topic = "No description";
