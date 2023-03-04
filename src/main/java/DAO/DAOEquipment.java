@@ -24,7 +24,8 @@ public interface DAOEquipment {
 
     /**
      * Metodo che aggiorna la tupla Equipment con l'id passato in input.
-     * @param id             ID dell'equipment. Chiave primaria.
+     * @param old_id         ID originale dell'equipment. Chiave primaria.
+     * @param new_id         ID nuovo dell'equipment. Chiave primaria.
      * @param name           Nome dell'attrezzatura.
      * @param description    Descrizione dell'attrezzatura.
      * @param price          Prezzo d'acquisto dell'attrezzatura.
