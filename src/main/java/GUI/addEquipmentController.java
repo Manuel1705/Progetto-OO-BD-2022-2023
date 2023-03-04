@@ -35,7 +35,8 @@ public class addEquipmentController implements Initializable {
     private Controller controller;
 
     /**
-     * Metodo che viene chiamato quando l'utente conferma l'inserimento dei dati. Effettua i controlli sulla validita' dell'input.
+     * Metodo che viene chiamato quando l'utente conferma l'inserimento dei dati. Effettua i controlli sulla validità dell'input.
+     * @throws IOException Gestione delle eccezioni di I/O
      */
     @FXML public void buyEquipment() throws IOException{
         ArrayList<String> errors = new ArrayList<String>();
@@ -98,8 +99,8 @@ public class addEquipmentController implements Initializable {
 
     /**
      * Metodo che apre una finestra elencando gli errori passati in input.
-     * @param errors
-     * @throws IOException
+     * @param errors Stringhe di errori rilevati
+     * @throws IOException Gestione delle eccezioni di I/O
      */
     private void showErrorWindow (ArrayList<String> errors) throws IOException {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("../GUI/ErrorWindow.fxml"));

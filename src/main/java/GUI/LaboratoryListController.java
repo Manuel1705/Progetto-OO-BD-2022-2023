@@ -139,7 +139,7 @@ public class LaboratoryListController implements Initializable {
 
     /**
      * Metodo che apre la finestra Home.
-     * @param event Evento proveniente dalla GUI
+     * @param event Viene premuto l'apposito bottone
      * @throws IOException Gestione delle eccezioni di I/O
      */
     @FXML public void switchToHomeScene(ActionEvent event)  throws IOException {

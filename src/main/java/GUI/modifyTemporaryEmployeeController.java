@@ -55,15 +55,15 @@ public class modifyTemporaryEmployeeController {
 
     /**
      * Metodo che inizializza i campi della finestra con i dati passati in input.
-     * @param ssn
-     * @param firstName
-     * @param lastName
-     * @param phoneNumber
-     * @param address
-     * @param project
-     * @param labName
-     * @param salary
-     * @param email
+     * @param ssn           Social Security Number dell'impiegato temporaneo
+     * @param firstName     Nome dell'impiegato temporaneo
+     * @param lastName      Cognome dell'impiegato temporaneo
+     * @param phoneNumber   Recapito telefonico dell'impiegato temporaneo
+     * @param address       Indirizzo dell'impiegato temporaneo
+     * @param project       Progetto per il quale l'impiegato temporaneo lavora
+     * @param labName       Nome del laboratorio presso cui l'impiegato temporaneo lavora
+     * @param salary        Salario dell'impiegato temporaneo
+     * @param email         Email dell'impiegato temporaneo
      */
     public void setDefaultFields(String ssn, String firstName, String lastName, String phoneNumber, String address,
                                  String project, String labName, String salary, String email)
@@ -89,7 +89,8 @@ public class modifyTemporaryEmployeeController {
         projectModifyTemporaryEmployee.setText(project);;
 }
     /**
-     * Metodo che effettua i controlli sulla validita' dell'input e passa i dati al controller che modifica i dati dell'impiegato.
+     * Metodo che effettua i controlli sulla validità dell'input e passa i dati al controller che modifica i dati dell'impiegato.
+     * @throws IOException Gestione delle eccezioni di I/O
      */
     @FXML
     public void modifyTemporaryEmployee() throws IOException {
@@ -132,8 +133,8 @@ public class modifyTemporaryEmployeeController {
 
     /**
      * Metodo che apre una finestra elencando gli errori passati in input.
-     * @param errors
-     * @throws IOException
+     * @param errors Stringhe di errori rilevati
+     * @throws IOException Gestione delle eccezioni di I/O
      */
     private void showErrorWindow (ArrayList<String> errors) throws IOException {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("../GUI/ErrorWindow.fxml"));

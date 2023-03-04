@@ -67,7 +67,7 @@ public class PostgresDBConnection {
      * altrimenti la crea usando il metodo costruttore privato.
      *
      * @return instance Istanza della classe PostgresDBConnection
-     * @throws SQLException
+     * @throws SQLException Gestione delle eccezioni SQL
      */
     public static PostgresDBConnection getInstance() throws SQLException{
 
@@ -93,7 +93,7 @@ public class PostgresDBConnection {
 
     /**
      * Metodo che restituisce l'oggetto connection
-     * @return Connection
+     * @return Connection la connessione
      */
     public Connection getConnection() {
         return connection;
@@ -101,9 +101,9 @@ public class PostgresDBConnection {
 
     /**
      * Metodo che setta le credenziali del database.
-     * @param username
-     * @param newPassword
-     * @param database
+     * @param username Username dell'utente
+     * @param newPassword   Password dell'utente
+     * @param database  Database utilizzato
      */
 
     private void setCredentials(String username, String newPassword, String database){
@@ -116,7 +116,7 @@ public class PostgresDBConnection {
 
     /**
      * Metodo che restituisce errors.
-     * @return errors.
+     * @return Stringhe di errori rilevati
      */
     public ArrayList<String> getErrors(){return errors;}
 }

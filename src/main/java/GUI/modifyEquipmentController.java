@@ -34,13 +34,13 @@ public class modifyEquipmentController {
 
     /**
      * Metodo che inizializza i campi della finestra.
-     * @param id
-     * @param description
-     * @param dealer
-     * @param labName
-     * @param projectCup
-     * @param price
-     * @param name
+     * @param id            Codice identificativo dell'equipaggiamento
+     * @param description   Descrizione dell'equipaggiamento
+     * @param dealer        Colui che ha venduto l'equipaggiamento
+     * @param labName       Nome del laboratorio che ha fatto richiesta dell'equipaggiamento
+     * @param projectCup    Cup del progetto per cui è stato richiesto l'equipaggiamento
+     * @param price         Prezzo dell'equipaggiamento
+     * @param name          Nome dell'equipaggiamento
      */
     public void setDefaultFields(int id, String description, String dealer, String labName, String projectCup, float price,
                                   String name){
@@ -66,6 +66,7 @@ public class modifyEquipmentController {
 
     /**
      * Metodo che viene chiamato quando l'utente conferma la modifica.
+     * @throws IOException Gestione delle eccezioni di I/O
      */
     @FXML void modifyEquipment() throws IOException{
         ArrayList<String> errors = controller.getEquipmentController().checkEquipmentModify(
@@ -85,8 +86,8 @@ public class modifyEquipmentController {
 
         /**
          * Metodo che apre una finestra elencando gli errori passati in input.
-         * @param errors
-         * @throws IOException
+         * @param errors Stringhe di errori rilevati
+         * @throws IOException Gestione delle eccezioni di I/O
          */
         private void showErrorWindow (ArrayList<String> errors) throws IOException {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("../GUI/ErrorWindow.fxml"));
