@@ -40,8 +40,8 @@ public class HomeController implements Initializable {
 
         /**
          * Metodo che apre la finestra dell'elenco degli impiegati e aggiorna i dati.
-         * @param event
-         * @throws IOException
+         * @param event È stato premuto l'apposito bottone
+         * @throws IOException Gestione delle eccezioni di I/O
          */
         @FXML
         public void switchToEmployeeListScene(ActionEvent event) throws IOException {
@@ -56,8 +56,8 @@ public class HomeController implements Initializable {
 
         /**
          * Metodo che apre la finestra dell'elenco dei laboratori e aggiorna i dati.
-         * @param event
-         * @throws IOException
+         * @param event È stato premuto l'apposito bottone
+         * @throws IOException Gestione delle eccezioni di I/O
          */
         @FXML
         public void switchToLabListScene(ActionEvent event) throws IOException {
@@ -72,8 +72,8 @@ public class HomeController implements Initializable {
 
         /**
          * Metodo che apre la finestra dell'elenco dei progetti e aggiorna i dati.
-         * @param event
-         * @throws IOException
+         * @param event È stato premuto l'apposito bottone
+         * @throws IOException Gestione delle eccezioni di I/O
          */
         @FXML
         public void switchToProjectsListScene(ActionEvent event) throws IOException {
@@ -88,8 +88,8 @@ public class HomeController implements Initializable {
 
         /**
          * Metodo che apre la finestra dell'elenco dell'equipaggiamento e aggiorna i dati.
-         * @param event
-         * @throws IOException
+         * @param event È stato premuto l'apposito bottone
+         * @throws IOException Gestione delle eccezioni di I/O
          */
         @FXML
         public void switchToEquipmentListScene(ActionEvent event) throws IOException {
@@ -104,8 +104,8 @@ public class HomeController implements Initializable {
 
         /**
          * Metodo che apre la finestra dell'elenco degli impiegati temporanei e aggiorna i dati.
-         * @param event
-         * @throws IOException
+         * @param event È stato premuto l'apposito bottone
+         * @throws IOException Gestione delle eccezioni di I/O
          */
         @FXML
         public void switchToTemporaryEmployeeListScene(ActionEvent event) throws IOException {
@@ -120,8 +120,8 @@ public class HomeController implements Initializable {
 
         /**
          * Metodo che apre la finestra che permette di collegare il database.
-         * @param event
-         * @throws IOException
+         * @param event È stato premuto l'apposito bottone
+         * @throws IOException Gestione delle eccezioni di I/O
          */
         @FXML
         public void switchToDBConnectScene(ActionEvent event) throws IOException {
