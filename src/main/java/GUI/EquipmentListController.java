@@ -47,7 +47,7 @@ public class EquipmentListController implements Initializable {
 
     /**
      * Metodo che apre la finestra che permette di modificare l'equipaggiamento selezionato dall'utente.
-     * @throws IOException
+     * @throws IOException Gestione delle eccezioni di I/O
      */
     @FXML public void modifyEquipment() throws IOException{
         FXMLLoader loader = new FXMLLoader(getClass().getResource("../GUI/modifyEquipment.fxml"));
@@ -74,7 +74,7 @@ public class EquipmentListController implements Initializable {
 
     /**
      * Metodo che apre la finestra che permette di acquistare nuovo equipaggiamento.
-     * @throws IOException
+     * @throws IOException Gestione delle eccezioni di I/O
      */
     @FXML public void buyEquipment()throws IOException{
         Parent root = FXMLLoader.load(getClass().getResource("../GUI/addEquipment.fxml"));
@@ -100,7 +100,7 @@ public class EquipmentListController implements Initializable {
 
     /**
      * Metodo che restituisce l'indice della riga selezionata dall'utente.
-     * @return
+     * @return L'indice di riga
      */
     @FXML public int getSelectedEquipmentIndex(){
         return EquipmentTable.getSelectionModel().getSelectedIndex();
@@ -111,8 +111,8 @@ public class EquipmentListController implements Initializable {
 
     /**
      * Metodo che permette di ritornare alla schermata home.
-     * @param event
-     * @throws IOException
+     * @param event Viene premuto l'apposito bottone
+     * @throws IOException Gestione delle eccezioni di I/O
      */
     @FXML public void switchToHomeScene(ActionEvent event) throws IOException {
         root = FXMLLoader.load(getClass().getResource("../GUI/Home.fxml"));
@@ -147,7 +147,7 @@ public class EquipmentListController implements Initializable {
 
     /**
      * Metodo che restituisce l'Observable List usata dalla tabella.
-     * @return
+     * @return L'Observable List
      */
     private ObservableList<Equipment> getEquipmentList(){
         return list;
