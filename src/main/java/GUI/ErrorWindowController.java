@@ -12,7 +12,7 @@ public class ErrorWindowController{
 
     /**
      * Metodo che inizializza la finestra con i messaggi di errore passati in input.
-     * @param errorList Lista dei messagi di errore.
+     * @param errorList Lista dei messaggi di errore.
      */
     public void setErrors(ArrayList<String> errorList){
         for(String error: errorList){
