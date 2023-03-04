@@ -11,7 +11,7 @@ public class ErrorWindowController{
     private Label errorLabel= new Label("");
 
     /**
-     * Metodo che inizializza la finestra con i messaggi di errore passati in inpyt.
+     * Metodo che inizializza la finestra con i messaggi di errore passati in input.
      * @param errorList Lista dei messagi di errore.
      */
     public void setErrors(ArrayList<String> errorList){
