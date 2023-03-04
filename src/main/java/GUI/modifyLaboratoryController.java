@@ -31,10 +31,10 @@ public class modifyLaboratoryController {
 
     /**
      * Metodo che inizializza i campi della finestra.
-     * @param name
-     * @param topic
-     * @param srespSsn
-     * @param projectCup
+     * @param name          Nome del laboratorio
+     * @param topic         Argomento di ricerca
+     * @param srespSsn      SSN del responsabile scientifico
+     * @param projectCup    Cup del progetto di cui il laboratorio si occupa
      */
     public void setDefaultFields(String name, String topic, String srespSsn, String projectCup){
         controller = Controller.getInstance();
@@ -60,6 +60,7 @@ public class modifyLaboratoryController {
 
     /**
      * Questo metodo viene chiamato quando l'utente conferma la modifica del laboratorio e passa i dati inseriti al controller.
+     * @throws IOException Gestione delle eccezioni di I/O
      */
     @FXML void modifyLaboratory() throws IOException{
         ArrayList<String> errors = controller.getLaboratoryController().checkLaboratoryModify(nameModifyLaboratory.getText(),
@@ -81,8 +82,8 @@ public class modifyLaboratoryController {
 
     /**
      * Metodo che apre una finestra elencando gli errori passati in input.
-     * @param errors
-     * @throws IOException
+     * @param errors Stringhe di errori rilevati
+     * @throws IOException Gestione delle eccezioni di I/O
      */
     private void showErrorWindow (ArrayList<String> errors) throws IOException {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("../GUI/ErrorWindow.fxml"));
