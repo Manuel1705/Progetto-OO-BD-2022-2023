@@ -49,7 +49,7 @@ public class ProjectListController implements Initializable {
 
     /**
      * Metodo che apre la finestra per inserire un progetto.
-     * @throws IOException
+     * @throws IOException Gestione delle eccezioni di I/O
      */
     @FXML public void AddProject() throws IOException{
         Parent root = FXMLLoader.load(getClass().getResource("../GUI/addProject.fxml"));
@@ -79,7 +79,7 @@ public class ProjectListController implements Initializable {
 
     /**
      * Metodo che restituisce l'indice del progetto selezionato dall'utente nella tabella.
-     * @return
+     * @return L'indice del progetto
      */
     @FXML public int getSelectedProjectIndex() {
         return ProjectTable.getSelectionModel().getSelectedIndex();
@@ -87,7 +87,7 @@ public class ProjectListController implements Initializable {
 
     /**
      * Metodo che apre la finestra per modificare il progetto selezionato dall'utente.
-     * @throws IOException
+     * @throws IOException Gestione delle eccezioni di I/O
      */
     @FXML public void modifyProject() throws IOException{
         FXMLLoader loader = new FXMLLoader(getClass().getResource("../GUI/modifyProject.fxml"));
@@ -116,8 +116,8 @@ public class ProjectListController implements Initializable {
 
     /**
      * Metodo che ritorna alla schermata iniziale
-     * @param event
-     * @throws IOException
+     * @param event 
+     * @throws IOException Gestione delle eccezioni di I/O
      */
     @FXML public void switchToHomeScene(ActionEvent event) throws IOException {
         root = FXMLLoader.load(getClass().getResource("../GUI/Home.fxml"));
@@ -130,7 +130,7 @@ public class ProjectListController implements Initializable {
 
     /**
      * Metodo che restituisce la lista della tabella.
-     * @return
+     * @return Lista di progetti
      */
     private ObservableList<Project> getProjectsList(){
         return list;
@@ -160,8 +160,8 @@ public class ProjectListController implements Initializable {
 
     /**
      * Metodo che apre una finestra elencando gli errori passati in input.
-     * @param errors
-     * @throws IOException
+     * @param errors Stringhe di errori rilevati
+     * @throws IOException Gestione delle eccezioni di I/O
      */
     private void showErrorWindow (ArrayList<String> errors) throws IOException {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("../GUI/ErrorWindow.fxml"));

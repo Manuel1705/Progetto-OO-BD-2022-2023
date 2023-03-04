@@ -45,7 +45,7 @@ public class LaboratoryListController implements Initializable {
 
     /**
      * Metodo che restituisce list.
-     * @return
+     * @return lista di laboratori
      */
     private ObservableList<Laboratory> getLaboratoryList(){
             return list;
@@ -53,7 +53,7 @@ public class LaboratoryListController implements Initializable {
 
     /**
      * Metodo che apre la finestra per aggiungere un nuovo laboratorio.
-     * @throws IOException
+     * @throws IOException gestione delle eccezioni di I/O
      */
     @FXML public void AddLaboratory() throws IOException {
         Parent root = FXMLLoader.load(getClass().getResource("../GUI/addLaboratory.fxml"));
@@ -68,7 +68,7 @@ public class LaboratoryListController implements Initializable {
 
     /**
      * Metodo che apre la finestra per modificare il laboratorio selezionato dall'utente.
-     * @throws IOException
+     * @throws IOException Gestione delle eccezioni di I/O
      */
     @FXML
     public void modifyLaboratory() throws IOException {
@@ -128,7 +128,7 @@ public class LaboratoryListController implements Initializable {
 
     /**
      * Metodo che restituisce l'indice del laboratorio selezionato nella tabella.
-     * @return
+     * @return L'indice del laboratorio
      */
     @FXML public int getSelectedLabIndex() {
         return LabTable.getSelectionModel().getSelectedIndex();
@@ -139,8 +139,8 @@ public class LaboratoryListController implements Initializable {
 
     /**
      * Metodo che apre la finestra Home.
-     * @param event
-     * @throws IOException
+     * @param event Evento proveniente dalla GUI
+     * @throws IOException Gestione delle eccezioni di I/O
      */
     @FXML public void switchToHomeScene(ActionEvent event)  throws IOException {
             root = FXMLLoader.load(getClass().getResource("../GUI/Home.fxml"));
@@ -153,8 +153,8 @@ public class LaboratoryListController implements Initializable {
 
     /**
      * Metodo che apre una finestra elencando gli errori passati in input.
-     * @param errors
-     * @throws IOException
+     * @param errors Stringhe contenenti gli errori riscontrati
+     * @throws IOException Gestione delle eccezioni di I/O
      */
     private void showErrorWindow (ArrayList<String> errors) throws IOException {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("../GUI/ErrorWindow.fxml"));
