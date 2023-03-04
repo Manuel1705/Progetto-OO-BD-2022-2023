@@ -80,7 +80,7 @@ public class EmployeeListController implements Initializable {
 
     /**
      * Metodo che restituisce l'indice della riga selezionata dall'utente nella tabella.
-     * @return
+     * @return L'indice di riga
      */
     @FXML public int getSelectedEmployeeIndex(){
         return EmployeesTable.getSelectionModel().getSelectedIndex();
@@ -104,8 +104,8 @@ public class EmployeeListController implements Initializable {
 
     /**
      * Metodo che apre una finestra elencando gli errori passati in input.
-     * @param errors
-     * @throws IOException
+     * @param errors Strighe di errori rilevati
+     * @throws IOException Gestione delle eccezioni di I/O
      */
     private void showErrorWindow (ArrayList<String> errors) throws IOException {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("../GUI/ErrorWindow.fxml"));
@@ -126,8 +126,8 @@ public class EmployeeListController implements Initializable {
 
     /**
      * Metodo che ritorna alla finestra Home.
-     * @param event
-     * @throws IOException
+     * @param event Viene premuto l'apposito bottone
+     * @throws IOException Gestione delle eccezioni di I/O
      */
     @FXML public void switchToHomeScene(ActionEvent event) throws IOException {
         root = FXMLLoader.load(getClass().getResource("../GUI/Home.fxml"));
@@ -140,8 +140,8 @@ public class EmployeeListController implements Initializable {
 
     /**
      * Metodo che apre la finestra degli scatti di carriera.
-     * @param event
-     * @throws IOException
+     * @param event Viene premuto l'apposito bottone
+     * @throws IOException Gestione delle eccezioni di I/O
      */
     @FXML public void careerChanges(ActionEvent event) throws IOException {
         root = FXMLLoader.load(getClass().getResource("../GUI/CareerDevelopment.fxml"));
@@ -154,7 +154,7 @@ public class EmployeeListController implements Initializable {
 
     /**
      * Metodo che apre la finestra per assumere un nuovo impiegato.
-     * @throws IOException
+     * @throws IOException Gestione delle eccezioni di I/O
      */
     @FXML public void hireEmployee() throws IOException {
         Parent root = FXMLLoader.load(getClass().getResource("../GUI/addEmployee.fxml"));
@@ -169,7 +169,7 @@ public class EmployeeListController implements Initializable {
 
     /**
      * Metodo che apre la finestra per modificare l'impiegato selezionato dall'utente.
-     * @throws IOException
+     * @throws IOException Gestione delle eccezioni di I/O
      */
     @FXML public void modifyEmployee()throws IOException  {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("../GUI/modifyEmployee.fxml"));
