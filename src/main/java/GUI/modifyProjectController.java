@@ -48,12 +48,12 @@ public class modifyProjectController {
 
     /**
      * Metodo che inizializza i campi della finestra.
-     * @param cup
-     * @param name
-     * @param budget
-     * @param sResp
-     * @param sRef
-     * @param endDate
+     * @param cup       Codice identificativo del progetto
+     * @param name      Nome del progetto
+     * @param budget    Soldi stanziati per il progetto
+     * @param sResp     SSN del responsabile scientifico
+     * @param sRef      SSN del referente scientifico
+     * @param endDate   Data di scadenza del progetto
      */
     public void setDefaultFields(String cup, String name, String budget, String sResp, String sRef,
                                  String endDate)
@@ -79,7 +79,8 @@ public class modifyProjectController {
 
     /**
      * Metodo che viene chiamato quando l'utente conferma la modifica del progetto.
-     * Verifica la validita' dell'input e passa i dati al controller.
+     * Verifica la validità dell'input e passa i dati al controller.
+     * @throws IOException Gestione delle eccezioni di I/O
      */
     @FXML
     public void modifyProject() throws IOException{
@@ -115,8 +116,8 @@ public class modifyProjectController {
 
     /**
      * Metodo che apre una finestra elencando gli errori passati in input.
-     * @param errors
-     * @throws IOException
+     * @param errors Stringhe di errori rilevati
+     * @throws IOException Gestione delle eccezioni di I/O
      */
     private void showErrorWindow (ArrayList<String> errors) throws IOException {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("../GUI/ErrorWindow.fxml"));
