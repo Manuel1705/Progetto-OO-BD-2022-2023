@@ -12,7 +12,7 @@ public class DAOLaboratoryPostgres implements DAOLaboratory{
 
     /**
      * Costruttore della classe. Ottiene il collegamento al database.
-     * @throws SQLException
+     * @throws SQLException Gestione delle eccezioni SQL
      */
     public DAOLaboratoryPostgres() throws SQLException{
         connection = PostgresDBConnection.getInstance().getConnection();
@@ -20,10 +20,10 @@ public class DAOLaboratoryPostgres implements DAOLaboratory{
 
     /**
      * Metodo che inserisce una nuova tupla nella tabella Laboratory
-     * @param name Nome del laboratorio. Chiave primaria.
-     * @param topic Topic del laboratorio.
-     * @param sresp SSN del responsabile scientifico del laboratorio.
-     * @param project CUP del progetto su cui lavora il laboratorio.
+     * @param name      Nome del laboratorio. Chiave primaria.
+     * @param topic     Topic del laboratorio.
+     * @param sresp     SSN del responsabile scientifico del laboratorio.
+     * @param project   CUP del progetto su cui lavora il laboratorio.
      */
     public void addLaboratoryDB(String name, String topic, String sresp, String project){
 
@@ -63,11 +63,11 @@ public class DAOLaboratoryPostgres implements DAOLaboratory{
 
     /**
      * Metodo che aggiorna la tupla di Laboratory con chiave primaria uguale a oldName
-     * @param oldName Chiave primaria originale.
-     * @param newName Nuova chiave primaria della tupla.
-     * @param topic Topic del laboratorio.
-     * @param sresp SSN del responsabile scientifico del laboratorio.
-     * @param project CUP del progetto su cui lavora il laboratorio.
+     * @param oldName   Chiave primaria originale.
+     * @param newName   Nuova chiave primaria della tupla.
+     * @param topic     Topic del laboratorio.
+     * @param sresp     SSN del responsabile scientifico del laboratorio.
+     * @param project   CUP del progetto su cui lavora il laboratorio.
      */
     public void updateLaboratoryDB(String oldName, String newName, String topic, String sresp, String project){
         String query = "UPDATE azienda.laboratory " +
@@ -92,10 +92,10 @@ public class DAOLaboratoryPostgres implements DAOLaboratory{
     /**
      * Metodo che riceve in input degli ArrayList passati per riferimento e salva al loro interno i valori di tutte
      * le tuple Laboratory salvate nel database
-     * @param nameList Lista dei nomi delle tuple caricate. Chiave primaria della tabella Laboratory.
-     * @param topicList Lista dei topic delle tuple.
-     * @param srespList Lista degli ssn dei responsabili scientifici dei laboratori.
-     * @param projectList Lista dei CUP dei progetti a cui lavorano i laboratori.
+     * @param nameList      Lista dei nomi delle tuple caricate. Chiave primaria della tabella Laboratory.
+     * @param topicList     Lista dei topic delle tuple.
+     * @param srespList     Lista degli ssn dei responsabili scientifici dei laboratori.
+     * @param projectList   Lista dei CUP dei progetti a cui lavorano i laboratori.
      */
     public void loadLaboratoryDB(ArrayList<String> nameList, ArrayList<String> topicList, ArrayList<String> srespList,
                                  ArrayList<String> projectList){
