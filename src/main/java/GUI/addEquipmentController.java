@@ -36,6 +36,7 @@ public class addEquipmentController implements Initializable {
 
     /**
      * Metodo che viene chiamato quando l'utente conferma l'inserimento dei dati. Effettua i controlli sulla validità dell'input.
+     * @throws IOException Gestione delle eccezioni di I/O
      */
     @FXML public void buyEquipment() throws IOException{
         ArrayList<String> errors = new ArrayList<String>();
