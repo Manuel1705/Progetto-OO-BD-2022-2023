@@ -102,7 +102,7 @@ create table azienda.temporary_contract(
 );
 --aggiunta del vincolo referenziale mancante
 alter table azienda.employee 
-add constraint emp_lab_fk foreign key(laboratory_name) references azienda.laboratory(name);  --se il nome di un laboratorio viene aggiornato vengono aggiornate anche le tuple in employee che lo referenziano.
+add constraint emp_lab_fk foreign key(laboratory_name) references azienda.laboratory(name) on update cascade on delete set null ;  --se il nome di un laboratorio viene aggiornato vengono aggiornate anche le tuple in employee che lo referenziano.
 --Se invece esso viene eliminato, l’attributo laboratory_name in employee, in tutte le tuple che lo referenziano, viene settato a null
 
 
