@@ -42,17 +42,6 @@ create table azienda.career_development(
     on update cascade on delete cascade --se l’ssn di un impiegato viene aggiornato/eliminato 
     --vengono aggiornate/eliminate anche le tuple in career_development che lo referenziano
 );
---Laboratory
-create table azienda.laboratory(
-    name varchar(30),
-    topic varchar(50),
-    sresp azienda.ssn_type,
-    project char(15),
---vincoli referenziali
-    constraint lab_pk primary key(name),
-    constraint lsresp_fk foreign key(sresp) references azienda.employee(ssn) on update cascade on delete cascade  --se l’ssn di un impiegato viene aggiornato/eliminato 
-    --vengono aggiornate/eliminate tutte tuple in laboratory che lo referenziano
-);
 --Project
 create table azienda.project(
     cup char(15),
@@ -70,6 +59,20 @@ create table azienda.project(
     constraint psref_fk foreign key(sref) references azienda.employee(ssn) on update cascade on delete cascade  --se l’ssn di un impiegato viene aggiornato/eliminato 
     --vengono aggiornate/eliminate tutte le tuple in project che lo referenziano
 );
+--Laboratory
+create table azienda.laboratory(
+    name varchar(30),
+    topic varchar(50),
+    sresp azienda.ssn_type,
+    project char(15),
+--vincoli referenziali
+    constraint lab_pk primary key(name),
+    constraint prj_lab_fk foreign key(project) references azienda.project(cup) on update cascade on delete set null, --se la primary key di project viene aggiornata vengono aggiornate anche le tuple in laboratory che la referenziano. 
+    --Se invece essa viene eliminata, l’attributo project in laboratory, in tutte le tuple che lo referenziano, viene settato a null
+    constraint lsresp_fk foreign key(sresp) references azienda.employee(ssn) on update cascade on delete cascade  --se l’ssn di un impiegato viene aggiornato/eliminato 
+    --vengono aggiornate/eliminate tutte tuple in laboratory che lo referenziano
+);
+
 --Equipment
 create table azienda.equipment(
     id_equipment serial,
@@ -99,27 +102,5 @@ create table azienda.temporary_contract(
 );
 --aggiunta del vincolo referenziale mancante
 alter table azienda.employee 
-add constraint emp_lab_fk foreign key(laboratory_name) references azienda.laboratory(name);  --se il nome di un laboratorio viene aggiornato vengono aggiornate anche le tuple in employee che lo referenziano.
+add constraint emp_lab_fk foreign key(laboratory_name) references azienda.laboratory(name) on update cascade on delete set null ;  --se il nome di un laboratorio viene aggiornato vengono aggiornate anche le tuple in employee che lo referenziano.
 --Se invece esso viene eliminato, l’attributo laboratory_name in employee, in tutte le tuple che lo referenziano, viene settato a null
-alter table azienda.laboratory
-add constraint prj_lab_fk foreign key(project) references azienda.project(cup) on update cascade on delete set null; --se la primary key di project viene aggiornata vengono aggiornate anche le tuple in laboratory che la referenziano. 
-    --Se invece essa viene eliminata, l’attributo project in laboratory, in tutte le tuple che lo referenziano, viene settato a null
------------------------------------------------------------------------------------------------
---FUNZIONI E TRIGGER
-
-create function azienda.add_career_development() returns trigger as $add_career_development_trigger$
-begin
---aggiunge le informazioni relative al cambio di ruolo e stipendio dell’impiegato
-if new.role<>old.role then --si assicura che ci sia stato un cambio di ruolo
-	insert into azienda.career_development values(old.role, new.role, current_date, new.salary-old.salary, new.ssn);
-end if;
-return null;
-end;
-$add_career_development_trigger$ LANGUAGE plpgsql;
-
---trigger corrispondente
-create trigger add_career_development_trigger after update of role on azienda.employee
---attivato ad ogni modifica del ruolo nella tabella employee
-for each row
-execute function azienda.add_career_development();
----------------------------------
