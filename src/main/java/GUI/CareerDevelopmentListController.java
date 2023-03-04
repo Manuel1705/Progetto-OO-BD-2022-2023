@@ -88,7 +88,7 @@ public class  CareerDevelopmentListController implements Initializable {
 
     /**
      * Metodo che viene chiamato quando l'utente chiude la finestra.
-     * @param event
+     * @param event Viene premuto l'apposito pulsante
      * @throws IOException Gestione delle eccezioni di I/O
      */
     @FXML public void switchToEmployeeList(ActionEvent event) throws IOException {
