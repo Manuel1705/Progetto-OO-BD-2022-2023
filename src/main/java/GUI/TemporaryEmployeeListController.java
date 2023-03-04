@@ -77,7 +77,7 @@ public class TemporaryEmployeeListController implements Initializable {
 
     /**
      * Metodo che restiusice l'indice della riga selezionata dall'utente.
-     * @return
+     * @return L'indice di riga
      */
     @FXML public int getSelectedTemporaryEmployeeIndex(){
         return TemporaryEmployeesTable.getSelectionModel().getSelectedIndex();
@@ -105,8 +105,8 @@ public class TemporaryEmployeeListController implements Initializable {
 
     /**
      * Metodo che permette di ritornare alla schermata Home.
-     * @param event
-     * @throws IOException
+     * @param event 
+     * @throws IOException Gestione delle eccezioni di I/O
      */
     @FXML public void switchToHomeScene(ActionEvent event) throws IOException {
         Parent root = FXMLLoader.load(getClass().getResource("../GUI/Home.fxml"));
@@ -119,7 +119,7 @@ public class TemporaryEmployeeListController implements Initializable {
 
     /**
      * Metodo che apre la finestra che permette di inserire un nuovo impiegato temporaneo.
-     * @throws IOException
+     * @throws IOException Gestione delle eccezioni di I/O
      */
     @FXML public void hireTemporaryEmployee() throws IOException {
         Parent root = FXMLLoader.load(getClass().getResource("../GUI/addTemporaryEmployee.fxml"));
@@ -134,7 +134,7 @@ public class TemporaryEmployeeListController implements Initializable {
 
     /**
      * Metodo che apre la finestra che permette di modificare l'impiegato temporaneo selezionato dall'utente.
-     * @throws IOException
+     * @throws IOException Gestione delle eccezioni di I/O
      */
     @FXML public void modifyTemporaryEmployee()throws IOException  {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("../GUI/modifyTemporaryEmployee.fxml"));
