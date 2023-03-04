@@ -13,7 +13,7 @@ public class DAOTemporaryContractPostgres implements DAOTemporaryContract {
 
     /**
      * Costruttore della classe. Ottiene il collegamento al database.
-     * @throws SQLException
+     * @throws SQLException Gestione delle eccezioni SQL
      */
     public DAOTemporaryContractPostgres() throws SQLException {
         connection = PostgresDBConnection.getInstance().getConnection();
@@ -66,7 +66,7 @@ public class DAOTemporaryContractPostgres implements DAOTemporaryContract {
 
     /**
      * Metodo che cerca una tupla con l'ssn passato e la elimina.
-     * @param ssn
+     * @param ssn SSN dell'impiegato interessato
      */
     public void removeTemporaryContractDB(String ssn){
         try {
