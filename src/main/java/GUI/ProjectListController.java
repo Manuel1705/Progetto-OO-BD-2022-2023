@@ -116,7 +116,7 @@ public class ProjectListController implements Initializable {
 
     /**
      * Metodo che ritorna alla schermata iniziale
-     * @param event 
+     * @param event Viene premuto l'apposito bottone
      * @throws IOException Gestione delle eccezioni di I/O
      */
     @FXML public void switchToHomeScene(ActionEvent event) throws IOException {
