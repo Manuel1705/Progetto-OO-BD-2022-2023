@@ -99,8 +99,8 @@ public class DAOEmployeePostgres implements DAOEmployee {
     {
 
         String query = "UPDATE azienda.employee " +
-                "SET ssn = ?, first_name = ?, last_name = ?, phone_num = ?, email = ?, address = ?," +
-                "employment_date = ?, salary = ?, role = ?, laboratory_name = ?" +
+                "SET ssn = ?, first_name = ?, last_name = ?, phone_num = ?, email = ?, address = ?, " +
+                "employment_date = ?, salary = ?, role = ?, laboratory_name = ? " +
                 "WHERE ssn LIKE ?;";
 
         try {

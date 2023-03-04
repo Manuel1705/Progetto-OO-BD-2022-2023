@@ -194,7 +194,7 @@ public class EquipmentController {
         try{
             if(controller.isDBConnected() && controller.getDBMS().equals("PostgreSQL")){
                 DAOEquipmentPostgres daoEquipmentPostgres = new DAOEquipmentPostgres();
-                daoEquipmentPostgres.addEquipmentDB(id, name, description, equipment.getPrice(),
+                daoEquipmentPostgres.updateEquipmentDB(id,id, name, description, equipment.getPrice(),
                         Date.valueOf(equipment.getPurchaseDate()), equipment.getDealer(), lab, equipment.getProjectCup());
 
             }

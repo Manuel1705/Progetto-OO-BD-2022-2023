@@ -28,6 +28,6 @@
             <TextArea fx:id="descriptionModifyEquipment" layoutX="470.0" layoutY="63.0" prefHeight="151.0" prefWidth="200.0" promptText="Description" />
             </children>
         </AnchorPane>
-        <Button fx:id="modifyEquipmentButton" layoutX="642.0" layoutY="261.0" mnemonicParsing="false" onAction="#modifyEquipment" style="-fx-background-color: #21252f;" text="Buy" textFill="WHITE" />
+        <Button fx:id="modifyEquipmentButton" layoutX="632.0" layoutY="261.0" mnemonicParsing="false" onAction="#modifyEquipment" style="-fx-background-color: #21252f;" text="Modify" textFill="WHITE" />
     </children>
 </Pane>

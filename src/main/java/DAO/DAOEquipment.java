@@ -33,7 +33,7 @@ public interface DAOEquipment {
      * @param laboratoryName Nome del laboratorio nel quale è attualmente utilizzata l'attrezzatura.
      * @param projectCup     CUP del progetto che ha acquistato l'attrezzatura.
      */
-    public void updateEquipmentDB(int id, String name, String description, float price, Date purchaseDate, String dealer, String laboratoryName,
+    public void updateEquipmentDB(int old_id,int new_id, String name, String description, float price, Date purchaseDate, String dealer, String laboratoryName,
                                   String projectCup);
 
     /**

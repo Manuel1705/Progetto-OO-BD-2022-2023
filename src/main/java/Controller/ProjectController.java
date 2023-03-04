@@ -165,8 +165,9 @@ public class ProjectController {
      * @return  Stringhe che comunicano eventuali errori riscontrati
      */
     public ArrayList<String> checkProjectModify(String cup, String name, float budget,
-                                                LocalDate endDate, String SrespSSN,
-                                                String SrefSSN){
+                                                LocalDate endDate,
+                                                String SrefSSN,
+                                                String SrespSSN){
         ArrayList<String> errors = new ArrayList<String>();
         Project project = findProjectCup(cup);
 
@@ -187,7 +188,6 @@ public class ProjectController {
             errors.add("Inserted scientific responsible does not exist.");
         else if(!controller.getEmployeeController().findEmployee(SrespSSN).getRole().equals("Executive"))
             errors.add("Scientific responsible must be an executive employee.");
-
         if(SrefSSN == null || SrefSSN.isBlank()) errors.add("Must insert scientific reference.");
         else if(controller.getEmployeeController().findEmployee(SrefSSN) == null)
             errors.add("Inserted scientific reference does not exist.");
