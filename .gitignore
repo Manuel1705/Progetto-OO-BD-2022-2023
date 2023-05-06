@@ -8,7 +8,7 @@ target/
 .idea/jarRepositories.xml
 .idea/compiler.xml
 .idea/libraries/
-Documentazione/
+Documentazione/*
 *.iws
 *.iml
 *.ipr
